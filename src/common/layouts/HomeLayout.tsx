@@ -1,8 +1,9 @@
 import React, { useState, ReactNode } from 'react';
 import Header from '../components/Header/index';
 import Sidebar from '../components/Sidebar/index';
+import RoleCheckerHOC from '../hoc/RoleCheckerHOC';
 
-const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+const HomeLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -22,6 +23,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+              HOME LAYOUT
               {children}
             </div>
           </main>
@@ -34,4 +36,6 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-export default DefaultLayout;
+const ProtectedLayout = RoleCheckerHOC(HomeLayout, "USER");
+
+export default ProtectedLayout;

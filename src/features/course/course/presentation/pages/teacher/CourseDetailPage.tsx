@@ -1,12 +1,12 @@
 import React from 'react';
-import CourseDetail from '../components/CourseDetail';
+import CourseDetail from '../../components/CourseDetail';
 import { RouteObject } from 'react-router-dom';
 
 
 export const route: () => RouteObject = () => {
 
     return {
-        path: ":courseId",
+        path: "course/:courseId",
         element: <CourseDetailPage />
     }
 }

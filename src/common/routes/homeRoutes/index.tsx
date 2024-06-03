@@ -3,7 +3,6 @@ import React from "react";
 import { HomeLayout } from "../../layouts";
 import { courseRoutes } from "./courseRoutes";
 import { communityRoutes } from "./communityRoutes";
-import { blogRoutes } from "./blogRoutes";
 
 export const homeRoutes: RouteObject = {
     path: "",
@@ -11,6 +10,5 @@ export const homeRoutes: RouteObject = {
     children: [
         courseRoutes,
         communityRoutes,
-        blogRoutes
     ]
 }

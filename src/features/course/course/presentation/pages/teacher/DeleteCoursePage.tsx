@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { RootState, useAppDispatch, useAppSelector } from '../../../../../common/context/store';
-import { deleteCourse, fetchCourseDetail } from '../redux/courseActions';
+import { RootState, useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
+import { deleteCourse, fetchCourseDetail } from '../../redux/courseActions';
 
 import { RouteObject } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export const route: () => RouteObject = () => {
     return {
-        path: "delete/:courseId",
+        path: "course/delete/:courseId",
         element: <DeleteCoursePage />
     }
 }

@@ -12,7 +12,7 @@ import Settings from '../temp_pages/Settings';
 import Tables from '../temp_pages/Tables';
 import Alerts from '../temp_pages/UiElements/Alerts';
 import Buttons from '../temp_pages/UiElements/Buttons';
-import { dashboardRoute } from "../../features/admin/presentation/pages";
+import { dashboardRoute } from "../../features/dashboard/presentation/pages";
 
 const tempRoutes: RouteObject[] = [
     {

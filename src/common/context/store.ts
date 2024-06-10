@@ -1,7 +1,11 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from '../../features/auth/presentation/redux/authSlice';
+<<<<<<< Updated upstream
 import courseSlice from '../../features/course/course/presentation/redux/courseSlice';
+=======
+import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
+>>>>>>> Stashed changes
 // import userReducer from './features/user/presentation/redux/userSlice';
 // import adminReducer from './features/admin/presentation/redux/adminSlice';
 // import teacherReducer from './features/teacher/presentation/redux/teacherSlice';
@@ -9,7 +13,11 @@ import courseSlice from '../../features/course/course/presentation/redux/courseS
 
 const rootReducer = combineReducers({
     auth: authReducer,
+<<<<<<< Updated upstream
     courses: courseSlice,
+=======
+    blogs: blogSlice,
+>>>>>>> Stashed changes
     // user: userReducer,
     // admin: adminReducer,
     // teacher: teacherReducer,

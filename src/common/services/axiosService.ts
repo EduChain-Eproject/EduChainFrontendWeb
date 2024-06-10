@@ -1,7 +1,11 @@
 import axios from 'axios';
 
 const axiosService = axios.create({
+<<<<<<< Updated upstream
     baseURL: process.env.REACT_APP_API_BASE_URL,
+=======
+    baseURL: import.meta.env.VITE_API_BASE_URL
+>>>>>>> Stashed changes
 });
 
 axiosService.interceptors.request.use(
@@ -17,4 +21,8 @@ axiosService.interceptors.request.use(
     }
 );
 
+<<<<<<< Updated upstream
 export default axiosService;
+=======
+export default axiosService;
+>>>>>>> Stashed changes

@@ -1,11 +1,11 @@
-import HomeUserLayout from "./HomeUserLayout"
+import HomeLayout from "./HomeLayout"
 import AuthLayout from "./AuthLayout"
 import DashboardAdminLayout from "./DashboardAdminLayout"
 import DashboardCensorLayout from "./DashboardCensorLayout"
 import DashboardTeacherLayout from "./DashboardTeacherLayout"
 
 export {
-    HomeUserLayout,
+    HomeLayout,
     AuthLayout,
     DashboardTeacherLayout,
     DashboardCensorLayout,

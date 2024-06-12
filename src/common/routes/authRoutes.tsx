@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 import { AuthLayout } from "../layouts";
 import React from "react";
 import { ErrorPage } from "../pages";
@@ -11,6 +11,10 @@ export const authRoute: RouteObject =
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
     children: [
+        {
+            path:"",
+            element:<Navigate to={"signup"} />
+        },
         {
             path: "signup",
             element: <SignIn />,

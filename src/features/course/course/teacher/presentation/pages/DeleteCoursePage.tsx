@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
-import { deleteCourse, fetchCourseDetail } from '../../redux/courseActions';
+import { deleteCourse, fetchCourseDetail } from '../redux/courseActions';
 
 import { RouteObject } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ const DeleteCoursePage: React.FC = () => {
     const { courseId } = useParams<{ courseId: string }>();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { courseDetail } = useAppSelector((state) => state.courses);
+    const { courseDetail } = useAppSelector((state) => state.courses.teacher);
 
 
     useEffect(() => {

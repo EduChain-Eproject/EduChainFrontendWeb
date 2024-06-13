@@ -1,8 +1,8 @@
 import React from 'react';
 
-import CourseForm from '../../components/CourseForm';
+import CourseForm from '../components/CourseForm';
 import { useAppDispatch } from '../../../../../../common/context/store';
-import { createCourse } from '../../redux/courseActions';
+import { createCourse } from '../redux/courseActions';
 import { RouteObject } from 'react-router-dom';
 
 export const route: () => RouteObject = () => {

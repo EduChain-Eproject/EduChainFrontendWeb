@@ -23,7 +23,7 @@ const initialState: CourseState = {
     error: undefined
 }
 
-const courseSlice = createSlice({
+const teacherCourseSlice = createSlice({
     name: 'courses',
     initialState,
     reducers: {},
@@ -36,4 +36,4 @@ const courseSlice = createSlice({
     },
 });
 
-export default courseSlice.reducer;
+export default teacherCourseSlice.reducer;

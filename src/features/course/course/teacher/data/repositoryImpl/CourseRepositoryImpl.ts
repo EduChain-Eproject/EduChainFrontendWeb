@@ -1,4 +1,4 @@
-import Failure from '../../../../../common/types/Failure';
+import Failure from '../../../../../../common/types/Failure';
 import Course from '../../domain/entities/Course';
 import { CourseRepository } from '../../domain/repositories/CourseRepository';
 import { CreateCourseReq } from '../../domain/usecases/CreateCourse';

@@ -1,6 +1,6 @@
 import React, { useState, ReactNode } from 'react';
-import Header from '../components/Header/index';
-import Sidebar from '../components/Sidebar/index';
+import Header from '../components/Header/AdminHeader';
+import CensorSidebar from '../components/Sidebar/CensorSidebar';
 import RoleCheckerHOC from '../hoc/RoleCheckerHOC';
 
 const DashboardCensorLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -11,7 +11,7 @@ const DashboardCensorLayout: React.FC<{ children: ReactNode }> = ({ children }) 
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <CensorSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}

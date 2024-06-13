@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import React from 'react';
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../public/images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 
-const Header = (props: {
+const AdminHeader = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
@@ -116,4 +117,4 @@ const Header = (props: {
   );
 };
 
-export default Header;
+export default AdminHeader;

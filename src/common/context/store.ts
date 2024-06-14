@@ -1,11 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from '../../features/auth/presentation/redux/authSlice';
-<<<<<<< Updated upstream
 import courseSlice from '../../features/course/course/presentation/redux/courseSlice';
-=======
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
->>>>>>> Stashed changes
+import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
 // import userReducer from './features/user/presentation/redux/userSlice';
 // import adminReducer from './features/admin/presentation/redux/adminSlice';
 // import teacherReducer from './features/teacher/presentation/redux/teacherSlice';
@@ -13,22 +11,20 @@ import blogSlice from '../../features/community/blog/presentation/redux/blogSlic
 
 const rootReducer = combineReducers({
     auth: authReducer,
-<<<<<<< Updated upstream
     courses: courseSlice,
-=======
     blogs: blogSlice,
->>>>>>> Stashed changes
+    cates: cateSlice
     // user: userReducer,
     // admin: adminReducer,
     // teacher: teacherReducer,
     // censor: censorReducer,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
-
 const store = configureStore({
     reducer: rootReducer,
 });
+
+export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

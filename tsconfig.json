@@ -29,7 +29,8 @@
     "src/core/common",
     "src/core/layout",
     "src/core/public/js",
-    "src/core/hooks"
+    "src/core/hooks",
+    "src/vite-env.d.ts"
   ],
   "references": [
     {

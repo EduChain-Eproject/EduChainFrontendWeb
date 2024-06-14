@@ -2,6 +2,8 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from '../../features/auth/presentation/redux/authSlice';
 import teacherCourseSlice from '../../features/course/course/teacher/presentation/redux/courseSlice'
+import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
+import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
 // import userReducer from './features/user/presentation/redux/userSlice';
 // import adminReducer from './features/admin/presentation/redux/adminSlice';
 // import teacherReducer from './features/teacher/presentation/redux/teacherSlice';
@@ -14,6 +16,8 @@ const courses = combineReducers({
 const rootReducer = combineReducers({
     auth: authReducer,
     courses: courses,
+    blogs: blogSlice,
+    cates: cateSlice
     // user: userReducer,
     // admin: adminReducer,
     // teacher: teacherReducer,

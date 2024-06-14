@@ -1,5 +1,5 @@
 import React from 'react';
-import CourseList from '../../components/CourseList';
+import CourseList from '../components/CourseList';
 import { RouteObject } from 'react-router-dom';
 
 export const route: () => RouteObject = () => {

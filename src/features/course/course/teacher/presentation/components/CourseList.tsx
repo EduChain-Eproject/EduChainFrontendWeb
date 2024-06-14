@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState, useAppDispatch, useAppSelector } from '../../../../../common/context/store';
 import { fetchCourses } from '../redux/courseActions';
+import { useAppSelector, useAppDispatch } from '../../../../../../common/context/store';
 
 const CourseList: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { courses, status, error } = useAppSelector((state) => state.courses);
+    const { courses, status, error } = useAppSelector((state) => state.courses.teacher);
 
     useEffect(() => {
         dispatch(fetchCourses());

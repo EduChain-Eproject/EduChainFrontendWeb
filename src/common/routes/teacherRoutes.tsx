@@ -2,7 +2,7 @@ import { RouteObject } from "react-router-dom";
 import { DashboardTeacherLayout } from "../layouts";
 import { ErrorPage } from "../pages";
 import React from "react";
-import { createCourseRoute, deleteCourseRoute, getCourseDetailRoute, getCoursesRoute, updateCourseRoute } from "../../features/course/course/presentation/pages";
+import { createCourseRoute, deleteCourseRoute, getCourseDetailRoute, getCoursesRoute, updateCourseRoute } from "../../features/course/course/teacher/presentation/pages";
 
 export const teacherRoutes: RouteObject = {
     path: "dashboard/teacher",

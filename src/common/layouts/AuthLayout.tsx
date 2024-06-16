@@ -1,6 +1,6 @@
 import React, { useState, ReactNode } from 'react';
-import Header from '../components/Header/index';
-import Sidebar from '../components/Sidebar/index';
+import Header from '../components/Header/AdminHeader';
+import Sidebar from '../components/Sidebar/AdminSidebar';
 import { Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {

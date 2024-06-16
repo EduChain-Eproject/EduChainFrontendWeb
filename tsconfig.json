@@ -22,14 +22,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src/core",
     "src/lib.d.ts",
-    "src/core/pages",
-    "src/core/types",
-    "src/core/common",
-    "src/core/layout",
-    "src/core/public/js",
-    "src/core/hooks"
   ],
   "references": [
     {

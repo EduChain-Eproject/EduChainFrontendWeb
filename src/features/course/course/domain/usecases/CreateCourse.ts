@@ -9,5 +9,5 @@ export default class CreateCourse {
 }
 
 export type CreateCourseReq = {
-
+    
 }

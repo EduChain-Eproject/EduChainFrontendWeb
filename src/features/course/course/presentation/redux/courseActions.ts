@@ -7,8 +7,10 @@ import {
     GetCourses,
     DeleteCourse,
 } from '../../domain/usecases';
+import { CourseRepository } from '../../domain/repositories/CourseRepository';
+import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
 
-const courseRepository = new CourseRepositoryImpl();
+const courseRepository: CourseRepository = new CourseRepositoryImpl();
 
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
     const getCoursesUseCase = new GetCourses(courseRepository);
@@ -20,7 +22,7 @@ export const fetchCourseDetail = createAsyncThunk('courses/fetchCourseDetail', a
     return await getCourseDetailUseCase.execute(courseId);
 });
 
-export const createCourse = createAsyncThunk('courses/createCourse', async (courseData: any) => {
+export const createCourse = createAsyncThunk('courses/createCourse', async (courseData: CreateCourseReq) => {
     const createCourseUseCase = new CreateCourse(courseRepository);
     return await createCourseUseCase.execute(courseData);
 });

@@ -4,19 +4,24 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // import LogoutUser from '../../domain/usecases/LogoutUser';
 // import CheckAuth from '../../domain/usecases/CheckAuth';
 import { User } from '../../domain/entities/User.ts';
+import handleLogin from './actionHandling/HandleLogin.ts';
 
-interface AuthState {
+export interface AuthState {
     user: User | null;
     isAuthenticated: boolean;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
+    token: string | null;
+    refreshToken: string | null;
 }
 
 const initialState: AuthState = {
-    user: new User("ADMIN"),
+    user: new User("Admin"),
     isAuthenticated: true,
     status: 'idle',
     error: null,
+    token:  null,
+    refreshToken:  null,
 };
 
 // const authRepository = new AuthRepositoryImpl();
@@ -49,7 +54,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder
+        // builder
         //   .addCase(authenticateUser.pending, (state) => {
         //     state.status = 'loading';
         //   })
@@ -69,6 +74,7 @@ const authSlice = createSlice({
         //   .addCase(verifyAuth.fulfilled, (state, action) => {
         //     state.isAuthenticated = action.payload;
         //   });
+        handleLogin(builder);
     },
 });
 

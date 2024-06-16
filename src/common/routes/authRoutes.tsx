@@ -4,6 +4,7 @@ import React from "react";
 import { ErrorPage } from "../pages";
 import SignIn from "../temp_pages/Authentication/SignIn";
 import SignUp from "../temp_pages/Authentication/SignUp";
+import { loginRoute, registerRoute } from "../../features/auth/presentation/pages";
 
 export const authRoute: RouteObject =
 {
@@ -11,17 +12,8 @@ export const authRoute: RouteObject =
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
     children: [
-        {
-            path:"",
-            element:<Navigate to={"signup"} />
-        },
-        {
-            path: "signup",
-            element: <SignIn />,
-        },
-        {
-            path: "signin",
-            element: <SignUp />,
-        },
+        
+        loginRoute(),
+        registerRoute()
     ],
 }

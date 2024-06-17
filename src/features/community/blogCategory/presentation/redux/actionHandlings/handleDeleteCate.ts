@@ -10,7 +10,7 @@ const handleDeleteCate = (builder: ActionReducerMapBuilder<CateState>) => {
         .addCase(deleteCate.fulfilled, (state, action) => {
             if (action.payload.error) {
                 state.status = 'failed';
-                state.error = action.payload.error;
+                state.errorDelete = action.payload.error;
             } else {
                 state.status = 'succeeded';
                 state.cates = state.cates?.filter(course => course.id !== action.meta.arg);
@@ -18,7 +18,7 @@ const handleDeleteCate = (builder: ActionReducerMapBuilder<CateState>) => {
         })
         .addCase(deleteCate.rejected, (state, action) => {
             state.status = 'failed';
-            state.error = action.error.message;
+            state.errorDelete = action.error.message;
         });
 };
 

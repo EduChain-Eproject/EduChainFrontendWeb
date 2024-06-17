@@ -29,8 +29,6 @@ export const apiCreateCate = async (cateData: CreateCateReq) => {
         console.log(cateData);
 
         const response = await axiosService.post('/api/blog_category', cateData);
-
-        console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -42,9 +40,12 @@ export const apiCreateCate = async (cateData: CreateCateReq) => {
 export const apiUpdateCate = async (cateId: number, cateData: UpdateCateReq) => {
     try {
         const response = await axiosService.put(`/api/blog_category/${cateId}`, cateData);
+        console.log(response);
         return response.data;
     } catch (error) {
-        throw new Failure(error.response.data.message, error.response.status);
+        console.log(error);
+
+        throw new Failure(error.response.data.error, error.response.status);
     }
 };
 

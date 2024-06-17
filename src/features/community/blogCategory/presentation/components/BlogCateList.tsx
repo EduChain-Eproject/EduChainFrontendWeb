@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const BlogCateList: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { cates, status, error } = useAppSelector((state: RootState) => state.cates);
+    const { cates, status } = useAppSelector((state: RootState) => state.cates);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [cateToDelete, setCateToDelete] = useState<number | null>(null);
@@ -34,10 +34,6 @@ const BlogCateList: React.FC = () => {
 
     if (status === 'loading') {
         return <div>Loading...</div>;
-    }
-
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
     }
 
     return (

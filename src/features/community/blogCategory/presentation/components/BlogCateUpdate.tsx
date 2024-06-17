@@ -12,13 +12,13 @@ const BlogCateUpdate: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const params = useParams<{ cateId: string }>();
     const cateId = Number(params.cateId);
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [successfulMessage, setSuccessfulMessage] = useState(false);
-
-    const { cate, status, error: fetchError } = useAppSelector((state: RootState) => state.cates);
+    const { cate, status, errorUpdate: fetchError } = useAppSelector((state: RootState) => state.cates);
 
     useEffect(() => {
         if (cateId) {
@@ -37,6 +37,13 @@ const BlogCateUpdate: React.FC = () => {
             setError(fetchError);
         }
     }, [fetchError, status]);
+
+    useEffect(() => {
+        return () => {
+            setError(undefined);
+            setSuccessfulMessage(false);
+        };
+    }, []);
 
     const handleFormSubmit = async (cateData: UpdateCateReq) => {
         try {

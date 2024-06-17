@@ -10,7 +10,8 @@ const handleUpdateCate = (builder: ActionReducerMapBuilder<CateState>) => {
         .addCase(updateCate.fulfilled, (state, action) => {
             if (action.payload.error) {
                 state.status = 'failed';
-                state.error = action.payload.error;
+                state.errorUpdate = action.payload.error;
+                console.log(action.payload.error);
             } else {
                 state.status = 'succeeded';
                 const updatedCourse = action.payload.data;
@@ -22,7 +23,7 @@ const handleUpdateCate = (builder: ActionReducerMapBuilder<CateState>) => {
         })
         .addCase(updateCate.rejected, (state, action) => {
             state.status = 'failed';
-            state.error = action.error.message;
+            state.errorUpdate = action.error.message;
         });
 };
 

@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import BlogCateRepositoryImpl from '../../data/repositoryImpl/BlogCateRepositoryImpl';
+import { createSlice } from '@reduxjs/toolkit';
 import { BlogCategory } from '../../domain/entities/BlogCategory';
 import {
     handleCreateCate,
@@ -12,14 +11,22 @@ import {
 export interface CateState {
     cates: BlogCategory[] | undefined,
     cate: BlogCategory | undefined,
-    status: string | null
-    error: string | undefined
+    status: string | null,
+    errorCreate: string | undefined
+    errorUpdate: string | undefined
+    errorDelete: string | undefined
+    errorFetchCates: string | undefined
+    errorFetchCate: string | undefined
 }
 const initialState: CateState = {
     cates: undefined,
     cate: undefined,
     status: null,
-    error: undefined
+    errorDelete: undefined,
+    errorCreate: undefined,
+    errorFetchCate: undefined,
+    errorFetchCates: undefined,
+    errorUpdate: undefined
 }
 
 const cateSlice = createSlice({

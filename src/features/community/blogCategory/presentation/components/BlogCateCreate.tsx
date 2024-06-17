@@ -21,7 +21,7 @@ const BlogCateCreate: React.FC<BlogCateCreateProps> = ({ initialData, onSubmit }
 
     const [error, setError] = useState<string | undefined>(undefined);
 
-    const errorFromReducer = useAppSelector((state: RootState) => state.cates.error);
+    const errorFromReducer = useAppSelector((state: RootState) => state.cates.errorCreate);
 
     const [successfulMessage, setSuccessfulMessage] = useState(false);
 
@@ -29,33 +29,39 @@ const BlogCateCreate: React.FC<BlogCateCreateProps> = ({ initialData, onSubmit }
         setError(errorFromReducer);
     }, [errorFromReducer]);
 
-    const handleFormSubmit = async (data: CreateCateReq) => {
-        try {
-            await dispatch(createCate(data));
-            
-            if (onSubmit) {
-                onSubmit(data as BlogCategory);
-            }
+    useEffect(() => {
+        // Hàm này sẽ được gọi khi component bị unmount
+        return () => {
+            setError('');
+            setSuccessfulMessage(false);
+        };
+    }, []);
 
-            if (error == '') {
-                setSuccessfulMessage(true);
-                reset();
-    
-                setTimeout(() => {
-                    setSuccessfulMessage(false);
-                    navigate('/dashboard/blog_category');
-                }, 3000);
-            }
-    
-        } catch (err) {
-            console.error('Error while creating category:', err);
-            if (err.response && err.response.status === 409) {
-                setError('Category name already exists');
-            } else {
-                setError('Failed to create category');
-            }
+    const handleFormSubmit = async (data: CreateCateReq) => {
+    try {
+        await dispatch(createCate(data));
+        
+        if (onSubmit) {
+            onSubmit(data as BlogCategory);
         }
-    };
+        
+        if (errorFromReducer) {
+            setError('Failed to create category');
+        } else {
+            setSuccessfulMessage(true);
+            reset();
+
+            setTimeout(() => {
+                setSuccessfulMessage(false);
+                navigate('/dashboard/blog_category');
+            }, 3000);
+        }
+
+    } catch (err) {
+        console.error('Error while creating category:', err);
+        setError('Failed to create category');
+    }
+};
 
     return (
         <div>

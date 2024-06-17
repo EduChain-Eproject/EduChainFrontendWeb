@@ -10,7 +10,7 @@ const handleFetchCate = (builder: ActionReducerMapBuilder<CateState>) => {
         .addCase(fetchCate.fulfilled, (state, action) => {
             if (action.payload.error) {
                 state.status = 'failed';
-                state.error = action.payload.error;
+                state.errorFetchCate = action.payload.error;
             } else {
                 state.status = 'succeeded';
                 state.cate = action.payload.data;
@@ -18,7 +18,7 @@ const handleFetchCate = (builder: ActionReducerMapBuilder<CateState>) => {
         })
         .addCase(fetchCate.rejected, (state, action) => {
             state.status = 'failed';
-            state.error = action.error.message;
+            state.errorFetchCate = action.error.message;
         });
 };
 

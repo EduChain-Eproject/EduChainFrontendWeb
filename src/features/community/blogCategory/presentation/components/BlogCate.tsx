@@ -7,7 +7,7 @@ const BlogCate: React.FC = () => {
     const { cateId } = useParams<{ cateId: string }>();
     const cId = Number(cateId)
     const dispatch = useAppDispatch();
-    const { cate, status, error } = useAppSelector((state) => state.cates);
+    const { cate, status } = useAppSelector((state) => state.cates);
 
     useEffect(() => {
         if (cId) {
@@ -19,9 +19,6 @@ const BlogCate: React.FC = () => {
         return <div>Loading...</div>;
     }
 
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
-    }
 
     return (
         <div>

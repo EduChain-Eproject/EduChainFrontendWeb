@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import CourseForm from '../components/CourseForm';
 import { useAppDispatch } from '../../../../../../common/context/store';
-import { createCourse } from '../redux/courseActions';
+import { createCourse, fetchListCategories } from '../redux/courseActions';
 import { RouteObject } from 'react-router-dom';
 
 export const route: () => RouteObject = () => {
@@ -18,6 +18,10 @@ const CreateCoursePage: React.FC = () => {
     const handleSubmit = (data: any) => {
         dispatch(createCourse(data));
     };
+
+    useEffect(() => {
+        dispatch(fetchListCategories())
+    }, [dispatch])
 
     return (
         <div>

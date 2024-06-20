@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import CourseRepositoryImpl from '../../data/repositoryImpl/CourseRepositoryImpl';
 import Course from '../../domain/entities/Course';
 import {
     handleUpdateCourse,
@@ -7,20 +6,24 @@ import {
     handleFetchCourseDetail,
     handleDeleteCourse,
     handleCreateCourse,
+    handleGetListCategories,
 } from './actionHandlings';
+import Category from '../../domain/entities/Category';
 
 
 export interface CourseState {
     courses: Course[] | undefined,
     courseDetail: Course | undefined,
     status: string | null
-    error: string | undefined
+    error: string | undefined,
+    categories: Category[] | undefined
 }
 const initialState: CourseState = {
     courses: undefined,
     courseDetail: undefined,
     status: null,
-    error: undefined
+    error: undefined,
+    categories: undefined
 }
 
 const teacherCourseSlice = createSlice({
@@ -33,6 +36,7 @@ const teacherCourseSlice = createSlice({
         handleCreateCourse(builder);
         handleUpdateCourse(builder);
         handleDeleteCourse(builder);
+        handleGetListCategories(builder);
     },
 });
 

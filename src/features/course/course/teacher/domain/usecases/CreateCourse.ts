@@ -9,5 +9,8 @@ export default class CreateCourse {
 }
 
 export type CreateCourseReq = {
-
+    title: string,
+    description: string,
+    price: number,
+    categoryIds: number[]
 }

@@ -1,6 +1,6 @@
-export default class Course {
-    id: string;
-    title: string;
-    description: string;
-    instructor: string;
+import CommonCourse from '../../../common/domain/entities/Course'
+
+
+export default class Course extends CommonCourse {
+
 }

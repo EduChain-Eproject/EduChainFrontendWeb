@@ -3,6 +3,18 @@ import Failure from '../../../../../../common/types/Failure';
 import Course from '../../domain/entities/Course';
 import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
 import { UpdateCourseReq } from '../../domain/usecases/UpdateCourse';
+import { CategoryDto } from '../models/CategoryDto';
+
+export const apiFetchListCategories: () => Promise<CategoryDto[]> = async () => {
+    try {
+
+
+        const response = await axiosService.get('http://localhost:8080/TEACHER/api/category/list');
+        return response.data;
+    } catch (error) {
+        throw new Failure(error.response.data.message, error.response.status);
+    }
+}
 
 export const apiFetchCourses: () => Promise<Course[]> = async () => {
     try {

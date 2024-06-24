@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import CourseForm from '../components/CourseForm';
-import { useAppDispatch } from '../../../../../../common/context/store';
-import { createCourse } from '../redux/courseActions';
-import { RouteObject } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
+import { createCourse, fetchListCategories } from '../redux/courseActions';
+import { RouteObject, useNavigate } from 'react-router-dom';
+import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
 
 export const route: () => RouteObject = () => {
     return {
@@ -13,11 +14,31 @@ export const route: () => RouteObject = () => {
 }
 
 const CreateCoursePage: React.FC = () => {
+    const { status, error } = useAppSelector(state => state.courses.teacher);
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const handleSubmit = (data: any) => {
-        dispatch(createCourse(data));
+    const handleSubmit = (data: CreateCourseReq) => {
+        // Convert the categoryIds object to an array
+        const categoryIds = Object.keys(data.categoryIds)
+            .filter((key) => data.categoryIds[key])
+            .map((key) => parseInt(key, 10));
+
+        const submitData = {
+            ...data,
+            categoryIds,
+        };
+
+        dispatch(createCourse(submitData));
+
+        if (status === 'succeeded') {
+            navigate('/teacher/courses');
+        }
     };
+
+    useEffect(() => {
+        dispatch(fetchListCategories())
+    }, [dispatch])
 
     return (
         <div>

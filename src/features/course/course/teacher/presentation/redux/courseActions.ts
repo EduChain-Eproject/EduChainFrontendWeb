@@ -1,16 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import CourseRepositoryImpl from '../../data/repositoryImpl/CourseRepositoryImpl';
+import CourseRepositoryImpl from '../../../teacher/data/repositoryImpl/CourseRepositoryImpl';
 import {
     GetCourseDetail,
     UpdateCourse,
     CreateCourse,
     GetCourses,
     DeleteCourse,
+    GetListCategories,
 } from '../../domain/usecases';
-import { CourseRepository } from '../../domain/repositories/CourseRepository';
+import CategoryRepositoryImpl from '../../data/repositoryImpl/CategoryRepositoryImpl';
 import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
 
-const courseRepository: CourseRepository = new CourseRepositoryImpl();
+const courseRepository = new CourseRepositoryImpl();
+const categoryRepository = new CategoryRepositoryImpl();
+
+export const fetchListCategories = createAsyncThunk('courses/fetchListCategories', async () => {
+    const getListCateoriesUseCase = new GetListCategories(categoryRepository);
+    return await getListCateoriesUseCase.execute();
+});
 
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
     const getCoursesUseCase = new GetCourses(courseRepository);

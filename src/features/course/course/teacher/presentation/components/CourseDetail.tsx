@@ -6,7 +6,7 @@ import { fetchCourseDetail } from '../redux/courseActions';
 const CourseDetail: React.FC = () => {
     const { courseId } = useParams<{ courseId: string }>();
     const dispatch = useAppDispatch();
-    const { courseDetail, status, error } = useAppSelector((state) => state.courses.teacher);
+    const { data, status, error } = useAppSelector((state) => state.courses.teacher.courseDetailPage);
 
     useEffect(() => {
         if (courseId) {
@@ -24,11 +24,11 @@ const CourseDetail: React.FC = () => {
 
     return (
         <div>
-            {courseDetail && (
+            {data && (
                 <>
-                    <h1>{courseDetail.title}</h1>
-                    <p>{courseDetail.description}</p>
-                    <p>Instructor: {courseDetail.instructor}</p>
+                    <h1>{data.title}</h1>
+                    <p>{data.description}</p>
+                    <p>Instructor: {data.instructor}</p>
                 </>
             )}
         </div>

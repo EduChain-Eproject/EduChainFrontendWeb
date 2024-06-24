@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import CourseRepositoryImpl from '../../data/repositoryImpl/CourseRepositoryImpl';
 import Course from '../../domain/entities/Course';
 import {
     handleUpdateCourse,
@@ -7,33 +6,55 @@ import {
     handleFetchCourseDetail,
     handleDeleteCourse,
     handleCreateCourse,
+    handleGetListCategories,
 } from './actionHandlings';
+import Category from '../../domain/entities/Category';
 
+interface CommonState<T> {
+    data: T | undefined,
+    status: string | null
+    error: string | undefined,
+}
 
 export interface CourseState {
-    courses: Course[] | undefined,
-    courseDetail: Course | undefined,
-    status: string | null
-    error: string | undefined
+    createCoursePage: CommonState<Category[]>,
+    courseDetailPage: CommonState<Course>,
+    listCoursesPage: CommonState<Course[]>,
+    deactivateCoursePage: CommonState<Course>,
+}
+
+const initCommonState = {
+    data: undefined,
+    status: null,
+    error: undefined,
 }
 const initialState: CourseState = {
-    courses: undefined,
-    courseDetail: undefined,
-    status: null,
-    error: undefined
+    courseDetailPage: initCommonState,
+    createCoursePage: initCommonState,
+    listCoursesPage: initCommonState,
+    deactivateCoursePage: initCommonState,
 }
 
 const teacherCourseSlice = createSlice({
     name: 'courses',
     initialState,
-    reducers: {},
+    reducers: {
+        clearErrorStatus(state, action) {
+            if (action.payload == "createCoursePage") {
+                state.createCoursePage.status = null;
+                state.createCoursePage.error = undefined;
+            }
+        },
+    },
     extraReducers: (builder) => {
         handleFetchCourses(builder);
         handleFetchCourseDetail(builder);
         handleCreateCourse(builder);
         handleUpdateCourse(builder);
         handleDeleteCourse(builder);
+        handleGetListCategories(builder);
     },
 });
 
+export const { clearErrorStatus } = teacherCourseSlice.actions;
 export default teacherCourseSlice.reducer;

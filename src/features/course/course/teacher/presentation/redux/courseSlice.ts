@@ -10,26 +10,42 @@ import {
 } from './actionHandlings';
 import Category from '../../domain/entities/Category';
 
-
-export interface CourseState {
-    courses: Course[] | undefined,
-    courseDetail: Course | undefined,
+interface CommonState<T> {
+    data: T | undefined,
     status: string | null
     error: string | undefined,
-    categories: Category[] | undefined
 }
-const initialState: CourseState = {
-    courses: undefined,
-    courseDetail: undefined,
+
+export interface CourseState {
+    createCoursePage: CommonState<Category[]>,
+    courseDetailPage: CommonState<Course>,
+    listCoursesPage: CommonState<Course[]>,
+    deactivateCoursePage: CommonState<Course>,
+}
+
+const initCommonState = {
+    data: undefined,
     status: null,
     error: undefined,
-    categories: undefined
+}
+const initialState: CourseState = {
+    courseDetailPage: initCommonState,
+    createCoursePage: initCommonState,
+    listCoursesPage: initCommonState,
+    deactivateCoursePage: initCommonState,
 }
 
 const teacherCourseSlice = createSlice({
     name: 'courses',
     initialState,
-    reducers: {},
+    reducers: {
+        clearErrorStatus(state, action) {
+            if (action.payload == "createCoursePage") {
+                state.createCoursePage.status = null;
+                state.createCoursePage.error = undefined;
+            }
+        },
+    },
     extraReducers: (builder) => {
         handleFetchCourses(builder);
         handleFetchCourseDetail(builder);
@@ -40,4 +56,5 @@ const teacherCourseSlice = createSlice({
     },
 });
 
+export const { clearErrorStatus } = teacherCourseSlice.actions;
 export default teacherCourseSlice.reducer;

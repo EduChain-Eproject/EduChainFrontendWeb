@@ -9,6 +9,7 @@ import {
     GetListCategories,
 } from '../../domain/usecases';
 import CategoryRepositoryImpl from '../../data/repositoryImpl/CategoryRepositoryImpl';
+import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
 
 const courseRepository = new CourseRepositoryImpl();
 const categoryRepository = new CategoryRepositoryImpl();
@@ -28,7 +29,7 @@ export const fetchCourseDetail = createAsyncThunk('courses/fetchCourseDetail', a
     return await getCourseDetailUseCase.execute(courseId);
 });
 
-export const createCourse = createAsyncThunk('courses/createCourse', async (courseData: any) => {
+export const createCourse = createAsyncThunk('courses/createCourse', async (courseData: CreateCourseReq) => {
     const createCourseUseCase = new CreateCourse(courseRepository);
     return await createCourseUseCase.execute(courseData);
 });

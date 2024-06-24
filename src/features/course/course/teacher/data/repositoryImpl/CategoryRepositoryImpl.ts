@@ -17,6 +17,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
             const categories: Category[] = response.map(c => {
                 const cate = new Category();
                 cate.categoryName = c.categoryName;
+                cate.id = c.id;
                 return cate;
             });
 

@@ -7,9 +7,8 @@ import { CategoryDto } from '../models/CategoryDto';
 
 export const apiFetchListCategories: () => Promise<CategoryDto[]> = async () => {
     try {
+        const response = await axiosService.get('/TEACHER/api/category/list');
 
-
-        const response = await axiosService.get('http://localhost:8080/TEACHER/api/category/list');
         return response.data;
     } catch (error) {
         throw new Failure(error.response.data.message, error.response.status);
@@ -36,7 +35,7 @@ export const apiFetchCourseDetail = async (courseId: string) => {
 
 export const apiCreateCourse = async (courseData: CreateCourseReq) => {
     try {
-        const response = await axiosService.post('/courses', courseData);
+        const response = await axiosService.post('/TEACHER/api/course/create', courseData);
         return response.data;
     } catch (error) {
         throw new Failure(error.response.data.message, error.response.status);

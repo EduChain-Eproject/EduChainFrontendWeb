@@ -1,13 +1,10 @@
 import Failure from '../../../../common/types/Failure';
 import { ApiResponse, JwtResponse, LoginReq } from '../../domain/usecases/Login';
 import { RegisterReq, RegisterResponseMessage } from '../../domain/usecases/Register';
-import { logIn, registerUser } from '../dataSources/AuthRemoteDataSource';
+import { logIn, logOut, registerUser } from '../dataSources/AuthRemoteDataSource';
 
 import { AuthRepository } from './../../domain/repositories/AuthRepository';
 class AuthRepositoryImpl implements AuthRepository{
-    onLogout: () => {};
-    onResetPassword: () => {};
-  
     async onLogin(loginRequest: LoginReq): Promise<{ data?: ApiResponse<any>; error?: string }> {
         try {
             const response = await logIn(loginRequest);
@@ -30,7 +27,27 @@ class AuthRepositoryImpl implements AuthRepository{
           }
     }
  
+   async onLogout (email: string): Promise<{ message: RegisterResponseMessage; error?: string | undefined; }>{
+        try{
+            const response = await logOut(email);
+            return {message:response};
+        }
+        catch(error){
+            return {message:error.message||"unknow error"};
+        }
 
+   }
+
+  async sendMailResetPassword(email: string): Promise<{ message: RegisterResponseMessage; error?: string | undefined; }>{
+    try{
+        const response = await logOut(email);
+        return {message:response};
+    }
+    catch(error){
+        return {message:error.message||"unknow error"};
+    }
+
+   };
 }
 
 export default AuthRepositoryImpl;

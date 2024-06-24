@@ -8,6 +8,7 @@ export default class Login {
     }
 }
 
+
 export type LoginReq = {
     email:String;
     password:String;

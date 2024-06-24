@@ -26,3 +26,27 @@ export const registerUser = async (registerRequest:RegisterReq) => {
     throw new Failure(error.response.data.message, error.response.status);
    } 
 }
+
+
+export const logOut = async (email:string) => {
+    try{
+        const response = await axiosService.post(`${baseUrl}logout`,email);
+        console.log(response.data);
+        return response.data;
+    }
+    catch(error){
+        throw new Failure(error.response.data.message, error.response.status);
+    }
+}
+
+export const ResetPasswordForm = async (email:string) => {
+    try{
+        const response = await axiosService.post(`${baseUrl}reset_password`,email);
+        console.log(response.data);
+        return response.data;
+    }
+    catch(error){
+        throw new Failure(error.response.data.message, error.response.status);
+    }
+}
+

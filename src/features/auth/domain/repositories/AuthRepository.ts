@@ -7,9 +7,9 @@ export interface AuthRepository {
     //registers
     onRegister:(registerRequest:RegisterReq) => Promise<{message: RegisterResponseMessage; error?:string}>
     //
-    onLogout:() => {};
+    onLogout:(email:string) => Promise<{message: RegisterResponseMessage; error?:string}>;
     //lấy trang reset password
     //api reset password => lấy token từ url
-    onResetPassword:() => {};
+    sendMailResetPassword:(email:string) =>Promise<{message: RegisterResponseMessage; error?:string}>;
 
 }

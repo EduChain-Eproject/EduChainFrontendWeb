@@ -12,7 +12,6 @@ export const authRoute: RouteObject =
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
     children: [
-        
         loginRoute(),
         registerRoute()
     ],

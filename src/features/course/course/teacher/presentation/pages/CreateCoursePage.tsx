@@ -5,21 +5,33 @@ import { useAppDispatch, useAppSelector } from '../../../../../../common/context
 import { createCourse, fetchListCategories } from '../redux/courseActions';
 import { RouteObject, useNavigate } from 'react-router-dom';
 import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
+import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
 
 export const route: () => RouteObject = () => {
     return {
-        path: "course/create",
+        path: "courses/create",
         element: <CreateCoursePage />
     }
 }
 
+const breadCrumbItems = [
+    {
+        label: "Home", href: "/dashboard/teacher",
+    },
+    {
+        label: "Course by you", href: "/dashboard/teacher/courses",
+    },
+    {
+        label: "Create Course", href: "/dashboard/teacher/course/create",
+    },
+]
+
 const CreateCoursePage: React.FC = () => {
-    const { status, error } = useAppSelector(state => state.courses.teacher);
+    const { status, error } = useAppSelector(state => state.courses.teacher.createCoursePage);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const handleSubmit = (data: CreateCourseReq) => {
-        // Convert the categoryIds object to an array
         const categoryIds = Object.keys(data.categoryIds)
             .filter((key) => data.categoryIds[key])
             .map((key) => parseInt(key, 10));
@@ -42,7 +54,7 @@ const CreateCoursePage: React.FC = () => {
 
     return (
         <div>
-            <h1>Create Course</h1>
+            <AppBreadcrumb items={breadCrumbItems} />
             <CourseForm onSubmit={handleSubmit} />
         </div>
     );

@@ -1,41 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Course from '../../domain/entities/Course';
-import { useAppSelector } from '../../../../../../common/context/store';
-import Category from '../../domain/entities/Category';
-import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { clearErrorStatus } from '../redux/courseSlice';
+import { UpdateCourseReq } from '../../domain/usecases/UpdateCourse';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
+import Course from '../../domain/entities/Course';
 
-interface CourseFormProps {
-    initialData?: CreateCourseReq;
-    onSubmit: (data: CreateCourseReq) => void;
+interface CourseFormUpdateProps {
+    onSubmit: (data: UpdateCourseReq) => void;
 }
 
-const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const categories: Category[] | undefined = useAppSelector(
-        (state) => state.courses.teacher.createCoursePage.data
-    );
-    const { status, error } = useAppSelector(state => state.courses.teacher.createCoursePage);
+const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
+    const dispatch = useAppDispatch();
+    const { data: courseData } = useAppSelector((state) => state.courses.teacher.courseDetailPage);
+    const { data: listCategories } = useAppSelector((state) => state.courses.teacher.createCoursePage);
 
-    const { register, handleSubmit, reset, control } = useForm<CreateCourseReq>({
-        defaultValues: initialData || {},
+    const { register, handleSubmit, reset, control } = useForm<UpdateCourseReq>({
+        defaultValues: courseData || {},
     });
 
-    useEffect(() => {
-        if (initialData) {
-            reset(initialData);
-        }
-    }, [initialData, reset]);
+    const { status, error } = useAppSelector(state => state.courses.teacher.updateCoursePage);
 
     useEffect(() => {
-        if (status === 'create course succeeded') {
-            navigate('/teacher/courses');
+        if (courseData) {
+            reset(courseData);
         }
-    }, [status, navigate]);
+    }, [courseData, reset]);
+
+    useEffect(() => {
+        if (status === 'update course succeeded') {
+            // Handle successful update
+        }
+    }, [status]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -45,7 +40,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
                     <button
                         type="button"
                         className="ml-2 text-blue-500 hover:underline"
-                        onClick={() => dispatch(clearErrorStatus("createCoursePage"))}
+                        onClick={() => dispatch(clearErrorStatus("updateCoursePage"))}
                     >
                         Clear error
                     </button>
@@ -86,15 +81,16 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
             <div>
                 <label className="block font-medium text-meta-4 text-2xl">Categories</label>
                 <div className="mt-2 space-y-2">
-                    {categories?.map((cate) => (
-                        <div key={cate.categoryName} className="flex items-center">
+                    {listCategories?.map((cate) => (
+                        <div key={cate.id} className="flex items-center">
                             <Controller
                                 name={`categoryIds.${cate.id}`}
                                 control={control}
-                                // defaultValue={false}
+                                defaultValue={listCategories && listCategories[0].id}
                                 render={({ field }) => (
                                     <input
                                         type="checkbox"
+                                        defaultChecked={courseData?.categories?.some(c => c.id == cate.id || false)}
                                         {...field}
                                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
@@ -117,4 +113,4 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
     );
 };
 
-export default CourseForm;
+export default CourseFormUpdate;

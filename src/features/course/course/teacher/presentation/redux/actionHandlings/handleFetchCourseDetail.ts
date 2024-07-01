@@ -5,20 +5,20 @@ import { fetchCourseDetail } from '../courseActions';
 const handleFetchCourseDetail = (builder: ActionReducerMapBuilder<CourseState>) => {
     builder
         .addCase(fetchCourseDetail.pending, (state) => {
-            state.status = 'loading';
+            state.courseDetailPage.status = 'loading';
         })
         .addCase(fetchCourseDetail.fulfilled, (state, action) => {
             if (action.payload.error) {
-                state.status = 'failed';
-                state.error = action.payload.error;
+                state.courseDetailPage.status = 'failed';
+                state.courseDetailPage.error = action.payload.error;
             } else {
-                state.status = 'succeeded';
-                state.courseDetail = action.payload.data;
+                state.courseDetailPage.status = 'succeeded';
+                state.courseDetailPage.data = action.payload.data;
             }
         })
         .addCase(fetchCourseDetail.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
+            state.courseDetailPage.status = 'failed';
+            state.courseDetailPage.error = action.error.message;
         });
 };
 

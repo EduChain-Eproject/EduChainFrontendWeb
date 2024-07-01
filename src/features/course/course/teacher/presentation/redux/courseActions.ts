@@ -4,12 +4,12 @@ import {
     GetCourseDetail,
     UpdateCourse,
     CreateCourse,
-    GetCourses,
-    DeleteCourse,
+    DeactivateCourse,
     GetListCategories,
 } from '../../domain/usecases';
 import CategoryRepositoryImpl from '../../data/repositoryImpl/CategoryRepositoryImpl';
 import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
+import GetCoursesByTeacher, { GetCoursesByTeacherRequest } from '../../domain/usecases/GetCoursesByTeacher';
 
 const courseRepository = new CourseRepositoryImpl();
 const categoryRepository = new CategoryRepositoryImpl();
@@ -19,12 +19,7 @@ export const fetchListCategories = createAsyncThunk('courses/fetchListCategories
     return await getListCateoriesUseCase.execute();
 });
 
-export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
-    const getCoursesUseCase = new GetCourses(courseRepository);
-    return await getCoursesUseCase.execute();
-});
-
-export const fetchCourseDetail = createAsyncThunk('courses/fetchCourseDetail', async (courseId: string) => {
+export const fetchCourseDetail = createAsyncThunk('courses/fetchCourseDetail', async (courseId: number) => {
     const getCourseDetailUseCase = new GetCourseDetail(courseRepository);
     return await getCourseDetailUseCase.execute(courseId);
 });
@@ -34,12 +29,21 @@ export const createCourse = createAsyncThunk('courses/createCourse', async (cour
     return await createCourseUseCase.execute(courseData);
 });
 
-export const updateCourse = createAsyncThunk('courses/updateCourse', async ({ courseId, courseData }: { courseId: string, courseData: any }) => {
+export const updateCourse = createAsyncThunk('courses/updateCourse', async ({ courseId, courseData }: { courseId: number, courseData: any }) => {
     const updateCourseUseCase = new UpdateCourse(courseRepository);
     return await updateCourseUseCase.execute(courseId, courseData);
 });
 
-export const deleteCourse = createAsyncThunk('courses/deleteCourse', async (courseId: string) => {
-    const deleteCourseUseCase = new DeleteCourse(courseRepository);
-    return await deleteCourseUseCase.execute(courseId);
+export const deactivateCourse = createAsyncThunk('courses/DeactivateCourse', async (courseId: number) => {
+    const DeactivateCourseUseCase = new DeactivateCourse(courseRepository);
+    return await DeactivateCourseUseCase.execute(courseId);
 });
+
+
+export const fetchCoursesByTeacher = createAsyncThunk(
+    'courses/fetchCoursesByTeacher',
+    async (request: GetCoursesByTeacherRequest) => {
+        const getCoursesByTeacher = new GetCoursesByTeacher(courseRepository);
+        return await getCoursesByTeacher.execute(request);
+    }
+);

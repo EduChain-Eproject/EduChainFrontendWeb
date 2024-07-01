@@ -1,16 +1,16 @@
-import GetCourses from "./GetCourses";
+import GetCoursesByTeacher from "./GetCoursesByTeacher";
 import CreateCourse from "./CreateCourse";
 import UpdateCourse from "./UpdateCourse";
 import GetCourseDetail from "./GetCourseDetail";
-import DeleteCourse from "./DeleteCourse";
+import DeactivateCourse from "./DeactivateCourse";
 import GetListCategories from "./GetListCategories";
 
 export {
     GetCourseDetail,
     UpdateCourse,
     CreateCourse,
-    GetCourses,
+    GetCoursesByTeacher,
     GetListCategories,
-    DeleteCourse,
+    DeactivateCourse,
 
 }

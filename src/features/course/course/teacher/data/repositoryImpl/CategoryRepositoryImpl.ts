@@ -5,7 +5,7 @@ import { CategoryRepository } from '../../domain/repositories/CategoryRepository
 import { CourseRepository } from '../../domain/repositories/CourseRepository';
 import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
 import { UpdateCourseReq } from '../../domain/usecases/UpdateCourse';
-import { apiFetchCourses, apiFetchCourseDetail, apiCreateCourse, apiUpdateCourse, apiDeleteCourse, apiFetchListCategories } from '../dataSources/courseRemoteDataSource';
+import { apiFetchListCategories } from '../dataSources/courseRemoteDataSource';
 
 class CategoryRepositoryImpl implements CategoryRepository {
 

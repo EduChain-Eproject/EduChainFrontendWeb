@@ -2,22 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Course from '../../domain/entities/Course';
 import {
     handleUpdateCourse,
-    handleFetchCourses,
     handleFetchCourseDetail,
-    handleDeleteCourse,
+    handleDeactivateCourse,
     handleCreateCourse,
     handleGetListCategories,
 } from './actionHandlings';
 import Category from '../../domain/entities/Category';
+import { CommonState } from '../../../../../../common/state';
+import handleGetCourseByTeacher from './actionHandlings/handleGetCourseByTeacher';
 
-interface CommonState<T> {
-    data: T | undefined,
-    status: string | null
-    error: string | undefined,
-}
 
 export interface CourseState {
     createCoursePage: CommonState<Category[]>,
+    updateCoursePage: CommonState<Category[]>,
     courseDetailPage: CommonState<Course>,
     listCoursesPage: CommonState<Course[]>,
     deactivateCoursePage: CommonState<Course>,
@@ -33,6 +30,7 @@ const initialState: CourseState = {
     createCoursePage: initCommonState,
     listCoursesPage: initCommonState,
     deactivateCoursePage: initCommonState,
+    updateCoursePage: initCommonState
 }
 
 const teacherCourseSlice = createSlice({
@@ -47,12 +45,12 @@ const teacherCourseSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        handleFetchCourses(builder);
         handleFetchCourseDetail(builder);
         handleCreateCourse(builder);
         handleUpdateCourse(builder);
-        handleDeleteCourse(builder);
+        handleDeactivateCourse(builder);
         handleGetListCategories(builder);
+        handleGetCourseByTeacher(builder);
     },
 });
 

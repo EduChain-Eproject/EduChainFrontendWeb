@@ -2,8 +2,10 @@ import axiosService from '../../../../../../common/services/axiosService'
 import Failure from '../../../../../../common/types/Failure';
 import Course from '../../domain/entities/Course';
 import { CreateCourseReq } from '../../domain/usecases/CreateCourse';
+import { GetCoursesByTeacherRequest } from '../../domain/usecases/GetCoursesByTeacher';
 import { UpdateCourseReq } from '../../domain/usecases/UpdateCourse';
 import { CategoryDto } from '../models/CategoryDto';
+import { CourseDto } from '../models/CourseDto';
 
 export const apiFetchListCategories: () => Promise<CategoryDto[]> = async () => {
     try {
@@ -15,25 +17,32 @@ export const apiFetchListCategories: () => Promise<CategoryDto[]> = async () => 
     }
 }
 
-export const apiFetchCourses: () => Promise<Course[]> = async () => {
+export const apiFetchCourseDetail: (courseId: number) => Promise<CourseDto> = async (
+    courseId: number
+) => {
     try {
-        const response = await axiosService.get('/courses');
+        const response = await axiosService.get(`/TEACHER/api/course/${courseId}`);
         return response.data;
     } catch (error) {
         throw new Failure(error.response.data.message, error.response.status);
     }
 };
 
-export const apiFetchCourseDetail = async (courseId: string) => {
+export const apiGetCoursesByTeacher = async (
+    request: GetCoursesByTeacherRequest
+): Promise<CourseDto[]> => {
     try {
-        const response = await axiosService.get(`/courses/${courseId}`);
-        return response.data;
+        const response = await axiosService.post(`/TEACHER/api/course/list`, request);
+
+        return response.data.content;
     } catch (error) {
         throw new Failure(error.response.data.message, error.response.status);
     }
 };
 
-export const apiCreateCourse = async (courseData: CreateCourseReq) => {
+export const apiCreateCourse = async (
+    courseData: CreateCourseReq
+): Promise<CourseDto> => {
     try {
         const response = await axiosService.post('/TEACHER/api/course/create', courseData);
         return response.data;
@@ -42,19 +51,23 @@ export const apiCreateCourse = async (courseData: CreateCourseReq) => {
     }
 };
 
-export const apiUpdateCourse = async (courseId: string, courseData: UpdateCourseReq) => {
+export const apiUpdateCourse = async (
+    courseId: number,
+    courseData: UpdateCourseReq
+): Promise<CourseDto> => {
     try {
-        const response = await axiosService.put(`/courses/${courseId}`, courseData);
+        const response = await axiosService.put(`/TEACHER/api/course/update/${courseId}`, courseData);
         return response.data;
     } catch (error) {
         throw new Failure(error.response.data.message, error.response.status);
     }
 };
 
-export const apiDeleteCourse = async (courseId: string) => {
+export const apiDeactivateCourse = async (
+    courseId: number
+): Promise<void> => {
     try {
-        const response = await axiosService.delete(`/courses/${courseId}`);
-        return response.data;
+        await axiosService.delete(`/TEACHER/api/course/deactivate/${courseId}`);
     } catch (error) {
         throw new Failure(error.response.data.message, error.response.status);
     }

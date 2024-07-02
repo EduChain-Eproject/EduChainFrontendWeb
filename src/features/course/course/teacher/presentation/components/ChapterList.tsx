@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chapter from '../../domain/entities/Chapter';
-import { useAppDispatch } from '../../../../../../common/context/store';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
+import { useNavigate } from 'react-router-dom';
+import { deleteChapter } from '../../../../chapter/teacher/presentation/redux/courseActions';
+import { courseChaperDeleted } from '../redux/courseSlice';
 
 interface ChapterListProps {
     chapters: Chapter[] | undefined;
@@ -9,20 +12,29 @@ interface ChapterListProps {
 
 const ChapterList: React.FC<ChapterListProps> = ({ chapters, courseId }) => {
     const dispatch = useAppDispatch();
+    const nagivate = useNavigate()
+    const { data: deletedChapterId } = useAppSelector((state) => state.chapters.teacher.deleteChapterPage);
+
+    useEffect(() => {
+        dispatch(courseChaperDeleted(deletedChapterId))
+    }, [deletedChapterId])
 
     const handleUpdate = (chapterId: number) => {
-
+        nagivate(`/dashboard/teacher/chapters/update/${chapterId}`)
     };
 
     const handleDelete = (chapterId: number) => {
-        // dispatch(deleteChapter({ courseId, chapterId }));
+        dispatch(deleteChapter(chapterId));
     };
 
     return (
         <div className="h-64 overflow-y-auto border p-2">
             {chapters && chapters.map((chapter) => (
                 <div key={chapter.id} className="flex justify-between items-center border-b last:border-b-0 py-2">
-                    <span className="text-gray-700">{chapter.chapterTitle}</span>
+                    <span className="text-gray-700"
+                        onClick={() =>
+                            nagivate(`/dashboard/teacher/chapters/${chapter.id}`)}
+                    >{chapter.chapterTitle}</span>
                     <div>
                         <button
                             onClick={() => handleUpdate(chapter.id)}

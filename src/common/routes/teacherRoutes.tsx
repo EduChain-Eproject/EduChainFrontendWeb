@@ -3,6 +3,7 @@ import { DashboardTeacherLayout } from "../layouts";
 import { ErrorPage } from "../pages";
 import React from "react";
 import { createCourseRoute, getCourseDetailRoute, getCoursesRoute, updateCourseRoute } from "../../features/course/course/teacher/presentation/pages/index";
+import { getChapterCreateRoute, getChapterDetailRoute, getChapterUpdateRoute } from "../../features/course/chapter/teacher/presentation/pages";
 
 export const teacherRoutes: RouteObject = {
     path: "dashboard/teacher",
@@ -13,5 +14,10 @@ export const teacherRoutes: RouteObject = {
         getCourseDetailRoute(),
         createCourseRoute(),
         updateCourseRoute(),
+
+        // chapters
+        getChapterDetailRoute(),
+        getChapterUpdateRoute(),
+        getChapterCreateRoute()
     ]
 }

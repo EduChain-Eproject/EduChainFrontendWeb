@@ -43,6 +43,18 @@ const teacherCourseSlice = createSlice({
                 state.createCoursePage.error = undefined;
             }
         },
+        courseChaperDeleted(state, action) {
+            const deletedChapterId = action.payload;
+            if (state.courseDetailPage.data?.chapters) {
+                const filteredChapters = state.courseDetailPage.data.chapters.filter(
+                    ch => ch.id !== deletedChapterId
+                );
+                state.courseDetailPage.data = {
+                    ...state.courseDetailPage.data,
+                    chapters: filteredChapters
+                }
+            }
+        }
     },
     extraReducers: (builder) => {
         handleFetchCourseDetail(builder);
@@ -54,5 +66,5 @@ const teacherCourseSlice = createSlice({
     },
 });
 
-export const { clearErrorStatus } = teacherCourseSlice.actions;
+export const { clearErrorStatus, courseChaperDeleted } = teacherCourseSlice.actions;
 export default teacherCourseSlice.reducer;

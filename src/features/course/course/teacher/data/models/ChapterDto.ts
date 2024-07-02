@@ -1,4 +1,4 @@
-export class ChapterDto {
+export class ChapterDTO {
     id: number;
     chapterTitle: string;
 }

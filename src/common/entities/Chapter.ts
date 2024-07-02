@@ -4,6 +4,6 @@ import { Lesson } from "./Lesson";
 export class Chapter {
     id: number;
     chapterTitle: string;
-    courses: Course
+    course: Course
     lessons: Lesson[] | undefined
 }

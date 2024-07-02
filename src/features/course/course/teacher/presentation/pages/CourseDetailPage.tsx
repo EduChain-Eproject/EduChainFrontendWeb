@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import CourseDetail from '../components/CourseDetail';
-import { RouteObject, useParams } from 'react-router-dom';
+import { RouteObject, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
 import { deactivateCourse, fetchCourseDetail } from '../redux/courseActions';
 import CourseInfo from '../components/CourseInfo'
 import CategoryList from '../components/CategoryList'
 import ChapterList from '../components/ChapterList'
 import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
-
-
 
 export const route: () => RouteObject = () => {
 
@@ -21,6 +19,7 @@ export const route: () => RouteObject = () => {
 const CourseDetailPage: React.FC = () => {
     const { courseId } = useParams<{ courseId: string }>();
     const dispatch = useAppDispatch();
+    const nagivate = useNavigate();
     const { data, status, error } = useAppSelector((state) => state.courses.teacher.courseDetailPage);
 
     const breadCrumbItems = [
@@ -56,9 +55,8 @@ const CourseDetailPage: React.FC = () => {
     };
 
     const handleCreateChapter = () => {
-
+        nagivate(`/dashboard/teacher/chapters/course/${courseId}/create/`);
     };
-
 
     return (
         <div>

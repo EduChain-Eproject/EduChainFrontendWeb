@@ -1,14 +1,19 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from '../../features/auth/presentation/redux/authSlice';
+
 import teacherCourseSlice from '../../features/course/course/teacher/presentation/redux/courseSlice'
 import teacherChapterSlice from '../../features/course/chapter/teacher/presentation/redux/courseSlice'
 import teacherLessonSlice from '../../features/course/lesson/teacher/presentation/redux/lessonSlice'
+
+import studentCourseSlice from '../../features/course/course/student/presentation/redux/courseSlice'
+
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
 import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
 
 const courses = combineReducers({
-    teacher: teacherCourseSlice
+    teacher: teacherCourseSlice,
+    student: studentCourseSlice,
 });
 
 const chapters = combineReducers({

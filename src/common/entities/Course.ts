@@ -1,5 +1,6 @@
 import { Category } from "./Category";
 import { Chapter } from "./Chapter";
+import CourseFeedback from './CourseFeedback';
 
 export default class Course {
     id: number;
@@ -10,4 +11,9 @@ export default class Course {
 
     categories: Category[] | undefined
     chapters: Chapter[] | undefined
+
+    numberOfEnrolledStudents: number | undefined
+    courseFeedbacks: CourseFeedback[] | undefined
+
+    relatedCourses: Course[] | undefined
 }

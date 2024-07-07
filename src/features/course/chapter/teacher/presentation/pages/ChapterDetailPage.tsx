@@ -5,6 +5,7 @@ import { deleteChapter, getChapterDetail } from "../redux/courseActions";
 import React from "react";
 import LessonList from '../components/LessonList'
 import AppBreadcrumb from "../../../../../../common/components/Breadcrumbs/AppBreadcrumb";
+import { deleteLesson } from "../../../../lesson/teacher/presentation/redux/lessonActions";
 
 export const route: () => RouteObject = () => {
     return {
@@ -34,7 +35,9 @@ const ChapterDetailPage: React.FC = () => {
     };
 
     const handleDeleteLesson = (lessonId: number) => {
-        // Implement delete lesson logic
+        if (window.confirm('Are you sure you want to delete this lesson?')) {
+            dispatch(deleteLesson(Number(lessonId)));
+        }
     };
 
     const handleUpdateChapter = () => {
@@ -95,6 +98,7 @@ const ChapterDetailPage: React.FC = () => {
                         onLessonClick={handleLessonClick}
                         onUpdateLesson={handleUpdateLesson}
                         onDeleteLesson={handleDeleteLesson}
+                        onCreateClick={() => navigate(`/dashboard/teacher/lessons/create/chapters/${chapterId}/`)}
                     />
                 </div>
             )}

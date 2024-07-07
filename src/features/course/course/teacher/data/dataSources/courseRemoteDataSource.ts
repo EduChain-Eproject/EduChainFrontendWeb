@@ -9,7 +9,7 @@ import { CourseDto } from '../models/CourseDto';
 
 export const apiFetchListCategories: () => Promise<CategoryDto[]> = async () => {
     try {
-        const response = await axiosService.get('/TEACHER/api/category/list');
+        const response = await axiosService.get('/COMMON/api/category/list');
 
         return response.data;
     } catch (error) {

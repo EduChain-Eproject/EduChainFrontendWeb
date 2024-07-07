@@ -3,8 +3,8 @@ import { DashboardTeacherLayout } from "../layouts";
 import { ErrorPage } from "../pages";
 import React from "react";
 import { createCourseRoute, getCourseDetailRoute, getCoursesRoute, updateCourseRoute } from "../../features/course/course/teacher/presentation/pages/index";
-import { getChapterCreateRoute, getChapterDetailRoute, getChapterUpdateRoute } from "../../features/course/chapter/teacher/presentation/pages";
-import { getLessonDetailRoute } from "../../features/course/lesson/teacher/presentation/pages";
+import { creatChapterRoute, getChapterDetailRoute, updateChapterRoute } from "../../features/course/chapter/teacher/presentation/pages";
+import { createLessonRoute, getLessonDetailRoute, updateLessonRoute } from "../../features/course/lesson/teacher/presentation/pages";
 
 export const teacherRoutes: RouteObject = {
     path: "dashboard/teacher",
@@ -18,10 +18,12 @@ export const teacherRoutes: RouteObject = {
 
         // chapters
         getChapterDetailRoute(),
-        getChapterUpdateRoute(),
-        getChapterCreateRoute(),
+        updateChapterRoute(),
+        creatChapterRoute(),
 
         // lessons
-        getLessonDetailRoute()
+        getLessonDetailRoute(),
+        updateLessonRoute(),
+        createLessonRoute()
     ]
 }

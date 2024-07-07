@@ -1,9 +1,9 @@
 import { route as getChapterDetailRoute } from "./ChapterDetailPage"
-import { route as getChapterUpdateRoute } from "./UpdateChapterPage"
-import { route as getChapterCreateRoute } from "./ChapterCreatePage"
+import { route as updateChapterRoute } from "./UpdateChapterPage"
+import { route as creatChapterRoute } from "./ChapterCreatePage"
 
 export {
     getChapterDetailRoute,
-    getChapterUpdateRoute,
-    getChapterCreateRoute
+    updateChapterRoute,
+    creatChapterRoute
 }

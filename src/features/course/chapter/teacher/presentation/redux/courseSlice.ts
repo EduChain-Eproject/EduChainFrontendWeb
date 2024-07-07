@@ -22,7 +22,18 @@ const teacherChapterSlice = createSlice({
     name: 'chapters',
     initialState,
     reducers: {
-
+        lessonDeleted(state, action) {
+            const deletedLessonId = action.payload;
+            if (state.chapterDetailPage.data?.lessons) {
+                const filteredLessons = state.chapterDetailPage.data.lessons.filter(
+                    lesson => lesson.id !== deletedLessonId
+                );
+                state.chapterDetailPage.data = {
+                    ...state.chapterDetailPage.data,
+                    lessons: filteredLessons
+                }
+            }
+        }
     },
     extraReducers: (builder) => {
         handleGetChapterDetail(builder);
@@ -32,4 +43,5 @@ const teacherChapterSlice = createSlice({
     },
 });
 
+export const { lessonDeleted } = teacherChapterSlice.actions;
 export default teacherChapterSlice.reducer;

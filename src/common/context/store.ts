@@ -8,11 +8,14 @@ import teacherLessonSlice from '../../features/course/lesson/teacher/presentatio
 
 import studentCourseSlice from '../../features/course/course/student/presentation/redux/courseSlice'
 
+import censorCourseSlice from '../../features/course/course/censor/presentation/redux/courseSlice'
+
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
 import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
 
 const courses = combineReducers({
     teacher: teacherCourseSlice,
+    censor: censorCourseSlice,
     student: studentCourseSlice,
 });
 

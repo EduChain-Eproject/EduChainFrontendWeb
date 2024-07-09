@@ -72,11 +72,11 @@ const CoursesListPage: React.FC = () => {
             />
             <CourseList
                 courses={data?.courses?.content || []}
+                totalPages={data?.courses?.totalPages || 0}
+                currentPage={page}
                 onViewCourseDetail={(courseId) => {
                     // Handle view course detail action
                 }}
-                totalPages={data?.courses?.totalPages || 0}
-                currentPage={page}
                 onPageChange={handlePageChange}
             />
         </div>

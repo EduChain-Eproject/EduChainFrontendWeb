@@ -13,8 +13,6 @@ const RoleCheckerHOC = <P extends object>(
             return <Navigate to="/login" />;
         }
 
-        console.log(user);
-
         if (user.role !== requiredRole) {
             return <Navigate to="/unauthorized" />;
         }

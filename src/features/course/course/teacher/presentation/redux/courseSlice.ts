@@ -1,39 +1,70 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import CourseRepositoryImpl from '../../data/repositoryImpl/CourseRepositoryImpl';
 import Course from '../../domain/entities/Course';
 import {
     handleUpdateCourse,
-    handleFetchCourses,
     handleFetchCourseDetail,
-    handleDeleteCourse,
+    handleDeactivateCourse,
     handleCreateCourse,
+    handleGetListCategories,
 } from './actionHandlings';
+import Category from '../../domain/entities/Category';
+import { CommonState } from '../../../../../../common/state';
+import handleGetCourseByTeacher from './actionHandlings/handleGetCourseByTeacher';
 
 
 export interface CourseState {
-    courses: Course[] | undefined,
-    courseDetail: Course | undefined,
-    status: string | null
-    error: string | undefined
+    createCoursePage: CommonState<Category[]>,
+    updateCoursePage: CommonState<Category[]>,
+    courseDetailPage: CommonState<Course>,
+    listCoursesPage: CommonState<Course[]>,
+    deactivateCoursePage: CommonState<Course>,
+}
+
+const initCommonState = {
+    data: undefined,
+    status: null,
+    error: undefined,
 }
 const initialState: CourseState = {
-    courses: undefined,
-    courseDetail: undefined,
-    status: null,
-    error: undefined
+    courseDetailPage: initCommonState,
+    createCoursePage: initCommonState,
+    listCoursesPage: initCommonState,
+    deactivateCoursePage: initCommonState,
+    updateCoursePage: initCommonState
 }
 
 const teacherCourseSlice = createSlice({
     name: 'courses',
     initialState,
-    reducers: {},
+    reducers: {
+        clearErrorStatus(state, action) {
+            if (action.payload == "createCoursePage") {
+                state.createCoursePage.status = null;
+                state.createCoursePage.error = undefined;
+            }
+        },
+        courseChaperDeleted(state, action) {
+            const deletedChapterId = action.payload;
+            if (state.courseDetailPage.data?.chapters) {
+                const filteredChapters = state.courseDetailPage.data.chapters.filter(
+                    ch => ch.id !== deletedChapterId
+                );
+                state.courseDetailPage.data = {
+                    ...state.courseDetailPage.data,
+                    chapters: filteredChapters
+                }
+            }
+        }
+    },
     extraReducers: (builder) => {
-        handleFetchCourses(builder);
         handleFetchCourseDetail(builder);
         handleCreateCourse(builder);
         handleUpdateCourse(builder);
-        handleDeleteCourse(builder);
+        handleDeactivateCourse(builder);
+        handleGetListCategories(builder);
+        handleGetCourseByTeacher(builder);
     },
 });
 
+export const { clearErrorStatus, courseChaperDeleted } = teacherCourseSlice.actions;
 export default teacherCourseSlice.reducer;

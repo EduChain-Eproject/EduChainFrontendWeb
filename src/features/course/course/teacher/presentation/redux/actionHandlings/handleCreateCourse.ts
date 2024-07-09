@@ -5,20 +5,20 @@ import { createCourse } from '../courseActions';
 const handleCreateCourse = (builder: ActionReducerMapBuilder<CourseState>) => {
     builder
         .addCase(createCourse.pending, (state) => {
-            state.status = 'loading';
+            state.createCoursePage.status = 'loading';
         })
         .addCase(createCourse.fulfilled, (state, action) => {
             if (action.payload.error) {
-                state.status = 'failed';
-                state.error = action.payload.error;
+                state.createCoursePage.status = 'create course failed';
+                state.createCoursePage.error = action.payload.error;
             } else {
-                state.status = 'succeeded';
-                action.payload.data && state.courses?.push(action.payload.data);
+                state.createCoursePage.status = 'create course succeeded';
+                action.payload.data && state.listCoursesPage.data?.push(action.payload.data);
             }
         })
         .addCase(createCourse.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
+            state.createCoursePage.status = 'failed';
+            state.createCoursePage.error = action.error.message;
         });
 };
 

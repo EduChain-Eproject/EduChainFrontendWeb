@@ -1,13 +1,17 @@
 import { CourseRepository } from '../repositories/CourseRepository';
 
+
 export default class UpdateCourse {
     constructor(private courseRepository: CourseRepository) { }
 
-    async execute(courseId: string, courseData: UpdateCourseReq) {
+    async execute(courseId: number, courseData: UpdateCourseReq) {
         return await this.courseRepository.updateCourse(courseId, courseData);
     }
 }
 
 export type UpdateCourseReq = {
-
-}
+    title: string;
+    description: string;
+    price: number;
+    categoryIds: number[];
+};

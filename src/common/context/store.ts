@@ -12,6 +12,7 @@ import censorCourseSlice from '../../features/course/course/censor/presentation/
 
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
 import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
+import homeSlice from '../../features/homepage/data/redux/homeSlice';
 
 const courses = combineReducers({
     teacher: teacherCourseSlice,
@@ -29,6 +30,7 @@ const lessons = combineReducers({
 
 
 const rootReducer = combineReducers({
+    home: homeSlice,
     auth: authReducer,
     courses: courses,
     blogs: blogSlice,

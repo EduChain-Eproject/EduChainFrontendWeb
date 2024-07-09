@@ -18,6 +18,7 @@ export const route: () => RouteObject = () => {
 
 const CoursesListPage: React.FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate()
     const { data, status, error } = useAppSelector((state) => state.courses.student.listCoursesPage);
 
     const [search, setSearch] = useState('');
@@ -47,8 +48,8 @@ const CoursesListPage: React.FC = () => {
     }
 
     const breadCrumbItems = [
-        { label: "Home", href: "/dashboard/student" },
-        { label: "Courses", href: "/dashboard/student/courses" },
+        { label: "Home", href: "" },
+        { label: "Courses", href: "/courses" },
     ];
 
     const handlePageChange = (newPage: number) => {
@@ -75,7 +76,7 @@ const CoursesListPage: React.FC = () => {
                 totalPages={data?.courses?.totalPages || 0}
                 currentPage={page}
                 onViewCourseDetail={(courseId) => {
-                    // Handle view course detail action
+                    navigate(`/courses/${courseId}`)
                 }}
                 onPageChange={handlePageChange}
             />

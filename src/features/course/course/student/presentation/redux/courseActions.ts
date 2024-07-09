@@ -32,7 +32,6 @@ export const fetchCourseDetail = createAsyncThunk(
     }
 );
 
-
 export const fetchLessonDetail = createAsyncThunk(
     'lessons/fetchLessonDetail',
     async (lessonId: number) => {

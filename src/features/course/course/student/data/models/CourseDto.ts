@@ -15,4 +15,6 @@ export class CourseDto {
     // participatedUserDtos:  UserDto[] | undefined
     courseFeedbackDtos: CourseFeedbackDto[] | undefined
     relatedCourseDtos: CourseDto[] | undefined
+
+    enrolled?: boolean
 }

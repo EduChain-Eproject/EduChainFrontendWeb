@@ -22,20 +22,26 @@ const ResetPasswordForm:React.FC<ResetPasswordFormPorps> = ({
     
 return(
     <div>
-            <form action="/submit" method="post">
-        <div>
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" required/>
-        </div>
-        <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" required/>
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>       
-    </div>
+    <form id="resetPasswordForm" onSubmit={handleSubmit(onSubmit)}>
+<div className="form-group">
+    <label htmlFor="email">Email</label>
+    <input type="email" id="email" 
+    {...register('email', { required: true })} />
+</div>
+<div className="form-group">
+    <label htmlFor="newPassword">New Password</label>
+    <input type="password" id="newPassword" {...register('password', { required: true })}  required/>
+</div>
+<div className="form-group">
+    <label htmlFor="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required/>
+</div>
+<button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Submit</button>
+<div className="error" id="error"></div>
+</form>
+
+</div>
 );
 }
 
+export default ResetPasswordForm;

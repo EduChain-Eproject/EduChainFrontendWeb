@@ -1,3 +1,5 @@
 import {route as loginRoute } from './LoginPage'
 import {route as registerRoute } from './RegisterPage'
-export {loginRoute,registerRoute}
+import {route as resetPasswordRoute } from './ResetPasswordPage'
+
+export {loginRoute,registerRoute, resetPasswordRoute}

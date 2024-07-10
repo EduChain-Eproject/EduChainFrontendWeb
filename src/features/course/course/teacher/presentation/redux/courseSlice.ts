@@ -9,12 +9,7 @@ import {
     handleGetListCategories,
 } from './actionHandlings';
 import Category from '../../domain/entities/Category';
-
-interface CommonState<T> {
-    data: T | undefined,
-    status: string | null
-    error: string | undefined,
-}
+import { CommonState, initCommonState } from '../../../../../../common/state';
 
 export interface CourseState {
     createCoursePage: CommonState<Category[]>,
@@ -23,11 +18,7 @@ export interface CourseState {
     deactivateCoursePage: CommonState<Course>,
 }
 
-const initCommonState = {
-    data: undefined,
-    status: null,
-    error: undefined,
-}
+
 const initialState: CourseState = {
     courseDetailPage: initCommonState,
     createCoursePage: initCommonState,

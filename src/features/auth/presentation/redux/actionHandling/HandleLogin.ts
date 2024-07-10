@@ -5,19 +5,19 @@ import { logInAction } from "../AuthAction";
 const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) =>{
     builder.addCase(logInAction.pending,
         (state) => {
-            state.status = 'loading';
+            state.logInPage.status = 'loading';
         }
     )
     .addCase(logInAction.fulfilled,(state,action)=> {
         if (action.payload.error) {
-            state.status = 'failed';
-            state.error = action.payload.error;
+            state.logInPage.status = 'failed';
+            state.logInPage.error = action.payload.error;
             console.log(action.payload.error);
             return;
         } else {
-            state.status = 'succeeded';
-            console.log(action.payload.data)
+            state.logInPage.status = 'login succeeded';
             if (action.payload.data) {
+                state.isAuthenticated = true;
                 localStorage.setItem('accessToken', action.payload.data.object.accessToken.toString());
                 localStorage.setItem('refreshToken', action.payload.data.object.refreshToken.toString());
             }

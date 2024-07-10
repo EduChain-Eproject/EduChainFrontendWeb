@@ -4,24 +4,29 @@ import authReducer from '../../features/auth/presentation/redux/authSlice';
 import teacherCourseSlice from '../../features/course/course/teacher/presentation/redux/courseSlice'
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
 import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
+import UserProfileSlice from '../../features/userprofile/presentation/redux/UserProfileSlice';
+import UserInterestSlice from '../../features/user_interest/presentation/redux/UserInterestSlice';
+
 // import userReducer from './features/user/presentation/redux/userSlice';
 // import adminReducer from './features/admin/presentation/redux/adminSlice';
 // import teacherReducer from './features/teacher/presentation/redux/teacherSlice';
 // import censorReducer from './features/censor/presentation/redux/censorSlice';
 
 const courses = combineReducers({
-    teacher: teacherCourseSlice
+  teacher: teacherCourseSlice,
 });
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    courses: courses,
-    blogs: blogSlice,
-    cates: cateSlice
-    // user: userReducer,
-    // admin: adminReducer,
-    // teacher: teacherReducer,
-    // censor: censorReducer,
+  auth: authReducer,
+  courses: courses,
+  blogs: blogSlice,
+  cates: cateSlice,
+  userProfile: UserProfileSlice,
+  userInterest: UserInterestSlice,
+  // user: userReducer,
+  // admin: adminReducer,
+  // teacher: teacherReducer,
+  // censor: censorReducer,
 });
 
 

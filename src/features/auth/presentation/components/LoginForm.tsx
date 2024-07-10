@@ -2,17 +2,31 @@ import { useForm } from "react-hook-form";
 import { LoginReq } from "../../domain/usecases/Login";
 import { useEffect, useState } from "react";
 import React from "react";
+import { useAppSelector } from "../../../../common/context/store";
+import { SendResetPasswordEmailReq } from "../../domain/usecases/SendResetPasswordEmail";
+
 
 interface LoginFormPorps{
     initialData?:LoginReq;
     onSubmit:(data:any) => void;
+    onSubmitReset:(data: any) => void;
 }
 
 const LoginForm:React.FC<LoginFormPorps> =
-({initialData,onSubmit}) => {
-    const {register, handleSubmit, reset} = useForm<LoginReq>({
-        defaultValues:initialData || {}
-    });
+({initialData,onSubmit, onSubmitReset}) => {
+  const {status, error, data} = useAppSelector(state => state.auth.logInPage);
+  const {status: sendMailStatus} = useAppSelector(state => state.auth.sendMailPage);
+  const {register, handleSubmit, reset} = useForm<LoginReq>({
+    defaultValues:initialData || {}
+});
+
+
+const {register: registerReset, handleSubmit: handleSubmitReset} = useForm<SendResetPasswordEmailReq>({
+  defaultValues: {}
+});
+
+
+
     const [showForgotPassword, setShowForgotPassword] = useState(false);
     const openForgotPasswordModal = () => {
       setShowForgotPassword(true);
@@ -52,10 +66,11 @@ const LoginForm:React.FC<LoginFormPorps> =
                 <div className="modal-content py-4 text-left px-6">
                   <span className="close absolute top-0 right-0 cursor-pointer text-2xl" onClick={closeForgotPasswordModal}>&times;</span>
                   <h2 className="text-lg font-semibold mb-4">Forgot Password</h2>
-                  <form>
+                  <form onSubmit={handleSubmitReset(onSubmitReset)}>
                     <div className="mb-4">
                       <label htmlFor="forgotEmail" className="block text-sm font-semibold mb-2">Email</label>
-                      <input id="forgotEmail" type="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                      <input id="forgotEmail"  {...registerReset('email', { required: true })} type="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  />
+                      {sendMailStatus == "succeeded" && "please check your email"}
                     </div>
                     <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Submit</button>
                   </form>

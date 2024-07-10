@@ -36,7 +36,13 @@ const rootReducer = combineReducers({
     blogs: blogSlice,
     cates: cateSlice,
     chapters,
-    lessons
+    lessons,
+  userProfile: UserProfileSlice,
+  userInterest: UserInterestSlice,
+  // user: userReducer,
+  // admin: adminReducer,
+  // teacher: teacherReducer,
+  // censor: censorReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

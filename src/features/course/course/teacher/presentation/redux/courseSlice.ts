@@ -20,11 +20,7 @@ export interface CourseState {
     deactivateCoursePage: CommonState<Course>,
 }
 
-const initCommonState = {
-    data: undefined,
-    status: null,
-    error: undefined,
-}
+
 const initialState: CourseState = {
     courseDetailPage: initCommonState,
     createCoursePage: initCommonState,

@@ -1,7 +1,8 @@
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import React from "react";
 import { UnauthorizedPage } from "./common/pages"
-import { adminRoutes, authRoute, censorRoutes, teacherRoutes, homeRoutes } from "./common/routes";
+import { adminRoutes, authRoute, censorRoutes, teacherRoutes, homeRoutes, userProfileRoutes, userInterestRoutes } from "./common/routes";
+import { updateUserProfileRoutes } from "./common/routes/userProfileRoutes";
 
 const unauthorizedRoute: RouteObject = {
   path: "unauthorized",
@@ -14,6 +15,9 @@ export const router = createBrowserRouter([
   adminRoutes,
   censorRoutes,
   teacherRoutes,
-  unauthorizedRoute
+  userProfileRoutes,
+  unauthorizedRoute,
+  updateUserProfileRoutes,
+  userInterestRoutes 
 ]);
 

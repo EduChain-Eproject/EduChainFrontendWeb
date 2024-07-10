@@ -10,7 +10,7 @@ const RoleCheckerHOC = <P extends object>(
         const { user, isAuthenticated } = useAppSelector((state) => state.auth);
 
         if (!isAuthenticated || user == null) {
-            return <Navigate to="/login" />;
+            return <Navigate to="/Auth" />;
         }
 
         if (user.role !== requiredRole) {

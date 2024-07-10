@@ -13,7 +13,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-    user: new User("TEACHER"),
+    user: new User("ADMIN"),
     isAuthenticated: true,
     status: 'idle',
     error: null,

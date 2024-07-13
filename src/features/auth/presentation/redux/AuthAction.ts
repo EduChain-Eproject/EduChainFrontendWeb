@@ -45,7 +45,7 @@ export const SendResetPasswordEmailAction = createAsyncThunk(
   },
 );
 
-export const ResetPasswrodAction = createAsyncThunk(
+export const ResetPasswordAction = createAsyncThunk(
   'Auth/ResetPasswordAction',
   async ({ req }: { req: ResetPasswordReq }) => {
     const ResetPasswordCase = new ResetPassword(authRepository);

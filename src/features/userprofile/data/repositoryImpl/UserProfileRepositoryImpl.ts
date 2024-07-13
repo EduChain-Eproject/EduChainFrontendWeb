@@ -1,5 +1,5 @@
 import { UserProfileDto } from './../Dto/UserProfileDto';
-import Failure from '../../../../common/types/Failure';
+import Failure from '../../../../common/entities/Failure';
 import { ApiResponse } from '../../../auth/domain/usecases/Login';
 import { UserProfileRepository } from '../../domain/repository/UserRepository';
 import {

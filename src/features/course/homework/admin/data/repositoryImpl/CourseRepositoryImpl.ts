@@ -1,4 +1,4 @@
-import Failure from '../../../../../../common/types/Failure';
+import Failure from '../../../../../../common/entities/Failure';
 import Category from '../../domain/entities/Homework';
 import Chapter from '../../domain/entities/Question';
 import Course from '../../domain/entities/Lesson';

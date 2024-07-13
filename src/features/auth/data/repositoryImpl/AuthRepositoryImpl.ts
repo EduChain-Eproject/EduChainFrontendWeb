@@ -1,5 +1,5 @@
 import { UserDto } from './../dtos/UserDto';
-import Failure from '../../../../common/types/Failure';
+import Failure from '../../../../common/entities/Failure';
 import { User } from '../../domain/entities/User';
 import {
   ApiResponse,

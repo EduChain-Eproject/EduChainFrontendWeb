@@ -1,7 +1,7 @@
 import { UserInterestDto } from './../dto/UserInterestDto';
 import { UserProfileModel } from './../../../userprofile/domain/entities/UserProfileModel';
 // import { UserInterestModel } from './../../domain/entities/UserInterestModel';
-import Failure from '../../../../common/types/Failure';
+import Failure from '../../../../common/entities/Failure';
 import { UserInterestRepository } from '../../domain/repository/UserInterestRepository';
 import {
   apiDeleteUserInterest,

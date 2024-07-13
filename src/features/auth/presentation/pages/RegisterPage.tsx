@@ -2,13 +2,12 @@ import { RouteObject } from "react-router-dom"
 import { registerAction } from "../redux/AuthAction";
 import React from "react";
 import { useAppDispatch } from "../../../../common/context/store";
-import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 
-export const route:() => RouteObject = () => {
+export const route: () => RouteObject = () => {
     return {
-        path:"register",
-        element:<CreateRegisterPage/>
+        path: "register",
+        element: <CreateRegisterPage />
     }
 }
 

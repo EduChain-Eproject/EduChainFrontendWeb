@@ -1,5 +1,5 @@
 import axiosService from '../../../../common/services/axiosService';
-import Failure from '../../../../common/types/Failure';
+import Failure from '../../../../common/entities/Failure';
 import { LoginReq } from '../../domain/usecases/Login';
 import { RegisterReq } from '../../domain/usecases/Register';
 import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';

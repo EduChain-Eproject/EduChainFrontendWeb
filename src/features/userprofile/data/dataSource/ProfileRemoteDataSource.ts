@@ -1,5 +1,5 @@
 import axiosService from '../../../../common/services/axiosService';
-import Failure from '../../../../common/types/Failure';
+import Failure from '../../../../common/entities/Failure';
 import { UpdateUserProfileReq } from '../../domain/usecases/UpdateUserProfileUseCase';
 
 const baseUrl: String = 'http://localhost:8080/COMMON/';

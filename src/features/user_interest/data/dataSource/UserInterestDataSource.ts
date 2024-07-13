@@ -1,6 +1,6 @@
 import { UserInterestDto } from './../dto/UserInterestDto';
 import axiosService from '../../../../common/services/axiosService';
-import Failure from '../../../../common/types/Failure';
+import Failure from '../../../../common/entities/Failure';
 import { DeleteUserInterestRes } from '../../domain/usecase/DeleteUserInterestUseCase';
 
 const baseUrl: String = 'http://localhost:8080/STUDENT/';

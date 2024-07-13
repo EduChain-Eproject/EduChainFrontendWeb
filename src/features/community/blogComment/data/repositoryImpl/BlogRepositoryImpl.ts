@@ -1,4 +1,4 @@
-import Failure from '../../../../../common/types/Failure';
+import Failure from '../../../../../common/entities/Failure';
 import Blog from '../../domain/entities/blog';
 import { BlogRepository } from '../../domain/repositories/BlogRepository';
 import { CreateBlogReq } from '../../domain/usecases/CreateBlog';

@@ -1,5 +1,5 @@
 import axiosService from '../../../../../../common/services/axiosService'
-import Failure from '../../../../../../common/types/Failure';
+import Failure from '../../../../../../common/entities/Failure';
 import { LessonDTO } from '../models/LessonDto';
 
 export const apiGetLessonDetail = async (lessonId: number): Promise<LessonDTO> => {

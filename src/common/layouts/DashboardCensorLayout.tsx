@@ -1,12 +1,41 @@
-import React, { useState, ReactNode } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+
+import { getUserAction } from '../../features/auth/presentation/redux/AuthAction';
 import Header from '../components/Header/AdminHeader';
 import CensorSidebar from '../components/Sidebar/CensorSidebar';
+import { useAppDispatch, useAppSelector } from '../context/store';
 import RoleCheckerHOC from '../hoc/RoleCheckerHOC';
 
 const DashboardCensorLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getUserAction());
+    } else {
+      navigate('/Auth')
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    switch (user?.role) {
+      case 'ADMIN':
+        navigate(`/dashboard`);
+        break;
+      case 'TEACHER':
+        navigate(`/dashboard/teacher`);
+        break;
+      case 'STUDENT':
+        navigate(`/`);
+        break;
+      default:
+        break;
+    }
+  }, [user]);
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}

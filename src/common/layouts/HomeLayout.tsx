@@ -4,9 +4,7 @@ import { HomeHeader } from '../components/Header/HomeHeader';
 import { Footer } from '../components/Footer';
 import { Outlet } from 'react-router-dom';
 
-import { Outlet } from 'react-router-dom';
-
-const HomeLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+const HomeLayout = () => {
 
   return (
     <div>
@@ -17,6 +15,4 @@ const HomeLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-const ProtectedLayout = RoleCheckerHOC(HomeLayout, "STUDENT");
-
-export default ProtectedLayout;
+export default HomeLayout;

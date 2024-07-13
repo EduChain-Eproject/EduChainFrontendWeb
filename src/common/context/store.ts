@@ -11,8 +11,12 @@ import studentCourseSlice from '../../features/course/course/student/presentatio
 import censorCourseSlice from '../../features/course/course/censor/presentation/redux/courseSlice'
 
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
+import blogUiSlice from '../../features/front-end/blogs/data/redux/blogUISlice';
 import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
 import homeSlice from '../../features/homepage/data/redux/homeSlice';
+
+import UserProfileSlice from '../../features/userprofile/presentation/redux/UserProfileSlice'
+import UserInterestSlice from '../../features/user_interest/presentation/redux/UserInterestSlice'
 
 const courses = combineReducers({
     teacher: teacherCourseSlice,
@@ -37,6 +41,7 @@ const rootReducer = combineReducers({
     cates: cateSlice,
     chapters,
     lessons,
+    blogUiSlice,
   userProfile: UserProfileSlice,
   userInterest: UserInterestSlice,
   // user: userReducer,

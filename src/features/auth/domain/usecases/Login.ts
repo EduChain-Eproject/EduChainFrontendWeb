@@ -3,8 +3,8 @@ import { AuthRepository } from "../repositories/AuthRepository";
 
 export default class Login {
     constructor(private authRepository:AuthRepository){}
+    
     async execute(loginData:LoginReq){
-        console.log(loginData)
         return await this.authRepository.onLogin(loginData);
     }
 }

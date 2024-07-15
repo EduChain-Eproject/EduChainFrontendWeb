@@ -53,12 +53,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   async onRegister(
     registerRequest: RegisterReq,
-  ): Promise<{ message: RegisterResponseMessage; error?: string }> {
+  ): Promise<{ message: string; error?: string }> {
     try {
       const response = await registerUser(registerRequest);
       return { message: response };
     } catch (error) {
-      return { message: error.message || 'Unknown error' };
+      return { message: '', error: error?.message };
     }
   }
 

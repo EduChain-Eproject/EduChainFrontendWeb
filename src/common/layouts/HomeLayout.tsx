@@ -6,7 +6,7 @@ import { HomeHeader } from '../components/Header/HomeHeader';
 import { useAppSelector } from '../context/store';
 import RoleCheckerHOC from '../hoc/RoleCheckerHOC';
 
-const HomeLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+const HomeLayout = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
 
@@ -35,6 +35,4 @@ const HomeLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-const ProtectedLayout = RoleCheckerHOC(HomeLayout, 'STUDENT');
-
-export default ProtectedLayout;
+export default HomeLayout;

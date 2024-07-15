@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+
 import authReducer from '../../features/auth/presentation/redux/authSlice';
 
 import teacherCourseSlice from '../../features/course/course/teacher/presentation/redux/courseSlice'
@@ -13,6 +14,9 @@ import censorCourseSlice from '../../features/course/course/censor/presentation/
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
 import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
 import homeSlice from '../../features/homepage/data/redux/homeSlice';
+
+import UserProfileSlice from '../../features/userprofile/presentation/redux/UserProfileSlice'
+import UserInterestSlice from '../../features/user_interest/presentation/redux/UserInterestSlice'
 
 const courses = combineReducers({
     teacher: teacherCourseSlice,
@@ -37,12 +41,8 @@ const rootReducer = combineReducers({
     cates: cateSlice,
     chapters,
     lessons,
-  userProfile: UserProfileSlice,
-  userInterest: UserInterestSlice,
-  // user: userReducer,
-  // admin: adminReducer,
-  // teacher: teacherReducer,
-  // censor: censorReducer,
+    userProfile: UserProfileSlice,
+    userInterest: UserInterestSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

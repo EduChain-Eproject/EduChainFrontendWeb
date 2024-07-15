@@ -7,7 +7,7 @@ const baseUrl: String = 'http://localhost:8080/STUDENT/';
 
 export const apiGetUserInterests = async (): Promise<UserInterestDto[]> => {
   try {
-    const response = await axiosService.get(`${baseUrl}get-user-interest`, {
+    const response = await axiosService.post(`${baseUrl}get-user-interest`, {
       headers: {
         'Content-Type': 'application/json',
       },

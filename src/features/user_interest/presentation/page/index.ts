@@ -1,2 +1,2 @@
-import { route as GetUserIterestRoute } from './GetUserInterestPage';
-export { GetUserIterestRoute };
+import { route as getUserIterestRoute } from './GetUserInterestPage';
+export { getUserIterestRoute };

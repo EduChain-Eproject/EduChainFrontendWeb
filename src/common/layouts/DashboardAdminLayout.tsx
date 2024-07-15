@@ -13,29 +13,30 @@ const DashboardAdminLayout = () => {
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getUserAction());
-    } else {
-      navigate('/Auth')
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     dispatch(getUserAction());
+  //   } else {
+  //     navigate('/Auth')
+  //   }
+  // }, [isAuthenticated]);
 
-  useEffect(() => {
-    switch (user?.role) {
-      case 'TEACHER':
-        navigate(`/dashboard/teacher`);
-        break;
-      case 'CENSOR':
-        navigate(`/dashboard/censor`);
-        break;
-      case 'STUDENT':
-        navigate(`/`);
-        break;
-      default:
-        break;
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   switch (user?.role) {
+  //     case 'TEACHER':
+  //       navigate(`/dashboard/teacher`);
+  //       break;
+  //     case 'CENSOR':
+  //       navigate(`/dashboard/censor`);
+  //       break;
+  //     case 'STUDENT':
+  //       navigate(`/`);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }, [user]);
+
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}

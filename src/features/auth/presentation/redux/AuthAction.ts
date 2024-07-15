@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import AuthRepositoryImpl from '../../data/repositoryImpl/AuthRepositoryImpl';
 
 import { AuthRepository } from './../../domain/repositories/AuthRepository';
@@ -10,6 +10,10 @@ import SendEmailResetPassword from '../../domain/usecases/SendResetPasswordEmail
 import ResetPassword, {
   ResetPasswordReq,
 } from '../../domain/usecases/ResetPassword';
+import Failure from '../../../../common/entities/Failure';
+import axiosService from '../../../../common/services/axiosService';
+import { AuthState } from './authSlice';
+import { logOut } from '../../data/dataSources/AuthRemoteDataSource';
 
 const authRepository: AuthRepository = new AuthRepositoryImpl();
 
@@ -52,4 +56,25 @@ export const ResetPasswordAction = createAsyncThunk(
     return await ResetPasswordCase.excute(req);
   },
 );
-//lam action cho send ResetPasswordreq
+
+export const logOutAction = createAsyncThunk(
+  'Auth/logOut',
+  async () => {
+    return await logOut();
+  },
+);
+
+
+export const handleLogout = (builder: ActionReducerMapBuilder<AuthState>) =>{
+  builder
+  .addCase(logOutAction.fulfilled,(state)=> {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.token = null;
+      state.refreshToken = null;
+
+      localStorage.removeItem("accessToken")
+      localStorage.removeItem("refreshToken")
+  });
+}
+

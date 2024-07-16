@@ -20,7 +20,8 @@ export interface ListCoursesPage {
 export interface CourseState {
     listCoursesPage: CommonState<ListCoursesPage>;
     courseDetailPage: CommonState<Course>;
-    lessonDetailPage: CommonState<Lesson>
+    lessonDetailPage: CommonState<Lesson>;
+    
 }
 
 const initialState: CourseState = {

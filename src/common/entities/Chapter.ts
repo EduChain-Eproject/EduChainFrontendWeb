@@ -1,9 +1,9 @@
 import Course from "./Course";
-import { Lesson } from "./Lesson";
+import  Lesson  from "./Lesson";
 
-export class Chapter {
+export default class Chapter {
     id: number;
     chapterTitle: string;
-    course: Course
-    lessons: Lesson[] | undefined
+    courseDto: Course
+    lessonDtos: Lesson[] | undefined
 }

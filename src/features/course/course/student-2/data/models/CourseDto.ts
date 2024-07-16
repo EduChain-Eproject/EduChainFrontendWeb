@@ -1,6 +1,9 @@
 import { CategoryDto } from "./CategoryDto";
 import { ChapterDTO } from "./ChapterDto";
 import { CourseFeedbackDto } from './CourseFeedbackDto'
+import { UserCourseDto } from './UserCourseDto'
+
+
 export class CourseDto {
     id: number;
     title: string;
@@ -12,7 +15,7 @@ export class CourseDto {
     chapterDtos: ChapterDTO[] | undefined;
     numberOfEnrolledStudents: number | undefined;
     // teacherDto: UserDto | undefined
-    // participatedUserDtos:  UserDto[] | undefined
+    participatedUserDtos:  UserCourseDto[] | undefined
     courseFeedbackDtos: CourseFeedbackDto[] | undefined
     relatedCourseDtos: CourseDto[] | undefined
 

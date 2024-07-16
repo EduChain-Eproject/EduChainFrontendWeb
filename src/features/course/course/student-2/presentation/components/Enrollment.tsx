@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAppDispatch } from '../../../../../../common/context/store';
-import Course from '../../../../../../common/entities/Course';
-import { enrollACourse } from '../../data/services/handleEnrollACourse';
+import Course from '../../domain/entities/Course';
+import { enrollACourse } from '../redux/courseActions';
+
 interface EnrollmentProps {
   course: Course;
 }

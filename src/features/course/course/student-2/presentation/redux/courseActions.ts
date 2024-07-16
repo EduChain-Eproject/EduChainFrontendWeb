@@ -6,6 +6,7 @@ import GetListCategories from '../../domain/usecases/GetListCategories';
 import { FetchCourseDetailUseCase } from '../../domain/usecases/FetchCourseDetailUseCase'
 import LessonRepositoryImpl from '../../../../lesson/teacher/data/repositoryImpl/LessonRepositoryImpl';
 import { GetLessonDetail } from '../../domain/usecases/GetLessonDetail'
+import { apiEnrollACourse } from '../../data/dataSources/courseRemoteDataSource';
 
 const courseRepository = new CourseRepositoryImpl();
 const categoryRepository = new CategoryRepositoryImpl();
@@ -37,5 +38,12 @@ export const fetchLessonDetail = createAsyncThunk(
     async (lessonId: number) => {
         const getLessonDetailUseCase = new GetLessonDetail(lessonRepository);
         return await getLessonDetailUseCase.execute(lessonId);
+    }
+);
+
+export const enrollACourse = createAsyncThunk(
+    'courses/enrollACourse',
+    async (courseId: number) => {
+        return await apiEnrollACourse(courseId);
     }
 );

@@ -1,19 +1,25 @@
-import { Category } from "./Category";
-import { Chapter } from "./Chapter";
+import Category from './Category';
+import Chapter from './Chapter';
 import CourseFeedback from './CourseFeedback';
+import User from './User';
+import { UserCourse } from './UserCourse';
 
 export default class Course {
-    id: number;
-    price: number;
-    title: string;
-    description: string;
-    status: string;
+  id: number;
+  price: number;
+  title: string;
+  description: string;
+  status: string;
 
-    categories: Category[] | undefined
-    chapters: Chapter[] | undefined
+  teacherDto: User | undefined;
+  categoryDtos: Category[] | undefined;
+  chapterDtos: Chapter[] | undefined;
 
-    numberOfEnrolledStudents: number | undefined
-    courseFeedbacks: CourseFeedback[] | undefined
+  numberOfEnrolledStudents: number | undefined;
+  courseFeedbacks: CourseFeedback[] | undefined;
+  participatedUserDtos: UserCourse[] | undefined;
+  courseFeedbackDtos: CourseFeedback[] | undefined;
+  relatedCourseDtos: Course[] | undefined;
 
-    relatedCourses: Course[] | undefined
+  enrolled?: boolean;
 }

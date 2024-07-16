@@ -1,6 +1,6 @@
-import { Chapter } from "./Chapter";
+import  Chapter  from "./Chapter";
 
-export class Lesson {
+export default class Lesson {
     id: number;
 
     lessonTitle: string;
@@ -11,5 +11,5 @@ export class Lesson {
 
     videoURL: string;
 
-    chapter: Chapter;
+    chapterDto: Chapter;
 }

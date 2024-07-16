@@ -13,6 +13,9 @@ import censorCourseSlice from '../../features/course/course/censor/presentation/
 import blogSlice from '../../features/community/blog/presentation/redux/blogSlice';
 import cateSlice from '../../features/community/blogCategory/presentation/redux/cateSlice';
 import homeSlice from '../../features/homepage/data/redux/homeSlice';
+import UserProfileSlice from '../../features/userprofile/presentation/redux/UserProfileSlice';
+import UserInterestSlice from '../../features/user_interest/presentation/redux/UserInterestSlice';
+
 
 const courses = combineReducers({
     teacher: teacherCourseSlice,

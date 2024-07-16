@@ -11,9 +11,11 @@ export const handleGetUserInterests = (
     })
     .addCase(fetchUserInterests.fulfilled, (state, action) => {
       if (action.payload.error) {
+        console.log(action.payload.error);
         state.userInterests.status = 'failed';
         state.userInterests.error = action.payload.error;
       } else {
+        console.log('success');
         state.userInterests.status = 'succeeded';
         state.userInterests.data = action.payload.data;
       }

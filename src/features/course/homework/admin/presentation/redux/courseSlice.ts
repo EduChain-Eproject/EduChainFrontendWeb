@@ -1,15 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import Course from '../../domain/entities/Course';
+
 import {
-    handleUpdateCourse,
-    handleFetchCourseDetail,
-    handleDeactivateCourse,
-    handleCreateCourse,
-    handleGetListCategories,
+  handleUpdateCourse,
+  handleFetchCourseDetail,
+  handleDeactivateCourse,
+  handleCreateCourse,
+  handleGetListCategories,
 } from './actionHandlings';
-import Category from '../../domain/entities/Category';
+
 import { CommonState } from '../../../../../../common/state';
 import handleGetCourseByTeacher from './actionHandlings/handleGetCourseByTeacher';
+import Category from '../../../../course/teacher/domain/entities/Category';
+import Course from '../../../../course/teacher/domain/entities/Course';
 
 
 export interface CourseState {

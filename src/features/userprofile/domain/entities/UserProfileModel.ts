@@ -7,4 +7,5 @@ export class UserProfileModel {
   phone: string;
   address: string;
   avatarPath: string;
+  role: string;
 }

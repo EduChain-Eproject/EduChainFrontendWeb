@@ -8,7 +8,7 @@ import {
     handleGetListCategories,
 } from './actionHandlings';
 import Category from '../../domain/entities/Category';
-import { CommonState } from '../../../../../../common/state';
+import { CommonState, initCommonState } from '../../../../../../common/state';
 import handleGetCourseByTeacher from './actionHandlings/handleGetCourseByTeacher';
 
 

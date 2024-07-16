@@ -5,10 +5,11 @@ import Failure from '../../../../common/types/Failure';
 import { UserInterestRepository } from '../../domain/repository/UserInterestRepository';
 import {
   apiDeleteUserInterest,
-  apiGetUserInterests,
+  apiTakeUserInterests,
 } from '../dataSource/UserInterestDataSource';
 import { UserInterest } from '../../domain/entities/UserInterest';
 import { DeleteUserInterestRes } from '../../domain/usecase/DeleteUserInterestUseCase';
+import { GetUserInterestReq } from '../../domain/usecase/GetUserInterests UserCase';
 
 class UserInterestRepositoryImpl implements UserInterestRepository {
   async deleteUserInterests(
@@ -22,25 +23,23 @@ class UserInterestRepositoryImpl implements UserInterestRepository {
     }
   }
 
-  // deleteUserInterests(): Promise<{ data?: boolean; error?: string }> {
-  //   try {
-  //     const response = await apiDeleteUserInterest();
-  //     return { data: response.map((dto) => this.mapDtoToEntity(dto)) };
-  //   } catch (error) {
-  //     return { error: 'Failed to fetch user interests' };
-  //   }
-  // }
-  async getUserInterests(): Promise<{ data?: UserInterest[]; error?: string }> {
+  async getUserInterests(
+    userInterest: GetUserInterestReq,
+  ): Promise<{ data?: UserInterest[]; error?: string }> {
     try {
-      const response = await apiGetUserInterests();
-      return { data: response.map((dto) => this.mapDtoToEntity(dto)) };
+      const response = await apiTakeUserInterests(userInterest);
+      console.log(response); // This will log the full response object including 'content'
+      const userInterests = response.content.map((dto: UserInterestDto) =>
+        this.mapDtoToEntity(dto),
+      );
+      return { data: userInterests };
     } catch (error) {
       return { error: 'Failed to fetch user interests' };
     }
   }
-
   private mapDtoToEntity(dto: UserInterestDto): UserInterest {
     const userInterest = new UserInterest();
+    console.log(dto);
     userInterest.course_id = dto.course_id;
     userInterest.student_id = dto.student_id;
     userInterest.description = dto.description;
@@ -48,6 +47,7 @@ class UserInterestRepositoryImpl implements UserInterestRepository {
     userInterest.price = dto.price;
     userInterest.teacherName = dto.teacherName;
     userInterest.categoryList = dto.categoryList;
+    console.log(userInterest);
     return userInterest;
   }
 }

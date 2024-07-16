@@ -15,7 +15,7 @@ export const route:() => RouteObject = () =>{
 const UpdateUserProfilePage = () => {
   const dispatch = useAppDispatch();
   const {data,error,status} = useAppSelector((state) => state.userProfile.profilePage);
-  const email = useAppSelector(s => s.auth.user?.email)
+  const email = useAppSelector(s => s.auth.user?.email);
   useEffect(() => {
     if(email) {
         dispatch(getUserProfileAction(email));

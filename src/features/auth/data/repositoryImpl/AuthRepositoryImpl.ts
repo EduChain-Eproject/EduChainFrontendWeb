@@ -40,7 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       const response: UserDto = await getUserWithToken();
       console.log(response);
-      const user: User = new User(response.role, response.email);
+      const user: User = new User(response.role, response.email, response.id);
 
       return { data: user };
     } catch (error) {

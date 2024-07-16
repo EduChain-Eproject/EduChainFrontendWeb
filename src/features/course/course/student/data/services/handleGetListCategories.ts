@@ -2,7 +2,7 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosService from '../../../../../../common/services/axiosService';
 import Failure from '../../../../../../common/entities/Failure';
 import Category from '../../../../../../common/entities/Category';
-import { ApiResponse } from '../../../../../../common/entities/ApiResponse';
+import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import { CourseState } from '../redux/courseSlice';
 
 const apiFetchListCategories: () => ApiResponse<Category[]> = async () => {

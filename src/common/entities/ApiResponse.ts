@@ -1,3 +1,5 @@
-import Failure from "./Failure";
+import Failure from './Failure';
 
-export type ApiResponse<T> = Promise<{data?: T; error?: Failure}>
+type ApiResponse<T> = Promise<{ data?: T; error?: Failure }>;
+
+export default ApiResponse;

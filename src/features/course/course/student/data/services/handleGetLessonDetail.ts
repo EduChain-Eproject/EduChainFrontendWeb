@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
-import { ApiResponse } from '../../../../../../common/entities/ApiResponse';
+import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import Failure from '../../../../../../common/entities/Failure';
 import Lesson from '../../../../../../common/entities/Lesson';
 import axiosService from '../../../../../../common/services/axiosService';

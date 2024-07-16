@@ -5,11 +5,11 @@ import Failure from '../../../../../../common/entities/Failure';
 import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
 
-const apiGetCourseDetail = async (courseId: number): ApiResponse<Course> => {
+export const apiFetchCourseDetail: (
+  courseId: number,
+) => ApiResponse<Course> = async (courseId: number) => {
   try {
-    const response = await axiosService.get(
-      `/STUDENT/api/course/detail/${courseId}`,
-    );
+    const response = await axiosService.get(`/TEACHER/api/course/${courseId}`);
     return { data: response.data };
   } catch (error) {
     return {
@@ -21,11 +21,11 @@ const apiGetCourseDetail = async (courseId: number): ApiResponse<Course> => {
 export const fetchCourseDetail = createAsyncThunk(
   'courses/fetchCourseDetail',
   async (courseId: number) => {
-    return apiGetCourseDetail(courseId);
+    return await apiFetchCourseDetail(courseId);
   },
 );
 
-export const handleGetCourseDetail = (
+const handleFetchCourseDetail = (
   builder: ActionReducerMapBuilder<CourseState>,
 ) => {
   builder
@@ -33,13 +33,18 @@ export const handleGetCourseDetail = (
       state.courseDetailPage.status = 'loading';
     })
     .addCase(fetchCourseDetail.fulfilled, (state, action) => {
-      state.courseDetailPage.status = 'succeeded';
-      state.courseDetailPage.data = action.payload.data;
+      if (action.payload.error) {
+        state.courseDetailPage.status = 'failed';
+        state.courseDetailPage.error = action.payload.error.message;
+      } else {
+        state.courseDetailPage.status = 'succeeded';
+        state.courseDetailPage.data = action.payload.data;
+      }
     })
     .addCase(fetchCourseDetail.rejected, (state, action) => {
       state.courseDetailPage.status = 'failed';
-      state.courseDetailPage.error = action.payload as string;
+      state.courseDetailPage.error = action.error.message;
     });
 };
 
-export default handleGetCourseDetail;
+export default handleFetchCourseDetail;

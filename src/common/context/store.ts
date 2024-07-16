@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import authReducer from '../../features/auth/presentation/redux/authSlice';
 
-import teacherCourseSlice from '../../features/course/course/teacher/presentation/redux/courseSlice';
+import teacherCourseSlice from '../../features/course/course/teacher/data/redux/courseSlice';
 import teacherChapterSlice from '../../features/course/chapter/teacher/presentation/redux/courseSlice';
 import teacherLessonSlice from '../../features/course/lesson/teacher/presentation/redux/lessonSlice';
 

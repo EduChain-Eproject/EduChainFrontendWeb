@@ -4,7 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from '../../features/auth/presentation/redux/authSlice';
 
 import teacherCourseSlice from '../../features/course/course/teacher/data/redux/courseSlice';
-import teacherChapterSlice from '../../features/course/chapter/teacher/data/redux/courseSlice';
+import teacherChapterSlice from '../../features/course/chapter/teacher/data/redux/chapterSlice';
 import teacherLessonSlice from '../../features/course/lesson/teacher/data/redux/lessonSlice';
 
 import studentCourseSlice from '../../features/course/course/student/data/redux/courseSlice';
@@ -17,6 +17,8 @@ import homeSlice from '../../features/homepage/data/redux/homeSlice';
 
 import UserProfileSlice from '../../features/userprofile/presentation/redux/UserProfileSlice';
 import UserInterestSlice from '../../features/user_interest/presentation/redux/UserInterestSlice';
+
+import teacherHomeworkSlice from '../../features/course/homework/teacher/data/redux/homeworkSlice';
 
 const courses = combineReducers({
   teacher: teacherCourseSlice,
@@ -32,6 +34,10 @@ const lessons = combineReducers({
   teacher: teacherLessonSlice,
 });
 
+const homeworks = combineReducers({
+  teacher: teacherHomeworkSlice,
+});
+
 const rootReducer = combineReducers({
   home: homeSlice,
   auth: authReducer,
@@ -42,6 +48,7 @@ const rootReducer = combineReducers({
   lessons,
   userProfile: UserProfileSlice,
   userInterest: UserInterestSlice,
+  homeworks,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

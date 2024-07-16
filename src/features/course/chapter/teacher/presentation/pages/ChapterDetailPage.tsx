@@ -23,8 +23,8 @@ const ChapterDetailPage: React.FC = () => {
     (state) => state.chapters.teacher.chapterDetailPage,
   );
   const dispatch = useAppDispatch();
-  const { chapterId } = useParams<{ chapterId: string }>();
   const navigate = useNavigate();
+  const { chapterId } = useParams<{ chapterId: string }>();
 
   useEffect(() => {
     if (chapterId) {

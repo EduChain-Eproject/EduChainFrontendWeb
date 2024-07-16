@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import CourseList from '../components/CourseList';
-import { RouteObject } from 'react-router-dom';
+import { Link, RouteObject } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../common/context/store';
-import { fetchCoursesByTeacher } from '../redux/courseActions';
 import FilterBar from '../components/FilterBar';
 import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
-import { GetCoursesByTeacherRequest } from '../../data/services/handleGetCourseByTeacher';
+import {
+  fetchCoursesByTeacher,
+  GetCoursesByTeacherRequest,
+} from '../../data/services/handleGetCourseByTeacher';
 
 export const route: () => RouteObject = () => {
   return {
@@ -48,7 +50,6 @@ const CoursesPage: React.FC = () => {
       size,
       sortBy,
     };
-    console.log('fetching...');
 
     dispatch(fetchCoursesByTeacher(request));
   }, [dispatch, search, page, size, sortBy]);
@@ -71,7 +72,14 @@ const CoursesPage: React.FC = () => {
 
   return (
     <div className="mx-auto max-w-4xl px-4">
-      <AppBreadcrumb items={breadCrumbItems} />
+      <div className="flex flex-row justify-between items-center mb-2">
+        <AppBreadcrumb items={breadCrumbItems} />
+        <button className="bg-meta-5 p-3 rounded-xl text-meta-4 hover:bg-meta-3">
+          <Link to={'/dashboard/teacher/courses/create'}>
+            Create new course
+          </Link>
+        </button>
+      </div>
       <FilterBar
         search={search}
         setSearch={setSearch}

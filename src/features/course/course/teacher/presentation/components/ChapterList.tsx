@@ -5,8 +5,8 @@ import {
   useAppSelector,
 } from '../../../../../../common/context/store';
 import { useNavigate } from 'react-router-dom';
-import { deleteChapter } from '../../../../chapter/teacher/presentation/redux/courseActions';
 import { courseChaperDeleted } from '../../data/redux/courseSlice';
+import { deleteChapter } from '../../../../chapter/teacher/data/services/handleDeleteChapter';
 
 interface ChapterListProps {
   chapters: Chapter[] | undefined;

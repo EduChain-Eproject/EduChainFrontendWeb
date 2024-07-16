@@ -4,7 +4,7 @@ import Chapter from '../../../../../../common/entities/Chapter';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import Failure from '../../../../../../common/entities/Failure';
 import axiosService from '../../../../../../common/services/axiosService';
-import { ChapterState } from '../redux/courseSlice';
+import { ChapterState } from '../redux/chapterSlice';
 
 export type UpdateChapterReq = {
   chapterTitle: string;

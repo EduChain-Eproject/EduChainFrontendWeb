@@ -1,6 +1,3 @@
-import { Lesson as LessonCommon } from "../../../../../../common/entities/Lesson";
+import { Lesson as LessonCommon } from '../../../../../common/entities/Lesson';
 
-
-export default class Lesson extends LessonCommon {
-
-}
+export default class Lesson extends LessonCommon {}

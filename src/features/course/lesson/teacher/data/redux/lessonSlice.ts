@@ -24,7 +24,22 @@ const initialState: LessonState = {
 const lessonSlice = createSlice({
   name: 'lessons',
   initialState,
-  reducers: {},
+  reducers: {
+    homeworkDeleted(state, action) {
+      console.log('deleted, filtering');
+
+      const deletedLessonId = action.payload;
+      if (state.lessonDetailPage.data?.homeworkDtos) {
+        const filteredLessons = state.lessonDetailPage.data.homeworkDtos.filter(
+          (homework) => homework.id !== deletedLessonId,
+        );
+        state.lessonDetailPage.data = {
+          ...state.lessonDetailPage.data,
+          homeworkDtos: filteredLessons,
+        };
+      }
+    },
+  },
   extraReducers: (builder) => {
     handleGetLessonDetail(builder);
     handleUpdateLesson(builder);
@@ -32,5 +47,7 @@ const lessonSlice = createSlice({
     handleCreateLesson(builder);
   },
 });
+
+export const { homeworkDeleted } = lessonSlice.actions;
 
 export default lessonSlice.reducer;

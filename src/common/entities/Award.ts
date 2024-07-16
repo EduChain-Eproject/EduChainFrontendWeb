@@ -1,18 +1,19 @@
-import { User } from "./User";
-import { Homework } from "./Homework";
+import User from './User';
+import { Homework } from './Homework';
 
 export enum AwardStatus {
-    PENDING = 'PENDING',
-    APPROVED = 'APPROVED',
-    REJECTED = 'REJECTED'
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
 }
 
 export class Award {
-    id: number;
-    user: User | undefined;
-    homework: Homework | undefined;
-    status: AwardStatus; // PENDING, APPROVED, REJECTED
-    submissionDate: Date;
-    reviewDate: Date;
-    comments: string; // Comments from the teacher
+  id: number;
+  status: AwardStatus;
+  submissionDate: Date;
+  reviewDate: Date;
+  comments: string;
+
+  userDto: User | undefined;
+  homeworkDto: Homework | undefined;
 }

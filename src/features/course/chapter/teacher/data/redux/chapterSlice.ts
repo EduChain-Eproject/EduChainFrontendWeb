@@ -2,12 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Chapter from '../../../../../../common/entities/Chapter';
 
 import { CommonState, initCommonState } from '../../../../../../common/state';
-import {
-  handleCreateChapter,
-  handleDeleteChapter,
-  handleGetChapterDetail,
-  handleUpdateChapter,
-} from './actionHandlings';
+import handleGetChapterDetail from '../services/handleGetChapterDetail';
+import handleUpdateChapter from '../services/handleUpdateChapter';
+import handleDeleteChapter from '../services/handleDeleteChapter';
+import handleCreateChapter from '../services/handleCreateChapter';
 
 export interface ChapterState {
   chapterDetailPage: CommonState<Chapter>;

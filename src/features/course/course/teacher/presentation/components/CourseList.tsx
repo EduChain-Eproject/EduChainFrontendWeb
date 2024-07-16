@@ -17,11 +17,6 @@ const CourseList: React.FC<CourseListProps> = ({
     <div className="space-y-4">
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl font-bold">Courses</h2>
-        <button className="bg-meta-5 p-3 rounded-xl text-meta-4 hover:bg-meta-3">
-          <Link to={'/dashboard/teacher/courses/create'}>
-            Create new course
-          </Link>
-        </button>
       </div>
       <ul className="divide-y divide-gray-200">
         {courses.map((course) => (

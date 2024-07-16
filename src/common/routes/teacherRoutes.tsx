@@ -18,6 +18,11 @@ import {
   getLessonDetailRoute,
   updateLessonRoute,
 } from '../../features/course/lesson/teacher/presentation/pages';
+import {
+  homeworkCreatePageRoute,
+  homeworkDetailPageRoute,
+  homeworkUpdatePageRoute,
+} from '../../features/course/homework/teacher/presentation/pages';
 
 export const teacherRoutes: RouteObject = {
   path: 'dashboard/teacher',
@@ -38,5 +43,10 @@ export const teacherRoutes: RouteObject = {
     getLessonDetailRoute(),
     updateLessonRoute(),
     createLessonRoute(),
+
+    // homeworks
+    homeworkCreatePageRoute(),
+    homeworkUpdatePageRoute(),
+    homeworkDetailPageRoute(),
   ],
 };

@@ -1,15 +1,11 @@
-import Course from "./Course";
-import { Lesson } from "./Lesson";
-import { Question } from "./Question";
-import { UserAnswer } from "./UserAnswer";
+import Course from './Course';
+import { Question } from './Question';
+import { UserAnswer } from './UserAnswer';
 
 export class Answer {
-    id: number;
-    answerText: string;
-    question: Question;
-    userAnswers: UserAnswer[];
+  id: number;
+  answerText: string;
 
-    constructor(answerText: string) {
-        this.answerText = answerText;
-    }
+  questionDto: Question;
+  userAnswerDtos: UserAnswer[];
 }

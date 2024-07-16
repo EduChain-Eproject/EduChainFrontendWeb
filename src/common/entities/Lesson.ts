@@ -1,15 +1,18 @@
-import  Chapter  from "./Chapter";
+import Chapter from './Chapter';
+import { Homework } from './Homework';
 
 export default class Lesson {
-    id: number;
+  id: number;
 
-    lessonTitle: string;
+  lessonTitle: string;
 
-    description: string;
+  description: string;
 
-    videoTitle: string;
+  videoTitle: string;
 
-    videoURL: string;
+  videoURL: string;
 
-    chapterDto: Chapter;
+  chapterDto: Chapter;
+
+  homeworkDtos: Homework[];
 }

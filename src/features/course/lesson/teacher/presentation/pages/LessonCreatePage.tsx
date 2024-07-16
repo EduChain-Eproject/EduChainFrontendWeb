@@ -7,7 +7,7 @@ import {
 } from '../../../../../../common/context/store';
 import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
 import LessonCreateForm from '../components/LessonCreateForm';
-import { getChapterDetail } from '../../../../chapter/teacher/data/redux/courseActions';
+import { getChapterDetail } from '../../../../chapter/teacher/data/services/handleGetChapterDetail';
 
 export const route: () => RouteObject = () => {
   return {

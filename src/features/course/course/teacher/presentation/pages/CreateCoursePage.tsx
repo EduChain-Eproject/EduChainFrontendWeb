@@ -53,15 +53,17 @@ const CreateCoursePage: React.FC = () => {
     };
 
     dispatch(createCourse(submitData));
-
-    if (status === 'succeeded') {
-      navigate('/teacher/courses');
-    }
   };
 
   useEffect(() => {
     dispatch(fetchListCategories());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (status === 'create course succeeded') {
+      navigate('/dashboard/teacher/courses');
+    }
+  }, [status, navigate]);
 
   return (
     <div>

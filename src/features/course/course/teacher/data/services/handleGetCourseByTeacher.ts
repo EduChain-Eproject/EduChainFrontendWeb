@@ -22,9 +22,11 @@ export const apiGetCoursesByTeacher = async (
       request,
     );
 
-    return response.data.content;
+    return { data: response.data.content };
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    return {
+      error: new Failure(error.response.data.message, error.response.status),
+    };
   }
 };
 

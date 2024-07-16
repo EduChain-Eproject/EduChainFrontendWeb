@@ -15,11 +15,10 @@ interface CourseFormProps {
 
 const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const categories: Category[] | undefined = useAppSelector(
     (state) => state.courses.teacher.createCoursePage.data,
   );
-  const { status, error } = useAppSelector(
+  const { error } = useAppSelector(
     (state) => state.courses.teacher.createCoursePage,
   );
 
@@ -32,12 +31,6 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
       reset(initialData);
     }
   }, [initialData, reset]);
-
-  useEffect(() => {
-    if (status === 'create course succeeded') {
-      navigate('/teacher/courses');
-    }
-  }, [status, navigate]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

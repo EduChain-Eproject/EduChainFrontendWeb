@@ -1,5 +1,3 @@
-import { Question as QuestionCommon } from "../../../../../../common/entities/Question";
+import { Question as QuestionCommon } from '../../../../../common/entities/Question';
 
-export default class Question extends QuestionCommon {
-
-}
+export default class Question extends QuestionCommon {}

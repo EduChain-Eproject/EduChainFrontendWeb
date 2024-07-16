@@ -5,7 +5,7 @@ import {
   useAppSelector,
 } from '../../../../../../common/context/store';
 import Lesson from '../../../../../../common/entities/Lesson';
-import { lessonDeleted } from '../../data/redux/courseSlice';
+import { lessonDeleted } from '../../data/redux/chapterSlice';
 
 interface LessonListProps {
   lessons: Lesson[];

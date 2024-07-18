@@ -2,7 +2,9 @@ import { Outlet, RouteObject } from "react-router-dom";
 import React from "react";
 import {
     BlogDetailRoute,
-    BlogListRoute
+    BlogListRoute,
+    CreateBlogRoute,
+    UpdateBlogRoute
 } from '../../../features/front-end/blogs/presentation/pages/index'
 
 export const communityRoutes: RouteObject = {
@@ -12,6 +14,8 @@ export const communityRoutes: RouteObject = {
     </>,
     children: [
         BlogListRoute(),
-        BlogDetailRoute()
+        BlogDetailRoute(),
+        CreateBlogRoute(),
+        UpdateBlogRoute()
     ]
 }

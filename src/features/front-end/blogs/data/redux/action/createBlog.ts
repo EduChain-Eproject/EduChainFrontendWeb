@@ -31,21 +31,21 @@ export const apiCreateBlog = async (blogData: CreateBlogReq) => {
     return response.data;
 };
 
-export const fetchBlog = createAsyncThunk('ui/blog/createBlog', async (blogData: CreateBlogReq) => {
+export const createBlog = createAsyncThunk('ui/blog/createBlog', async (blogData: CreateBlogReq) => {
     const response = await apiCreateBlog(blogData);
     return response;
 });
 
 export const createBlogExtraReducers = (builder: ActionReducerMapBuilder<any>) => {
     builder
-        .addCase(fetchBlog.pending, (state) => {
+        .addCase(createBlog.pending, (state) => {
             state.status = 'loading';
         })
-        .addCase(fetchBlog.fulfilled, (state, action) => {
+        .addCase(createBlog.fulfilled, (state, action) => {
             state.status = 'succeeded';
             state.data = action.payload;
         })
-        .addCase(fetchBlog.rejected, (state, action) => {
+        .addCase(createBlog.rejected, (state, action) => {
             state.status = 'failed';
             state.error = action.error.message;
         });

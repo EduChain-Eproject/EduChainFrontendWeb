@@ -8,7 +8,6 @@ export class Blog {
     title: string;
     blogText: string;
     voteUp: number;
-    voteDown: number;
     photo: string;
     user: User;
     blogCategory: BlogCategory;

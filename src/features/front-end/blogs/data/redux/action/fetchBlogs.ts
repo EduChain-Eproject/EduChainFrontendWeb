@@ -12,7 +12,8 @@ export const fetchBlogs = createAsyncThunk(
     '/ui/blog/fetchBlogs',
     async () => {
         const response = await apiFetchBlogs();
-
+        console.log(response);
+        
         return response;
     }
 );

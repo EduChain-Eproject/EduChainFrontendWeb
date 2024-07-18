@@ -1,14 +1,18 @@
 import User from './User';
-import { Homework } from './Homework';
 import { Question } from './Question';
 import { Answer } from './Answer';
+import { UserHomework } from './UserHomework';
 
 export class UserAnswer {
   id: number;
-  userDto: User | undefined;
   isCorrect: boolean;
 
-  homeworkDto: Homework | undefined;
-  questionDto: Question | undefined;
-  answerDto: Answer | undefined;
+  userHomeworkId?: number;
+  questionId?: number;
+  answerId?: number;
+
+  userDto?: User;
+  userHomeworkDto?: UserHomework;
+  questionDto?: Question;
+  answerDto?: Answer;
 }

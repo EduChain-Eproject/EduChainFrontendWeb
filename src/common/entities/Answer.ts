@@ -6,6 +6,8 @@ export class Answer {
   id: number;
   answerText: string;
 
-  questionDto: Question;
-  userAnswerDtos: UserAnswer[];
+  questionId?: string;
+
+  questionDto?: Question;
+  userAnswerDtos?: UserAnswer[];
 }

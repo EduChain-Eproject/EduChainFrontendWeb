@@ -1,5 +1,7 @@
-import { Homework } from './Homework';
+import { Award } from './Award';
+import Homework from './Homework';
 import User from './User';
+import { UserAnswer } from './UserAnswer';
 
 export class UserHomework {
   id: number;
@@ -8,6 +10,11 @@ export class UserHomework {
   grade: number;
   isSubmitted: boolean;
 
-  homeworkDto: Homework;
-  userDto: User | undefined;
+  homeworkDtoId?: number;
+
+  homeworkDto?: Homework;
+  userDto?: User;
+  userAnswerDtos?: UserAnswer[];
+
+  userAwardDto?: Award;
 }

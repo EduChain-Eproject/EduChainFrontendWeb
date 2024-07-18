@@ -3,6 +3,7 @@ import Chapter from './Chapter';
 import CourseFeedback from './CourseFeedback';
 import User from './User';
 import { UserCourse } from './UserCourse';
+import UserInterest from './UserInterest';
 
 export default class Course {
   id: number;
@@ -11,15 +12,14 @@ export default class Course {
   description: string;
   status: string;
 
-  teacherDto: User | undefined;
-  categoryDtos: Category[] | undefined;
-  chapterDtos: Chapter[] | undefined;
+  teacherDto?: User;
+  categoryDtos?: Category[];
+  chapterDtos?: Chapter[];
+  participatedUserDtos?: UserCourse[];
+  courseFeedbackDtos?: CourseFeedback[];
+  userInterestDtos?: UserInterest[];
 
-  numberOfEnrolledStudents: number | undefined;
-  courseFeedbacks: CourseFeedback[] | undefined;
-  participatedUserDtos: UserCourse[] | undefined;
-  courseFeedbackDtos: CourseFeedback[] | undefined;
-  relatedCourseDtos: Course[] | undefined;
-
-  enrolled?: boolean;
+  numberOfEnrolledStudents?: number;
+  currentUserCourse?: UserCourse;
+  relatedCourseDtos?: Course[];
 }

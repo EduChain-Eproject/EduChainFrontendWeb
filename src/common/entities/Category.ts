@@ -1,8 +1,9 @@
-import Course from "./Course";
+import Course from './Course';
 
 export default class Category {
-    id: number;
-    categoryName: string;
-    courses: Course[];
-    description: string;
+  id: number;
+  categoryName: string;
+  categoryDescription: string;
+
+  courseDtos?: Course[];
 }

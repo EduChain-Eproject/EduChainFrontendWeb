@@ -14,6 +14,7 @@
     "url": "https://tailadmin.com"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^2.2.5",
     "apexcharts": "^3.41.0",
     "axios": "^1.7.2",
@@ -24,6 +25,7 @@
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
+    "react-bootstrap": "^2.10.4",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.5",
     "react-hot-toast": "^2.4.1",

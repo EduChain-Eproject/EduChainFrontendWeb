@@ -1,9 +1,21 @@
-import { RouteObject } from "react-router-dom";
+import { Outlet, RouteObject } from "react-router-dom";
 import React from "react";
-import { HomeLayout } from "../../layouts";
+import {
+    BlogDetailRoute,
+    BlogListRoute,
+    CreateBlogRoute,
+    UpdateBlogRoute
+} from '../../../features/front-end/blogs/presentation/pages/index'
 
 export const communityRoutes: RouteObject = {
     path: "community",
-    element: <HomeLayout />,
-    children: []
+    element: <>
+        <Outlet />
+    </>,
+    children: [
+        BlogListRoute(),
+        BlogDetailRoute(),
+        CreateBlogRoute(),
+        UpdateBlogRoute()
+    ]
 }

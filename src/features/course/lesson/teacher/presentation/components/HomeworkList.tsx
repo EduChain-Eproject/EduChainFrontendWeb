@@ -10,17 +10,19 @@ import { homeworkDeleted } from '../../data/redux/lessonSlice';
 
 interface HomeworkListProps {
   homeworks: Homework[];
+  handleClickHomework: () => void;
 }
 
-const HomeworkList: React.FC<HomeworkListProps> = ({ homeworks }) => {
+const HomeworkList: React.FC<HomeworkListProps> = ({
+  homeworks,
+  handleClickHomework,
+}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { data: deletedHomeworkId } = useAppSelector(
     (state) => state.homeworks.teacher.deleteHomeworkPage,
   );
-
-  console.log(deletedHomeworkId);
 
   useEffect(() => {
     dispatch(homeworkDeleted(deletedHomeworkId));
@@ -34,7 +36,15 @@ const HomeworkList: React.FC<HomeworkListProps> = ({ homeworks }) => {
 
   return (
     <div className="bg-white shadow rounded-lg p-6 w-full">
-      <h2 className="text-2xl font-bold mb-4">Homeworks</h2>
+      <div className="flex flex-row justify-between items-center">
+        <h2 className="text-2xl font-bold mb-4">Homeworks</h2>
+        <button
+          onClick={handleClickHomework}
+          className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 mt-4"
+        >
+          Create Homework
+        </button>
+      </div>
       {homeworks.length === 0 ? (
         <p>No homeworks available.</p>
       ) : (

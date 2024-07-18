@@ -9,6 +9,7 @@ import Curriculum from '../components/Curriculum';
 import Enrollment from '../components/Enrollment';
 import { fetchLessonDetail } from '../../data/services/handleGetLessonDetail';
 import { fetchCourseDetail } from '../../data/services/handleGetCourseDetail';
+import HomeworkDetail from '../components/homeworks/HomeworkDetail';
 
 export const route: () => RouteObject = () => {
   return {
@@ -25,7 +26,7 @@ const LessonDetailPage: React.FC = () => {
   }>();
   const dispatch = useAppDispatch();
   const {
-    data: lesson,
+    data: lesson, // lesson is Lesson | undefined type
     status,
     error,
   } = useAppSelector((state) => state.courses.student.lessonDetailPage);
@@ -34,6 +35,10 @@ const LessonDetailPage: React.FC = () => {
   );
 
   const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
+  const [showHomeworks, setShowHomeworks] = useState(false);
+  const [selectedHomeworkId, setSelectedHomeworkId] = useState<number | null>(
+    null,
+  );
 
   useEffect(() => {
     dispatch(fetchLessonDetail(Number(lessonId)));
@@ -41,15 +46,15 @@ const LessonDetailPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchCourseDetail(Number(courseId)));
-  }, [lessonId, dispatch]);
+  }, [courseId, dispatch]);
 
   const breadCrumbItems = [
     { label: 'Home', href: '' },
     { label: 'Courses', href: '/courses' },
-    { label: `Courses ${data?.title}`, href: `/courses/${courseId}` },
+    { label: `Course ${data?.title}`, href: `/courses/${courseId}` },
     {
       label: `Lesson ${lesson?.lessonTitle}`,
-      href: `/courses/${courseId}/lesson/${lessonId}`,
+      href: `/courses/${courseId}/lessons/${lessonId}`,
     },
   ];
 
@@ -62,14 +67,14 @@ const LessonDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="mx-auto max-w-4xl px-4">
       <AppBreadcrumb items={breadCrumbItems} />
-      <div className="flex flex-row justify-between">
+      <div className="flex justify-between">
         {data?.chapterDtos && (
           <Curriculum
             chapters={data?.chapterDtos}
             onLessonClick={(id) => {
-              if (data && !data.enrolled) {
+              if (data && !data.currentUserCourse) {
                 setShowEnrollmentModal(true);
               } else {
                 navigate(`/courses/${courseId}/lessons/${id}`);
@@ -77,27 +82,49 @@ const LessonDetailPage: React.FC = () => {
             }}
           />
         )}
-        <div className="flex flex-1 bg-white shadow rounded-lg p-6">
+        <div className="flex flex-1 flex-col bg-white shadow rounded-lg p-6">
           <h1 className="text-2xl font-bold mb-4">Lesson Detail</h1>
-          {true && <button>Take the test</button>}
-          {true && <button>View your test</button>}
-          <div>
+          <button
+            onClick={() => setShowHomeworks((prev) => !prev)}
+            className="text-blue-500 underline"
+          >
+            {showHomeworks ? 'Hide Homeworks' : 'View Homeworks'}
+          </button>
+          <div className="mt-4">
             <h2 className="text-xl font-semibold">{lesson?.lessonTitle}</h2>
             <p>{lesson?.description}</p>
-            <h3 className="text-lg font-medium">Video</h3>
+            <h3 className="text-lg font-medium mt-2">Video</h3>
             <p>{lesson?.videoTitle}</p>
             <a
               href={lesson?.videoURL}
               target="_blank"
               rel="noopener noreferrer"
+              className="text-blue-500 underline"
             >
               {lesson?.videoURL}
             </a>
-            {/* Render other properties */}
           </div>
+          {showHomeworks && (
+            <div className="mt-4">
+              <h2 className="text-xl font-bold">Homeworks</h2>
+              {lesson?.homeworkDtos?.map((homework) => (
+                <div key={homework.id} className="mb-2">
+                  <button
+                    onClick={() => setSelectedHomeworkId(homework.id)}
+                    className="text-blue-500 underline"
+                  >
+                    {homework.title}
+                  </button>
+                </div>
+              ))}
+              {selectedHomeworkId && (
+                <HomeworkDetail homeworkId={selectedHomeworkId} />
+              )}
+            </div>
+          )}
         </div>
-        {showEnrollmentModal && !data?.enrolled && (
-          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
+        {showEnrollmentModal && !data?.currentUserCourse && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div className="bg-white p-4 rounded-md shadow-md">
               <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
               <p className="mb-4">

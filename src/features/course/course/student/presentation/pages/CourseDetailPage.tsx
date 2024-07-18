@@ -54,7 +54,7 @@ const CourseDetailPage: React.FC = () => {
   }
 
   const handleLessonClick = (lessonId: number) => {
-    if (courseData && !courseData.enrolled) {
+    if (courseData && !courseData.currentUserCourse) {
       setShowEnrollmentModal(true);
     } else {
       navigate(`/courses/${courseId}/lessons/${lessonId}`);
@@ -62,7 +62,7 @@ const CourseDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="mx-auto max-w-4xl px-4">
       <AppBreadcrumb items={breadCrumbItems} />
       <h1 className="text-2xl font-bold mb-4">{courseData?.title}</h1>
       <div className="mb-4">
@@ -116,9 +116,9 @@ const CourseDetailPage: React.FC = () => {
         />
       )}{' '}
       {activeTab === 'feedback' && courseData && (
-        <Feedback feedbacks={courseData.courseFeedbacks} />
+        <Feedback feedbacks={courseData.courseFeedbackDtos} />
       )}
-      {showEnrollmentModal && !courseData?.enrolled && (
+      {showEnrollmentModal && !courseData?.currentUserCourse && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-4 rounded-md shadow-md">
             <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
@@ -135,7 +135,9 @@ const CourseDetailPage: React.FC = () => {
           </div>
         </div>
       )}
-      {courseData && <Enrollment course={courseData} />}
+      {courseData && !courseData?.currentUserCourse && (
+        <Enrollment course={courseData} />
+      )}
       {courseData?.relatedCourseDtos &&
         courseData.relatedCourseDtos.length > 0 && (
           <RelatedCourses relatedCourses={courseData.relatedCourseDtos} />

@@ -104,22 +104,15 @@ const LessonDetailPage: React.FC = () => {
         </div>
       </div>
       <div className="mt-8">
-        {lesson?.homeworkDtos?.length ? (
-          <HomeworkList homeworks={lesson.homeworkDtos} />
-        ) : (
-          <div>
-            <p>No homework available.</p>
-            <button
-              onClick={() =>
-                navigate(
-                  `/dashboard/teacher/homeworks/create/lesson/${lessonId}`,
-                )
-              }
-              className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 mt-4"
-            >
-              Create Homework
-            </button>
-          </div>
+        {lesson?.homeworkDtos && (
+          <HomeworkList
+            homeworks={lesson.homeworkDtos}
+            handleClickHomework={() => {
+              navigate(
+                `/dashboard/teacher/homeworks/create/lesson/${lessonId}`,
+              );
+            }}
+          />
         )}
       </div>
     </div>

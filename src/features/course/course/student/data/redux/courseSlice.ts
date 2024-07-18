@@ -1,14 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Award } from '../../../../../../common/entities/Award';
 import Category from '../../../../../../common/entities/Category';
 import Course from '../../../../../../common/entities/Course';
+import Homework from '../../../../../../common/entities/Homework';
 import Lesson from '../../../../../../common/entities/Lesson';
 import { Page } from '../../../../../../common/entities/Page';
+import { UserHomework } from '../../../../../../common/entities/UserHomework';
 import {
   CommonState,
   initCommonState,
 } from '../../../../../../common/state/index';
 import handleEnrollACourse from '../services/handleEnrollACourse';
 import handleGetCourseDetail from '../services/handleGetCourseDetail';
+import handleGetHomeworkDetail from '../services/handleGetHomeworkDetail';
 import handleGetLessonDetail from '../services/handleGetLessonDetail';
 import handleGetListCategories from '../services/handleGetListCategories';
 import handleGetListCourses from '../services/handleGetListCourses';
@@ -22,6 +26,9 @@ export interface CourseState {
   listCoursesPage: CommonState<ListCoursesPage>;
   courseDetailPage: CommonState<Course>;
   lessonDetailPage: CommonState<Lesson>;
+  homeworkDetailComponent: CommonState<Homework>;
+  userHomeworkComponent: CommonState<UserHomework>;
+  userAwardComponent: CommonState<Award>;
 }
 
 const initialState: CourseState = {
@@ -34,6 +41,9 @@ const initialState: CourseState = {
   },
   courseDetailPage: initCommonState,
   lessonDetailPage: initCommonState,
+  homeworkDetailComponent: initCommonState,
+  userHomeworkComponent: initCommonState,
+  userAwardComponent: initCommonState,
 };
 
 const studentCourseSlice = createSlice({
@@ -46,6 +56,7 @@ const studentCourseSlice = createSlice({
     handleGetCourseDetail(builder);
     handleGetLessonDetail(builder);
     handleEnrollACourse(builder);
+    handleGetHomeworkDetail(builder);
   },
 });
 

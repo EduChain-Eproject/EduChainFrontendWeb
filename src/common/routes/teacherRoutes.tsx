@@ -23,6 +23,10 @@ import {
   homeworkDetailPageRoute,
   homeworkUpdatePageRoute,
 } from '../../features/course/homework/teacher/presentation/pages';
+import {
+  questionCreatePageRoute,
+  questionUpdatePageRoute,
+} from '../../features/course/question/teacher/presentation/pages';
 
 export const teacherRoutes: RouteObject = {
   path: 'dashboard/teacher',
@@ -48,5 +52,9 @@ export const teacherRoutes: RouteObject = {
     homeworkCreatePageRoute(),
     homeworkUpdatePageRoute(),
     homeworkDetailPageRoute(),
+
+    // questions
+    questionCreatePageRoute(),
+    questionUpdatePageRoute(),
   ],
 };

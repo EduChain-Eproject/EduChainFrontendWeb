@@ -14,7 +14,7 @@ const Enrollment: React.FC<EnrollmentProps> = ({ course }) => {
   }
 
   return (
-    <div>
+    <div className="p-3 border-blue-400 rounded-lg bg-blue-300">
       <h2 className="text-xl font-bold">Enrollment</h2>
       <p>
         <strong>Price:</strong> ${course.price}
@@ -23,7 +23,12 @@ const Enrollment: React.FC<EnrollmentProps> = ({ course }) => {
         <strong>Number of Enrolled Students:</strong>{' '}
         {course.numberOfEnrolledStudents}
       </p>
-      <button onClick={() => handleEnrollCourse(course.id)}>Enroll</button>
+      <button
+        className="px-3 py-1 rounded-lg bg-green-400 hover:bg-green-700"
+        onClick={() => handleEnrollCourse(course.id)}
+      >
+        Enroll
+      </button>
     </div>
   );
 };

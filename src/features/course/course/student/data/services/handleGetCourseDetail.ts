@@ -35,6 +35,13 @@ export const handleGetCourseDetail = (
     .addCase(fetchCourseDetail.fulfilled, (state, action) => {
       state.courseDetailPage.status = 'succeeded';
       state.courseDetailPage.data = action.payload.data;
+
+      if (state.courseDetailPage.data) {
+        state.courseDetailPage.data = {
+          ...state.courseDetailPage.data,
+          currentUserCourse: action.payload.data?.currentUserCourse,
+        };
+      }
     })
     .addCase(fetchCourseDetail.rejected, (state, action) => {
       state.courseDetailPage.status = 'failed';

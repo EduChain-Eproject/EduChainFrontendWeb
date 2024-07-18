@@ -76,6 +76,7 @@ const HomeworkDetailPage: React.FC = () => {
     <div className="p-4">
       <AppBreadcrumb items={breadCrumbItems} />
       <h1 className="text-2xl font-bold mb-4">Homework Detail</h1>
+
       {homework && (
         <>
           <h2 className="text-xl font-semibold">{homework.title}</h2>
@@ -99,7 +100,14 @@ const HomeworkDetailPage: React.FC = () => {
         </>
       )}
       {homework?.questionDtos && (
-        <QuestionList questions={homework.questionDtos} />
+        <QuestionList
+          questions={homework.questionDtos}
+          handleClickQuestion={() =>
+            navigate(
+              `/dashboard/teacher/questions/create/homework/${homeworkId}/`,
+            )
+          }
+        />
       )}
     </div>
   );

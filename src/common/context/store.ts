@@ -20,6 +20,8 @@ import UserInterestSlice from '../../features/user_interest/presentation/redux/U
 
 import teacherHomeworkSlice from '../../features/course/homework/teacher/data/redux/homeworkSlice';
 
+import teacherQuestionSlice from '../../features/course/question/teacher/data/redux/questionSlice';
+
 const courses = combineReducers({
   teacher: teacherCourseSlice,
   censor: censorCourseSlice,
@@ -38,6 +40,10 @@ const homeworks = combineReducers({
   teacher: teacherHomeworkSlice,
 });
 
+const questions = combineReducers({
+  teacher: teacherQuestionSlice,
+});
+
 const rootReducer = combineReducers({
   home: homeSlice,
   auth: authReducer,
@@ -49,6 +55,7 @@ const rootReducer = combineReducers({
   userProfile: UserProfileSlice,
   userInterest: UserInterestSlice,
   homeworks,
+  questions,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -1,13 +1,13 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { AuthState } from '../authSlice';
-import { ResetPasswrodAction } from '../AuthAction';
+import { ResetPasswordAction } from '../AuthAction';
 
 const handleResetPassword = (builder: ActionReducerMapBuilder<AuthState>) => {
   builder
-    .addCase(ResetPasswrodAction.pending, (state) => {
+    .addCase(ResetPasswordAction.pending, (state) => {
       state.resetPasswordPage.status = 'loading';
     })
-    .addCase(ResetPasswrodAction.fulfilled, (state, action) => {
+    .addCase(ResetPasswordAction.fulfilled, (state, action) => {
       if (action.payload.error) {
         state.resetPasswordPage.status = 'failed';
         state.resetPasswordPage.error = action.payload.error;

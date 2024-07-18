@@ -1,6 +1,6 @@
 import axios from 'axios';
 import axiosService from '../../../../../common/services/axiosService'
-import Failure from '../../../../../common/types/Failure';
+import Failure from '../../../../../common/entities/Failure';
 import Blog from '../../domain/entities/blog';
 import { CreateBlogReq } from '../../domain/usecases/CreateBlog';
 import { UpdateBlogReq } from '../../domain/usecases/UpdateBlog';

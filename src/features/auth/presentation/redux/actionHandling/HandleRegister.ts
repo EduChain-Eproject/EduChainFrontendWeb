@@ -12,11 +12,13 @@ const handleRegister = (builder:ActionReducerMapBuilder<AuthState>) =>{
         if (action.payload.error) {
             state.signUpPage.status = 'failed';
             state.signUpPage.error = action.payload.error;
-            console.log(action.payload.error);
             return;
         } else {
+            console.log(action.payload);
+            
+            console.log('thanh cong r ');
+            
             state.signUpPage.status = 'succeeded';
-            console.log(action.payload.message);
         }
     })
 }

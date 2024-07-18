@@ -1,48 +1,52 @@
-import { useParams } from "react-router-dom"
-import { useAppDispatch, useAppSelector } from "../../../../common/context/store";
-import { useEffect } from "react";
-import { getUserProfileAction } from "../redux/UserProfileAction";
-import React from "react";
+import { useAppSelector } from '../../../../common/context/store';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
+const UserProfilePage: React.FC = () => {
+  const { data } = useAppSelector((state) => state.userProfile.profilePage);
 
-const UserProfilePage:React.FC = () => {
-    const { data } = useAppSelector((state)=> state.userProfile.profilePage)
-    console.log(data);
-    return (
-        <div>
-           {data && (
-            <>
-                 <h2>User Profile</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Avatar Path</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{data.id}</td>
-                        <td>{data.email}</td>
-                        <td>{data.password}</td>
-                        <td>{data.firstName}</td>
-                        <td>{data.lastName}</td>
-                        <td>{data.phone}</td>
-                        <td>{data.address}</td>
-                        <td><img src={data.avatarPath} alt="" width="100px" height="200px" /></td>
-                    </tr>
-                </tbody>
-            </table>
-            </>
-           )} 
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      {data ? (
+        <>
+          <h2 className="text-3xl font-bold mb-8 text-center">User Profile</h2>
+          <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-8">
+            <img
+              src={data.avatarPath}
+              alt="User Avatar"
+              className="w-32 h-32 object-cover rounded-full mb-4 md:mb-0"
+            />
+            <div className="w-full">
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Email:</h3>
+                <p>{data.email}</p>
+              </div>
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">First Name:</h3>
+                <p>{data.firstName}</p>
+              </div>
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Last Name:</h3>
+                <p>{data.lastName}</p>
+              </div>
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Phone:</h3>
+                <p>{data.phone}</p>
+              </div>
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Address:</h3>
+                <p>{data.address}</p>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="text-center">
+          <p>Loading user profile...</p>
         </div>
-    )
-}
+      )}
+    </div>
+  );
+};
 
 export default UserProfilePage;

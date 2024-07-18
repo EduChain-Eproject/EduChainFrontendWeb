@@ -1,9 +1,13 @@
-import Course from "./Course";
-import { Lesson } from "./Lesson";
-import { Question } from "./Question";
+import Course from './Course';
+import { Question } from './Question';
+import { UserAnswer } from './UserAnswer';
 
 export class Answer {
-    id: number;
-    answerText: string;
-    question: Question;
+  id: number;
+  answerText: string;
+
+  questionId?: string;
+
+  questionDto?: Question;
+  userAnswerDtos?: UserAnswer[];
 }

@@ -12,7 +12,7 @@ export interface AuthRepository {
   //registers
   onRegister: (
     registerRequest: RegisterReq,
-  ) => Promise<{ message: RegisterResponseMessage; error?: string }>;
+  ) => Promise<{ message: string; error?: string }>;
   //
   onLogout: (
     email: string,

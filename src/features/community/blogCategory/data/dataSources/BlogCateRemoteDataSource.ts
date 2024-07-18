@@ -1,6 +1,6 @@
 import axios from 'axios';
 import axiosService from '../../../../../common/services/axiosService'
-import Failure from '../../../../../common/types/Failure';
+import Failure from '../../../../../common/entities/Failure';
 import { BlogCategory } from '../../domain/entities/BlogCategory';
 import { CreateCateReq } from '../../domain/usecases/CreateCate';
 import { UpdateCateReq } from '../../domain/usecases/UpdateCate';

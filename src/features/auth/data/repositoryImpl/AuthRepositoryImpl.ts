@@ -1,5 +1,5 @@
 import { UserDto } from './../dtos/UserDto';
-import Failure from '../../../../common/types/Failure';
+import Failure from '../../../../common/entities/Failure';
 import { User } from '../../domain/entities/User';
 import {
   ApiResponse,
@@ -53,12 +53,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   async onRegister(
     registerRequest: RegisterReq,
-  ): Promise<{ message: RegisterResponseMessage; error?: string }> {
+  ): Promise<{ message: string; error?: string }> {
     try {
       const response = await registerUser(registerRequest);
       return { message: response };
     } catch (error) {
-      return { message: error.message || 'Unknown error' };
+      return { message: '', error: error?.message };
     }
   }
 

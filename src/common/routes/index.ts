@@ -4,7 +4,6 @@ import { adminRoutes } from './adminRoutes';
 import { teacherRoutes } from './teacherRoutes';
 import { censorRoutes } from './censorRoutes';
 import { userProfileRoutes } from './userProfileRoutes';
-import { userInterestRoutes } from './userIterestRoute';
 
 export {
   authRoute,
@@ -13,5 +12,4 @@ export {
   teacherRoutes,
   censorRoutes,
   userProfileRoutes,
-  userInterestRoutes,
 };

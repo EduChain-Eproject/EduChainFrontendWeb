@@ -30,7 +30,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
         <nav className="flex space-x-4">
           <NavLink to="#">Home</NavLink>
           <NavLink to="#">Pages</NavLink>
-          <NavLink to="#">Courses</NavLink>
+          <NavLink to="/courses">Courses</NavLink>
           <NavLink to="#">Event</NavLink>
           <NavLink to="#">Blog</NavLink>
           <NavLink to="#">Contact Us</NavLink>
@@ -78,12 +78,9 @@ const NavLink: React.FC<{ to: string; children: string }> = ({
       )}
       {children === 'Courses' && (
         <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-            Course 1
-          </a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-            Course 2
-          </a>
+          <Link to={'/courses'} className="block px-4 py-2 hover:bg-gray-100">
+            Courses
+          </Link>
         </div>
       )}
       {children === 'Event' && (

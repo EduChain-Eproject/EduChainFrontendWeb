@@ -1,27 +1,23 @@
 import React from 'react';
 import { useAppSelector } from '../../../../../../../common/context/store';
 
-const UserHomework: React.FC = () => {
+const UserHomework = () => {
   const { data: userHomework } = useAppSelector(
     (state) => state.courses.student.userHomeworkComponent,
   );
 
   return (
-    <div className="mt-4">
-      <h2 className="text-xl font-bold">User Homework</h2>
-      <p>Submission Date: {userHomework?.submissionDate}</p>
-      <p>Progress: {userHomework?.progress}%</p>
-      <p>Grade: {userHomework?.grade}</p>
-      <p>Submitted: {userHomework?.isSubmitted ? 'Yes' : 'No'}</p>
-      <div>
-        {userHomework?.userAnswerDtos?.map((userAnswer) => (
-          <div key={userAnswer.id}>
-            <p>Question: {userAnswer.questionDto?.questionText}</p>
-            <p>Answer: {userAnswer.answerDto?.answerText}</p>
-            <p>Correct: {userAnswer.isCorrect ? 'Yes' : 'No'}</p>
-          </div>
-        ))}
-      </div>
+    <div className=" min-w-36">
+      {userHomework && (
+        <div className="">
+          <h3 className="text-lg font-semibold">Progress</h3>
+          <p>Progress: {userHomework.progress}%</p>
+          {userHomework.grade != 0 && <p>Grade: {userHomework.grade}</p>}
+          <p className="px-3 py-1 rounded-xl bg-orange-300">
+            {userHomework.isSubmitted ? 'Submitted' : 'Unsubmitted'}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

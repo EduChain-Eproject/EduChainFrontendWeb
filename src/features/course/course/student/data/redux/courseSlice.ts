@@ -10,12 +10,15 @@ import {
   CommonState,
   initCommonState,
 } from '../../../../../../common/state/index';
+import handleAnswerAQuestion from '../services/handleAnswerAQuestion';
 import handleEnrollACourse from '../services/handleEnrollACourse';
 import handleGetCourseDetail from '../services/handleGetCourseDetail';
 import handleGetHomeworkDetail from '../services/handleGetHomeworkDetail';
 import handleGetLessonDetail from '../services/handleGetLessonDetail';
 import handleGetListCategories from '../services/handleGetListCategories';
 import handleGetListCourses from '../services/handleGetListCourses';
+import handleReceiveAward from '../services/handleReceiveAward';
+import handleSubmitHomework from '../services/handleSubmitHomework';
 
 export interface ListCoursesPage {
   courses?: Page<Course>;
@@ -57,6 +60,9 @@ const studentCourseSlice = createSlice({
     handleGetLessonDetail(builder);
     handleEnrollACourse(builder);
     handleGetHomeworkDetail(builder);
+    handleAnswerAQuestion(builder);
+    handleSubmitHomework(builder);
+    handleReceiveAward(builder);
   },
 });
 

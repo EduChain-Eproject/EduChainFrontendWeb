@@ -5,51 +5,48 @@ import {
   useAppSelector,
 } from '../../../../../../../common/context/store';
 import { fetchHomeworkDetail } from '../../../data/services/handleGetHomeworkDetail';
-import UserHomework from './UserHomework';
-import UserAward from './UserAward';
+import CompletedHomework from './CompletedHomework';
+import HomeworkInProgress from './HomeworkInProgress';
 
-const HomeworkDetail = ({ homeworkId }: { homeworkId: number }) => {
+interface HomeworkDetailProps {
+  homeworkId: number;
+}
+
+const HomeworkDetail: React.FC<HomeworkDetailProps> = ({ homeworkId }) => {
   const dispatch = useAppDispatch();
   const {
     data: homework,
     status,
     error,
   } = useAppSelector((state) => state.courses.student.homeworkDetailComponent);
+  const { data: userAward } = useAppSelector(
+    (state) => state.courses.student.userAwardComponent,
+  );
+
+  const { status: userHomeworkStatus, error: userHomeworkError } =
+    useAppSelector((state) => state.courses.student.userHomeworkComponent);
 
   useEffect(() => {
     if (homeworkId) {
-      dispatch(fetchHomeworkDetail(Number(homeworkId)));
+      dispatch(fetchHomeworkDetail(homeworkId));
     }
   }, [homeworkId, dispatch]);
 
-  if (status === 'loading') {
+  if (status === 'loading' || userHomeworkStatus === 'loading') {
     return <div>Loading...</div>;
   }
 
-  if (status === 'failed') {
-    return <div>Error: {error}</div>;
+  if (status === 'failed' || userHomeworkStatus === 'failed') {
+    return <div>Error: {error || userHomeworkError}</div>;
   }
+
+  console.log(userAward);
 
   return (
     <div className="mt-4">
       <h2 className="text-xl font-bold">Homework Details</h2>
-      <div>
-        <h3 className="text-lg font-semibold">{homework?.title}</h3>
-        <p>{homework?.description}</p>
-        {homework?.questionDtos?.map((question) => (
-          <div key={question.id}>
-            <p>{question.questionText}</p>
-            {question.answerDtos?.map((answer) => (
-              <div key={answer.id}>
-                <p>{answer.answerText}</p>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      {homework?.userHomeworkDtos && <UserHomework />}
-      {homework?.userAwardDtos && homework.userAwardDtos.length > 0 && (
-        <UserAward />
+      {homework && (
+        <>{userAward ? <CompletedHomework /> : <HomeworkInProgress />}</>
       )}
     </div>
   );

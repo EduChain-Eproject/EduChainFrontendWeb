@@ -84,12 +84,6 @@ const LessonDetailPage: React.FC = () => {
         )}
         <div className="flex flex-1 flex-col bg-white shadow rounded-lg p-6">
           <h1 className="text-2xl font-bold mb-4">Lesson Detail</h1>
-          <button
-            onClick={() => setShowHomeworks((prev) => !prev)}
-            className="text-blue-500 underline"
-          >
-            {showHomeworks ? 'Hide Homeworks' : 'View Homeworks'}
-          </button>
           <div className="mt-4">
             <h2 className="text-xl font-semibold">{lesson?.lessonTitle}</h2>
             <p>{lesson?.description}</p>
@@ -103,10 +97,24 @@ const LessonDetailPage: React.FC = () => {
             >
               {lesson?.videoURL}
             </a>
+            <button
+              onClick={() => setShowHomeworks((prev) => !prev)}
+              className="text-blue-500 underline"
+            >
+              {!showHomeworks && 'Take Homeworks'}
+            </button>
           </div>
           {showHomeworks && (
             <div className="mt-4">
-              <h2 className="text-xl font-bold">Homeworks</h2>
+              <div className="flex flex-row justify-between">
+                <h2 className="text-xl font-bold">Homeworks</h2>
+                <button
+                  onClick={() => setShowHomeworks((prev) => !prev)}
+                  className="text-blue-500 underline"
+                >
+                  {showHomeworks && 'Close'}
+                </button>
+              </div>
               {lesson?.homeworkDtos?.map((homework) => (
                 <div key={homework.id} className="mb-2">
                   <button
@@ -115,6 +123,12 @@ const LessonDetailPage: React.FC = () => {
                   >
                     {homework.title}
                   </button>
+                  <div>
+                    {homework.questionDtos && (
+                      <p>{homework.questionDtos.length} questions</p>
+                    )}
+                    <p>{homework.description}</p>
+                  </div>
                 </div>
               ))}
               {selectedHomeworkId && (

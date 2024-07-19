@@ -38,7 +38,7 @@ export const handleEnrollACourse = (
       if (state.courseDetailPage.data) {
         state.courseDetailPage.data = {
           ...state.courseDetailPage.data,
-          enrolled: true,
+          // currentUserCourse = action.payload.data. // TODO
         };
       }
     })

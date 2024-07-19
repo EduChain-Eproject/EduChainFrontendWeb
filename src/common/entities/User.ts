@@ -12,6 +12,7 @@ export default class User {
   email: string;
   userAwardDtos: Award[] | undefined;
   userHomeworkDtos: UserHomework[] | undefined;
+
   constructor(role: Role, email: string) {
     this.role = role;
     this.email = email;

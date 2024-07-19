@@ -21,7 +21,7 @@ import {
 import { AuthRepository } from './../../domain/repositories/AuthRepository';
 import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswordEmail';
 import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';
-import { User } from '../../../../common/entities/User';
+import User from '../../../../common/entities/User';
 import { LogOutReq } from '../../domain/usecases/LogOut';
 class AuthRepositoryImpl implements AuthRepository {
   async onLogin(
@@ -39,11 +39,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
   async getUser(): Promise<{ data?: User; error?: string }> {
     try {
-      const response: UserDto = await getUserWithToken();
-      console.log(response);
-      const user: User = new User(response.role, response.email, response.id);
+      const response: User = await getUserWithToken();
 
-      return { data: user };
+      return { data: response };
     } catch (error) {
       if (error instanceof Failure) {
         return { error: error.message };

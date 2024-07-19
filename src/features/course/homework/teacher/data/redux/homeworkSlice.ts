@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Homework from '../../../../../../common/entities/Homework';
 
-import { Homework } from '../../../../../../common/entities/Homework';
 import {
   CommonState,
   initCommonState,
@@ -8,6 +8,7 @@ import {
 import handleCreateHomework from '../services/createHomework';
 import handleDeleteHomework from '../services/deleteHomework';
 import handleGetHomeworkDetail from '../services/getHomeworkDetail';
+import handleApproveOrRejectAward from '../services/handleApproveOrRejectAward';
 
 import handleUpdateHomework from '../services/updateHomework';
 
@@ -48,6 +49,7 @@ const homeworkSlice = createSlice({
     handleGetHomeworkDetail(builder);
     handleUpdateHomework(builder);
     handleDeleteHomework(builder);
+    handleApproveOrRejectAward(builder);
   },
 });
 

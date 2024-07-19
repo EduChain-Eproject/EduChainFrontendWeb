@@ -35,11 +35,11 @@ const HomeworkCreatePage: React.FC = () => {
     { label: 'Course by you', href: '/dashboard/teacher/courses' },
     {
       label: `Course ${lesson?.chapterDto?.courseDto?.title}`,
-      href: `/dashboard/teacher/courses/${lesson?.chapterDto?.courseDto.id}`,
+      href: `/dashboard/teacher/courses/${lesson?.chapterDto?.courseDto?.id}`,
     },
     {
       label: `Chapter ${lesson?.chapterDto?.chapterTitle}`,
-      href: `/dashboard/teacher/chapters/${lesson?.chapterDto.id}`,
+      href: `/dashboard/teacher/chapters/${lesson?.chapterDto?.id}`,
     },
     {
       label: `Lesson ${lesson?.lessonTitle}`,

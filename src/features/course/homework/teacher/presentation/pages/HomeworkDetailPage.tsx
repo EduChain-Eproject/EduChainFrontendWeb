@@ -10,6 +10,7 @@ import { homeworkDeleted } from '../../../../lesson/teacher/data/redux/lessonSli
 import { deleteHomework } from '../../data/services/deleteHomework';
 import { getHomeworkDetail } from '../../data/services/getHomeworkDetail';
 import QuestionList from '../components/QuestionList';
+import UserHomeworkList from '../components/UserHomeworkList';
 
 export const route: () => RouteObject = () => {
   return {
@@ -38,11 +39,11 @@ const HomeworkDetailPage: React.FC = () => {
     { label: 'Course by you', href: '/dashboard/teacher/courses' },
     {
       label: `Course ${homework?.lessonDto?.chapterDto?.courseDto?.title}`,
-      href: `/dashboard/teacher/courses/${homework?.lessonDto?.chapterDto?.courseDto.id}`,
+      href: `/dashboard/teacher/courses/${homework?.lessonDto?.chapterDto?.courseDto?.id}`,
     },
     {
       label: `Chapter ${homework?.lessonDto?.chapterDto?.chapterTitle}`,
-      href: `/dashboard/teacher/chapters/${homework?.lessonDto?.chapterDto.id}`,
+      href: `/dashboard/teacher/chapters/${homework?.lessonDto?.chapterDto?.id}`,
     },
     {
       label: `Lesson ${homework?.lessonDto?.lessonTitle}`,
@@ -97,17 +98,33 @@ const HomeworkDetailPage: React.FC = () => {
               Delete
             </button>
           </div>
+          <div className="flex flex-col md:flex-row items-start">
+            {homework.userHomeworkDtos && (
+              <div className="flex-1 p-4 border rounded overflow-hidden">
+                <div className="overflow-y-auto h-full">
+                  <UserHomeworkList
+                    userHomeworks={homework.userHomeworkDtos}
+                    homeworkId={homework.id}
+                  />
+                </div>
+              </div>
+            )}
+            {homework.questionDtos && (
+              <div className="flex-1 p-4 border rounded overflow-hidden ml-4">
+                <div className="overflow-y-auto h-full">
+                  <QuestionList
+                    questions={homework.questionDtos}
+                    handleClickQuestion={() =>
+                      navigate(
+                        `/dashboard/teacher/questions/create/homework/${homeworkId}/`,
+                      )
+                    }
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </>
-      )}
-      {homework?.questionDtos && (
-        <QuestionList
-          questions={homework.questionDtos}
-          handleClickQuestion={() =>
-            navigate(
-              `/dashboard/teacher/questions/create/homework/${homeworkId}/`,
-            )
-          }
-        />
       )}
     </div>
   );

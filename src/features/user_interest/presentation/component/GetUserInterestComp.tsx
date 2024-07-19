@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import { UserInterest } from "../../domain/entities/UserInterest";
-interface GetUserInterestCompProps {
-    data: UserInterest[];
-    onDelete: (courseId: number,studentId:number) => void;
-  }
+import AppPagination from "../../../../common/components/Pagination/AppPagination";
 
-const GetUserInterestComp:React.FC<GetUserInterestCompProps> = ({data , onDelete}) => {
+interface GetUserInterestCompProps {
+  data: UserInterest[];
+  onDelete: (courseId: number, studentId: number) => void;
+ 
+}
+const GetUserInterestComp:React.FC<GetUserInterestCompProps> = ({  data,
+  onDelete,
+
+ 
+}) => {
     return (
         <div>
           <h2>User Interests Table</h2>
@@ -46,6 +52,12 @@ const GetUserInterestComp:React.FC<GetUserInterestCompProps> = ({data , onDelete
               ))}
             </tbody>
           </table>
+          {/* <Pagination
+          totalPages={totalPage}
+          currentPage={currentPage}
+          onPageChange={onPageChange} titleSearch={""} setSearch={function (search: string): void {
+            throw new Error("Function not implemented.");
+          } }      /> */}
         </div>
       );
 }

@@ -1,5 +1,5 @@
 import axiosService from '../../../../../../common/services/axiosService'
-import Failure from '../../../../../../common/types/Failure';
+import Failure from '../../../../../../common/entities/Failure';
 import Page from '../../domain/entities/Page';
 import { CourseSearchParams } from '../../domain/usecases/SearchCourses';
 import { CourseDto } from '../models/CourseDto';

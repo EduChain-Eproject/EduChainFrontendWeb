@@ -9,7 +9,7 @@ export default class GetUserInterestsUseCase {
 }
 export type GetUserInterestReq = {
   student_id: number;
-  course_id: number;
   page: number;
   size: number;
+  titleSearch: string;
 };

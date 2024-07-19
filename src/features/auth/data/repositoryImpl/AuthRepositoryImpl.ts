@@ -1,6 +1,5 @@
 import { UserDto } from './../dtos/UserDto';
-import Failure from '../../../../common/types/Failure';
-import { User } from '../../domain/entities/User';
+import Failure from '../../../../common/entities/Failure';
 import {
   ApiResponse,
   JwtResponse,
@@ -22,6 +21,8 @@ import {
 import { AuthRepository } from './../../domain/repositories/AuthRepository';
 import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswordEmail';
 import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';
+import { User } from '../../../../common/entities/User';
+import { LogOutReq } from '../../domain/usecases/LogOut';
 class AuthRepositoryImpl implements AuthRepository {
   async onLogin(
     loginRequest: LoginReq,
@@ -33,7 +34,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (error instanceof Failure) {
         return { error: error.message };
       }
-      return { error: 'Unexpected error occurred' };
+      return { error: 'Unexpected error occurred on login' };
     }
   }
   async getUser(): Promise<{ data?: User; error?: string }> {
@@ -47,32 +48,31 @@ class AuthRepositoryImpl implements AuthRepository {
       if (error instanceof Failure) {
         return { error: error.message };
       }
-      return { error: 'Unexpected error occurred' };
+      return { error: 'Unexpected error occurred get User' };
     }
   }
 
-  async onRegister(
+  onRegister = async (
     registerRequest: RegisterReq,
-  ): Promise<{ message: RegisterResponseMessage; error?: string }> {
+  ): Promise<{ message: string | undefined; error?: string }> => {
     try {
       const response = await registerUser(registerRequest);
       return { message: response };
     } catch (error) {
-      return { message: error.message || 'Unknown error' };
+      return { message: undefined, error: 'error: ' + error?.message };
     }
-  }
+  };
 
-  async onLogout(
-    email: string,
-  ): Promise<{ message: RegisterResponseMessage; error?: string | undefined }> {
+  onLogout = async (
+    email: LogOutReq,
+  ): Promise<{ message: string; error?: string }> => {
     try {
       const response = await logOut(email);
       return { message: response };
     } catch (error) {
-      return { message: error.message || 'unknow error' };
+      return { message: error.message || 'unknown error' };
     }
-  }
-
+  };
   async onSendResetPasswordEmail(
     req: SendResetPasswordEmailReq,
   ): Promise<{ message: RegisterResponseMessage; error?: string | undefined }> {

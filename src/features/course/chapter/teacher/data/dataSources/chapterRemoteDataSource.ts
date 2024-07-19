@@ -1,5 +1,5 @@
 import axiosService from '../../../../../../common/services/axiosService'
-import Failure from '../../../../../../common/types/Failure';
+import Failure from '../../../../../../common/entities/Failure';
 import { CreateChapterReq } from '../../domain/usecases/CreateChapter';
 import { UpdateChapterReq } from '../../domain/usecases/UpdateChapter';
 import { ChapterDTO } from '../models/ChapterDto';

@@ -1,5 +1,5 @@
 import axiosService from "../../../../../../common/services/axiosService";
-import Failure from "../../../../../../common/types/Failure";
+import Failure from "../../../../../../common/entities/Failure";
 import { CategoryDto } from "../models/CategoryDto";
 
 export const apiFetchListCategories: () => Promise<CategoryDto[]> = async () => {

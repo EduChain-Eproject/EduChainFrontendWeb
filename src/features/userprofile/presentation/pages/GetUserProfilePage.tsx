@@ -1,43 +1,49 @@
-import { RouteObject } from "react-router-dom"
-import React, { useEffect } from "react"
-import UserProfilePage from "../components/UserProfilePage"
-import { useAppDispatch, useAppSelector } from "../../../../common/context/store"
-import { getUserProfileAction } from "../redux/UserProfileAction"
+import { RouteObject } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../common/context/store';
+import { getUserProfileAction } from '../redux/UserProfileAction';
+import UserProfileComp from '../components/UserProfileComp';
 
+export const route: () => RouteObject = () => {
+  return {
+    path: '',
+    element: <GetUserProfilePage />,
+  };
+};
 
-export const route:() => RouteObject = () => {
-    return {
-        path:"",
-        element:<GetUserProfilePage/>
-    }
-}
-
-const GetUserProfilePage:React.FC = () => {
+const GetUserProfilePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { data, error, status } = useAppSelector((state)=> state.userProfile.profilePage)
-  console.log(data?.firstName);
-  const email = useAppSelector(s => s.auth.user?.email)
+  const { error, status } = useAppSelector(
+    (state) => state.userProfile.profilePage,
+  );
+  const email = useAppSelector((s) => s.auth.user?.email);
+
   useEffect(() => {
-    if(email) {
-        dispatch(getUserProfileAction(email));
+    if (email) {
+      console.log(email);
+
+      dispatch(getUserProfileAction(email));
     }
-},[dispatch,email]);
+  }, [dispatch, email]);
 
-if(status === 'loading'){
+  if (status === 'loading') {
     return <div>Loading</div>;
-}
+  }
 
-if(status === 'failed'){
+  if (status === 'failed') {
     return <div>error:{error}</div>;
-}
+  }
 
-  return(
+  console.log('profile');
+
+  return (
     <div>
-     <h3>User-Profile</h3>
-     <h1>{email}</h1>
-       <UserProfilePage/>
+      <UserProfileComp />
     </div>
   );
-}
+};
 
 export default GetUserProfilePage;

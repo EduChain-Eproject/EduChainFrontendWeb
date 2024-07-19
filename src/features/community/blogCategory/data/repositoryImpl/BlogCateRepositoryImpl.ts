@@ -1,4 +1,4 @@
-import Failure from '../../../../../common/types/Failure';
+import Failure from '../../../../../common/entities/Failure';
 import { BlogCategory } from '../../domain/entities/BlogCategory';
 import { BlogCateRepository } from '../../domain/repositories/BlogCateRepository';
 import { CreateCateReq } from '../../domain/usecases/CreateCate';

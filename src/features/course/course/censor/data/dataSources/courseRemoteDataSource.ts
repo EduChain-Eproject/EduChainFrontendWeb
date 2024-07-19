@@ -1,5 +1,5 @@
 import axiosService from '../../../../../../common/services/axiosService'
-import Failure from '../../../../../../common/types/Failure';
+import Failure from '../../../../../../common/entities/Failure';
 import Course from '../../domain/entities/Course';
 import Page from '../../domain/entities/Page';
 import { ChangeCourseStatusRequest } from '../../domain/usecases/DeactivateCourse';

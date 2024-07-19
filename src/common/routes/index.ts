@@ -4,8 +4,7 @@ import { adminRoutes } from './adminRoutes';
 import { teacherRoutes } from './teacherRoutes';
 import { censorRoutes } from './censorRoutes';
 import { userProfileRoutes } from './userProfileRoutes';
-import { userInterestRoutes } from './userIterestRoute';
-
+import { userCourseRoute } from './userCourseRoute';
 export {
   authRoute,
   homeRoutes,
@@ -13,5 +12,5 @@ export {
   teacherRoutes,
   censorRoutes,
   userProfileRoutes,
-  userInterestRoutes,
+  userCourseRoute,
 };

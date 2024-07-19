@@ -1,5 +1,5 @@
 import axiosService from "../../../../../../common/services/axiosService";
-import Failure from "../../../../../../common/types/Failure";
+import Failure from "../../../../../../common/entities/Failure";
 import Lesson from "../../domain/entities/Lesson";
 import { CreateLessonReq } from "../../domain/usecases/CreateLesson";
 import { UpdateLessonReq } from "../../domain/usecases/UpdateLesson";

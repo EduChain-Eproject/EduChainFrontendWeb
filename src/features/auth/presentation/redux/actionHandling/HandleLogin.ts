@@ -12,7 +12,7 @@ const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) =>{
         if (action.payload.error) {
             state.logInPage.status = 'failed';
             state.logInPage.error = action.payload.error;
-            console.log(action.payload.error);
+            console.log(state.logInPage.error);
             return;
         } else {
             state.logInPage.status = 'login succeeded';

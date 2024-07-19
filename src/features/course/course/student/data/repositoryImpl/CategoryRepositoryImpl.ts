@@ -1,4 +1,4 @@
-import Failure from '../../../../../../common/types/Failure';
+import Failure from '../../../../../../common/entities/Failure';
 import Category from '../../domain/entities/Category';
 import { CategoryRepository } from '../../domain/repositories/CategoryRepository';
 import { apiFetchListCategories } from '../dataSources/categoryRemoteDataSource';

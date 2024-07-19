@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+
 import Course from '../../domain/entities/Course';
 import {
     handleUpdateCourse,

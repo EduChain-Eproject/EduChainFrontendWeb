@@ -1,6 +1,7 @@
+import { UserInterestRepository } from './../../domain/repository/UserInterestRepository';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import UserInterestRepositoryImpl from '../../data/repositoryImpl/UserInterestRepositoryImpl';
-import { UserInterestRepository } from '../../domain/repository/UserInterestRepository';
+
 import GetUserInterestsUseCase, {
   GetUserInterestReq,
 } from '../../domain/usecase/GetUserInterests UserCase';
@@ -10,16 +11,6 @@ import DeleteUserInterestUseCase from '../../domain/usecase/DeleteUserInterestUs
 const userInterestRepository: UserInterestRepository =
   new UserInterestRepositoryImpl();
 
-export const fetchUserInterests = createAsyncThunk(
-  'userInterests/fetchUserInterests',
-  async (req: GetUserInterestReq) => {
-    const getUserInterestsUseCase = new GetUserInterestsUseCase(
-      userInterestRepository,
-    );
-    return await getUserInterestsUseCase.execute(req);
-  },
-);
-
 export const fetchDeleteUserInterest = createAsyncThunk(
   'userInterests/deleteUserInterest',
   async (deleteUserInterest: DeleteUserInterest) => {
@@ -27,5 +18,27 @@ export const fetchDeleteUserInterest = createAsyncThunk(
       userInterestRepository,
     );
     return await deleteInterestUseCase.execute(deleteUserInterest);
+  },
+);
+
+export const fetchUserInterests = createAsyncThunk(
+  'userInterests/fetchUserInterests',
+  async (req: GetUserInterestReq, { getState }) => {
+    const getUserInterestsUseCase = new GetUserInterestsUseCase(
+      userInterestRepository,
+    );
+    const response = await getUserInterestsUseCase.execute(req);
+    return response;
+  },
+);
+
+export const fetchAddUserInterest = createAsyncThunk(
+  'userInterests/addUserInterests',
+  async (req: GetUserInterestReq, { getState }) => {
+    const getUserInterestsUseCase = new GetUserInterestsUseCase(
+      userInterestRepository,
+    );
+    const response = await getUserInterestsUseCase.execute(req);
+    return response;
   },
 );

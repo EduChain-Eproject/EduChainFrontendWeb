@@ -1,25 +1,51 @@
-import React, { ComponentType } from 'react'
-import { useAppSelector } from '../context/store';
-import { Navigate } from 'react-router-dom';
+import React, { ComponentType, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../context/store';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { getUserAction } from '../../features/auth/presentation/redux/AuthAction';
 
 const RoleCheckerHOC = <P extends object>(
-    WrappedComponent: ComponentType<P>,
-    requiredRole: string
+  WrappedComponent: ComponentType<P>,
+  requiredRole: string,
 ) => {
-    return (props: any) => {
-        const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const RoleChecker: React.FC<P> = (props) => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
-        if (!isAuthenticated || user == null) {
-            return <Navigate to="/Auth" />;
+    const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+
+    useEffect(() => {
+      if (!isAuthenticated) {
+        navigate('/Auth');
+      } else {
+        dispatch(getUserAction());
+      }
+    }, [isAuthenticated, dispatch, navigate]);
+
+    useEffect(() => {
+      if (user?.role && user.role !== requiredRole && requiredRole !== 'NONE') {
+        switch (user.role) {
+          case 'ADMIN':
+            navigate('/dashboard');
+            break;
+          case 'TEACHER':
+            navigate('/dashboard/teacher');
+            break;
+          case 'CENSOR':
+            navigate('/dashboard/censor');
+            break;
+          case 'STUDENT':
+            navigate('/');
+            break;
+          default:
+            break;
         }
+      }
+    }, [user?.role, navigate, requiredRole]);
 
-        if (user.role !== requiredRole) {
-            return <Navigate to="/unauthorized" />;
-        }
+    return <WrappedComponent {...props} />;
+  };
 
-        return <WrappedComponent {...props} />;
-    };
+  return RoleChecker;
 };
-
 
 export default RoleCheckerHOC;

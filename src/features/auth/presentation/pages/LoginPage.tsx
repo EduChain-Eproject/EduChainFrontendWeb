@@ -6,18 +6,15 @@ import LoginForm from "../components/LoginForm";
 
 
 
-export const route:() => RouteObject = () => {
+export const route: () => RouteObject = () => {
     return {
-        path:"login",
-        element:<CreateLoginPage/>
+        path: "login",
+        element: <LoginPage />
     }
 }
 
-const CreateLoginPage: React.FC = () => {
+const LoginPage: React.FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate()
-
-    const {status, error, data} = useAppSelector(state => state.auth.logInPage);
 
     const handleSubmit = (data: any) => {
         dispatch(logInAction({ loginReq: data }));
@@ -29,12 +26,12 @@ const CreateLoginPage: React.FC = () => {
 
     return (
         <div className="flex justify-center items-center h-screen sm:h-auto bg-gray-200">
-        <div className="bg-white shadow-md rounded px-8 py-6 w-full sm:w-96">
-          <h1 className="text-2xl font-bold mb-4 text-center">Log In</h1>
-          <LoginForm onSubmit={handleSubmit} onSubmitReset={handleSubmitReset}  />
+            <div className="bg-white shadow-md rounded px-8 py-6 w-full sm:w-96">
+                <h1 className="text-2xl font-bold mb-4 text-center">Log In</h1>
+                <LoginForm onSubmit={handleSubmit} onSubmitReset={handleSubmitReset} />
+            </div>
         </div>
-      </div>      
     )
 }
 
-export default CreateLoginPage;
+export default LoginPage;

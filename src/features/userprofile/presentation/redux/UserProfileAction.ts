@@ -19,8 +19,9 @@ export const getUserProfileAction = createAsyncThunk(
 
 export const updateUserProfileAction = createAsyncThunk(
   'update_profile',
-  async ({ req }: { req: any }) => {
+  async (formData: FormData) => {
     const updateProfile = new UpdateUserProfileUseCase(userProfileRepository);
-    return await updateProfile.execute(req);
+    return await updateProfile.execute(formData);
   },
 );
+

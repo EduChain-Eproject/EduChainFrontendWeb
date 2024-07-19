@@ -6,13 +6,13 @@ import { useAppSelector } from '../../../../common/context/store';
 import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswordEmail';
 import { Link } from 'react-router-dom';
 
-interface LoginFormPorps {
+interface LoginFormProps {
   initialData?: LoginReq;
   onSubmit: (data: any) => void;
   onSubmitReset: (data: any) => void;
 }
 
-const LoginForm: React.FC<LoginFormPorps> = ({
+const LoginForm: React.FC<LoginFormProps> = ({
   initialData,
   onSubmit,
   onSubmitReset,
@@ -23,16 +23,25 @@ const LoginForm: React.FC<LoginFormPorps> = ({
   const { status: sendMailStatus } = useAppSelector(
     (state) => state.auth.sendMailPage,
   );
-  const { register, handleSubmit, reset } = useForm<LoginReq>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginReq>({
     defaultValues: initialData || {},
   });
 
-  const { register: registerReset, handleSubmit: handleSubmitReset } =
-    useForm<SendResetPasswordEmailReq>({
-      defaultValues: {},
-    });
+  const {
+    register: registerReset,
+    handleSubmit: handleSubmitReset,
+    formState: { errors: resetErrors },
+  } = useForm<SendResetPasswordEmailReq>({
+    defaultValues: {},
+  });
 
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+
   const openForgotPasswordModal = () => {
     setShowForgotPassword(true);
   };
@@ -40,6 +49,7 @@ const LoginForm: React.FC<LoginFormPorps> = ({
   const closeForgotPasswordModal = () => {
     setShowForgotPassword(false);
   };
+
   useEffect(() => {
     if (initialData) {
       reset(initialData);
@@ -58,10 +68,13 @@ const LoginForm: React.FC<LoginFormPorps> = ({
           </label>
           <input
             id="email"
-            {...register('email', { required: true })}
+            {...register('email', { required: 'Email is required' })}
             type="email"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+          {errors.email && (
+            <p className="text-red-500 text-xs italic">{errors.email.message}</p>
+          )}
         </div>
         <div className="mb-6">
           <label
@@ -72,10 +85,15 @@ const LoginForm: React.FC<LoginFormPorps> = ({
           </label>
           <input
             id="password"
-            {...register('password', { required: true })}
+            {...register('password', { required: 'Password is required' })}
             type="password"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+          {errors.password && (
+            <p className="text-red-500 text-xs italic">
+              {errors.password.message}
+            </p>
+          )}
         </div>
         <div className="flex items-center justify-between">
           <button
@@ -93,6 +111,9 @@ const LoginForm: React.FC<LoginFormPorps> = ({
             Or Forgot Password?
           </button>
         </div>
+        {error && (
+          <p className="text-red-500 text-xs italic mt-4">{error}</p>
+        )}
       </form>
 
       {/* Forgot Password Modal */}
@@ -121,11 +142,20 @@ const LoginForm: React.FC<LoginFormPorps> = ({
                   </label>
                   <input
                     id="forgotEmail"
-                    {...registerReset('email', { required: true })}
+                    {...registerReset('email', { required: 'Email is required' })}
                     type="email"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
-                  {sendMailStatus == 'succeeded' && 'please check your email'}
+                  {resetErrors.email && (
+                    <p className="text-red-500 text-xs italic">
+                      {resetErrors.email.message}
+                    </p>
+                  )}
+                  {sendMailStatus === 'succeeded' && (
+                    <p className="text-green-500 text-xs italic">
+                      Please check your email.
+                    </p>
+                  )}
                 </div>
                 <button
                   type="submit"

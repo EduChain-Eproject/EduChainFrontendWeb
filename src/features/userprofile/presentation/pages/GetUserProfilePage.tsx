@@ -1,11 +1,11 @@
 import { RouteObject } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import UserProfilePage from '../components/UserProfilePage';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../common/context/store';
 import { getUserProfileAction } from '../redux/UserProfileAction';
+import UserProfileComp from '../components/UserProfileComp';
 
 export const route: () => RouteObject = () => {
   return {
@@ -23,7 +23,7 @@ const GetUserProfilePage: React.FC = () => {
 
   useEffect(() => {
     if (email) {
-      console.log('get profile');
+      console.log(email);
 
       dispatch(getUserProfileAction(email));
     }
@@ -41,7 +41,7 @@ const GetUserProfilePage: React.FC = () => {
 
   return (
     <div>
-      <UserProfilePage />
+      <UserProfileComp />
     </div>
   );
 };

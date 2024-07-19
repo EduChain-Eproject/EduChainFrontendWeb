@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import HomeDropdownUser from './HomeDropdownUser';
 import HomeSearch from './HomeSearch';
+import { useAppSelector } from '../../context/store';
+import { logOutAction } from '../../../features/auth/presentation/redux/AuthAction';
+import { LogOutReq } from '../../../features/auth/domain/usecases/LogOut';
 
 interface HomeHeaderProps {
   title: string;
@@ -10,6 +15,10 @@ interface HomeHeaderProps {
 const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
+  const user = useAppSelector((state) => state.auth.user);
+  const logoutError = useAppSelector((state) => state.auth.logoutError); // Access the logout error state
 
   const handleUserClick = () => {
     setIsUserDropdownOpen(!isUserDropdownOpen);
@@ -20,6 +29,21 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
     console.log(`Search query: ${searchQuery}`);
     // Add search logic here
   };
+
+  const handleLogout = async () => {
+    if (user?.email) {
+      const req: LogOutReq = { email: user.email };
+      await dispatch(logOutAction(req));
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      navigate('/Auth'); // Redirect to login page after logout
+    }
+  };
+  useEffect(() => {
+    if (logoutError) {
+      alert(`Logout failed: ${logoutError}`); // Display the logout error
+    }
+  }, [logoutError]);
 
   return (
     <header className="bg-gray-100 py-4 shadow-md px-5">
@@ -41,6 +65,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
             avatarUrl="https://example.com/avatar.jpg"
             onClick={handleUserClick}
             isOpen={isUserDropdownOpen}
+            onLogout={handleLogout} // Pass the logout handler
           />
           <HomeSearch
             placeholder="Search"

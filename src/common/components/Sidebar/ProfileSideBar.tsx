@@ -152,7 +152,7 @@ const ProfileSideBar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Enrolled Courses --> */}
               <li>
                 <NavLink
-                  to="/profile/enrolled-courses"
+                  to="/profile/user-course"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('profile/enrolled-courses') &&
                     'bg-graydark dark:bg-meta-4'
@@ -172,7 +172,7 @@ const ProfileSideBar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     />
                   </svg>
                   See your courses
-                </NavLink>
+                </NavLink >
               </li>
               {/* <!-- Menu Item Enrolled Courses --> */}
             </ul>

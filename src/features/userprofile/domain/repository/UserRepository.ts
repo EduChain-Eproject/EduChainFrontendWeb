@@ -1,13 +1,14 @@
 import { ApiResponse } from '../../../auth/domain/usecases/Login';
+
 import { UserProfileModel } from '../entities/UserProfileModel';
 import { UpdateUserProfileReq } from '../usecases/UpdateUserProfileUseCase';
 
 export interface UserProfileRepository {
-  onGetUserProfile: (
+  onGetUserProfile(
     email: string,
-  ) => Promise<{ data?: UserProfileModel; error?: string }>;
+  ): Promise<{ data?: UserProfileModel; error?: string }>;
 
   onUpdateUserProfile: (
-    req: any,
+    req: FormData,
   ) => Promise<{ data?: UserProfileModel; error?: string }>;
 }

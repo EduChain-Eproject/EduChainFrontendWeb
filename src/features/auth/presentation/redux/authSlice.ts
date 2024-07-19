@@ -1,28 +1,31 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  ActionReducerMapBuilder,
+} from '@reduxjs/toolkit';
 // import AuthRepositoryImpl from '../../data/repositories/AuthRepositoryImpl';
 // import LoginUser from '../../domain/usecases/LoginUser';
 // import LogoutUser from '../../domain/usecases/LogoutUser';
 // import CheckAuth from '../../domain/usecases/CheckAuth';
 import handleLogin from './actionHandling/HandleLogin';
-import {
-  CommonState,
-  initCommonState,
-} from '../../../../common/state/index';
+import { CommonState, initCommonState } from '../../../../common/state/index';
 import handleGetUser from './actionHandling/HandleGetUser';
 import handleSendMailReset from './actionHandling/HandleSendMailReset';
 import handleResetPassword from './actionHandling/HandleResetPassword';
 import { User } from '../../../../common/entities/User';
 import AuthRepositoryImpl from '../../data/repositoryImpl/AuthRepositoryImpl';
-import { handleLogout } from './AuthAction';
+
 import handleRegister from './actionHandling/HandleRegister';
+import handleLogOut from './actionHandling/HandleLogout';
 
 export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   token: string | null;
   refreshToken: string | null;
+  logoutError: string | null;
   logInPage: CommonState<null>;
-  signUpPage: CommonState<null>;
+  signUpPage: CommonState<{ message: string | undefined }>;
   sendMailPage: CommonState<null>;
   resetPasswordPage: CommonState<null>;
   verifyPage: CommonState<null>;
@@ -38,6 +41,7 @@ const initialState: AuthState = {
   signUpPage: initCommonState,
   resetPasswordPage: initCommonState,
   verifyPage: initCommonState,
+  logoutError: null,
 };
 
 const authSlice = createSlice({
@@ -49,7 +53,7 @@ const authSlice = createSlice({
     handleGetUser(builder);
     handleSendMailReset(builder);
     handleResetPassword(builder);
-    handleLogout(builder);
+    handleLogOut(builder);
     handleRegister(builder);
   },
 });

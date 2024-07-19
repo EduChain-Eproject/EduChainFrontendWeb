@@ -3,7 +3,7 @@ import { UserProfileRepository } from '../repository/UserRepository';
 export default class UpdateUserProfileUseCase {
   constructor(private userProfileRepository: UserProfileRepository) {}
 
-  async execute(req: any) {
+  async execute(req: FormData) {
     return await this.userProfileRepository.onUpdateUserProfile(req);
   }
 }

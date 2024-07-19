@@ -1,5 +1,6 @@
-import { User } from '../entities/User';
+import { User } from '../../../../common/entities/User';
 import { ApiResponse, JwtResponse, LoginReq } from '../usecases/Login';
+import { LogOutReq } from '../usecases/LogOut';
 import { RegisterReq, RegisterResponseMessage } from '../usecases/Register';
 import { ResetPasswordReq } from '../usecases/ResetPassword';
 import { SendResetPasswordEmailReq } from '../usecases/SendResetPasswordEmail';
@@ -12,11 +13,9 @@ export interface AuthRepository {
   //registers
   onRegister: (
     registerRequest: RegisterReq,
-  ) => Promise<{ message: string; error?: string }>;
+  ) => Promise<{ message?: string; error?: string }>;
   //
-  onLogout: (
-    email: string,
-  ) => Promise<{ message: RegisterResponseMessage; error?: string }>;
+  onLogout: (data: LogOutReq) => Promise<{ message: string; error?: string }>;
   //
   getUser: () => Promise<{ data?: User; error?: string }>;
   onSendResetPasswordEmail: (

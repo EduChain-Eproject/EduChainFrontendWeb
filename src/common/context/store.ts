@@ -18,6 +18,7 @@ import homeSlice from '../../features/homepage/data/redux/homeSlice';
 
 import UserProfileSlice from '../../features/userprofile/presentation/redux/UserProfileSlice';
 import UserInterestSlice from '../../features/user_interest/presentation/redux/UserInterestSlice';
+import UserCourseSlice from '../../features/user_course/presentation/redux/UserCourseSlice';
 
 import teacherHomeworkSlice from '../../features/course/homework/teacher/data/redux/homeworkSlice';
 
@@ -56,6 +57,7 @@ const rootReducer = combineReducers({
   blogUiSlice,
   userProfile: UserProfileSlice,
   userInterest: UserInterestSlice,
+  userCourse: UserCourseSlice,
   homeworks,
   questions,
 });

@@ -8,6 +8,7 @@ interface HomeDropdownUserProps {
   avatarUrl: string;
   onClick: () => void;
   isOpen: boolean;
+  onLogout: () => void;
 }
 
 const HomeDropdownUser: React.FC<HomeDropdownUserProps> = ({
@@ -15,6 +16,7 @@ const HomeDropdownUser: React.FC<HomeDropdownUserProps> = ({
   avatarUrl,
   onClick,
   isOpen,
+  onLogout 
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -52,10 +54,7 @@ const HomeDropdownUser: React.FC<HomeDropdownUserProps> = ({
             Profile
           </Link>
           <button
-            onClick={() => {
-              console.log('logout..');
-              dispatch(logOutAction()).then(() => navigate('/Auth'));
-            }}
+            onClick={onLogout}
             className="block px-4 py-2 hover:bg-gray-100"
           >
             Logout

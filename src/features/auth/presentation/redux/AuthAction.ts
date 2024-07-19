@@ -14,6 +14,7 @@ import Failure from '../../../../common/entities/Failure';
 import axiosService from '../../../../common/services/axiosService';
 import { AuthState } from './authSlice';
 import { logOut } from '../../data/dataSources/AuthRemoteDataSource';
+import LogOut, { LogOutReq } from '../../domain/usecases/LogOut';
 
 const authRepository: AuthRepository = new AuthRepositoryImpl();
 
@@ -59,22 +60,10 @@ export const ResetPasswordAction = createAsyncThunk(
 
 export const logOutAction = createAsyncThunk(
   'Auth/logOut',
-  async () => {
-    return await logOut();
+  async (data: LogOutReq) => {
+    const logtOutCase = new LogOut(authRepository);
+    return await logtOutCase.execute(data);
   },
 );
 
-
-export const handleLogout = (builder: ActionReducerMapBuilder<AuthState>) =>{
-  builder
-  .addCase(logOutAction.fulfilled,(state)=> {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.token = null;
-      state.refreshToken = null;
-
-      localStorage.removeItem("accessToken")
-      localStorage.removeItem("refreshToken")
-  });
-}
 

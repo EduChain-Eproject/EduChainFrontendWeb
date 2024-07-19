@@ -17,7 +17,7 @@ export const route: () => RouteObject = () => {
 const CreateRegisterPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const data = useAppSelector((state) => state.auth.signUpPage.data);
   const { status, error } = useAppSelector((state) => state.auth.signUpPage);
   const handleSubmit = (data: any) => {
     dispatch(registerAction({ registerReq: data }));
@@ -27,14 +27,14 @@ const CreateRegisterPage: React.FC = () => {
     console.log(status);
 
     if (status == 'succeeded') {
+      alert(data?.message);
       navigate('/Auth/login');
     }
   }, [status]);
 
   return (
     <div>
-      {error && <h3>{error}</h3>}
-      <RegisterForm onSubmit={handleSubmit} />
+      <RegisterForm onSubmit={handleSubmit} errorMessage={error} />
     </div>
   );
 };

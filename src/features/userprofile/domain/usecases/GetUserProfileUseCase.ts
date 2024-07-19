@@ -11,7 +11,6 @@ export default class GetUserProfileUseCase {
 export type UserProfileRes = {
   id: number;
   email: string;
-  password: string;
   firstName: string;
   lastName: string;
   phone: string;

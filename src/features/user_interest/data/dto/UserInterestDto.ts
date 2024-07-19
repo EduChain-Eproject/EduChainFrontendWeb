@@ -6,4 +6,5 @@ export class UserInterestDto {
   price: string;
   teacherName: string;
   categoryList: any;
+  role: any;
 }

@@ -2,7 +2,7 @@ import { useAppSelector } from '../../../../common/context/store';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const UserProfilePage: React.FC = () => {
+const UserProfileComp: React.FC = () => {
   const { data } = useAppSelector((state) => state.userProfile.profilePage);
 
   return (
@@ -39,6 +39,14 @@ const UserProfilePage: React.FC = () => {
               </div>
             </div>
           </div>
+          <div className="text-center mt-6">
+            <Link
+              to="/profile/update"
+              className="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200"
+            >
+              Update Profile
+            </Link>
+          </div>
         </>
       ) : (
         <div className="text-center">
@@ -49,4 +57,4 @@ const UserProfilePage: React.FC = () => {
   );
 };
 
-export default UserProfilePage;
+export default UserProfileComp;

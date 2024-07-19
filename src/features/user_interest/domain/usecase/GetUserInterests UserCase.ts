@@ -3,8 +3,13 @@ import { UserInterestRepository } from '../repository/UserInterestRepository';
 export default class GetUserInterestsUseCase {
   constructor(private userInterestRepository: UserInterestRepository) {}
 
-  async execute() {
-    return await this.userInterestRepository.getUserInterests();
+  async execute(req: GetUserInterestReq) {
+    return await this.userInterestRepository.getUserInterests(req);
   }
 }
-export const GetUserIterestRes = {};
+export type GetUserInterestReq = {
+  student_id: number;
+  page: number;
+  size: number;
+  titleSearch: string;
+};

@@ -1,6 +1,6 @@
 import { BlogCategory } from "./BlogCategory";
 import { BlogComment } from "./BlogComment";
-import { User } from "./User";
+import User  from "./User";
 
 export class Blog {
     id: number;

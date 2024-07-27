@@ -56,9 +56,18 @@ export const registerUser = async (registerRequest: RegisterReq) => {
   }
 };
 
-export const logOut = async (email: LogOutReq) => {
+// export const logOut = async (email: LogOutReq) => {
+//   try {
+//     const response = await axiosService.post(`${baseUrl}Auth/logout`, email);
+//     return response.data;
+//   } catch (error) {
+//     throw new Failure(error.response.data.message, error.response.status);
+//   }
+// };
+
+export const logOut = async () => {
   try {
-    const response = await axiosService.post(`${baseUrl}Auth/logout`, email);
+    const response = await axiosService.post(`${baseUrl}Auth/logout`);
     return response.data;
   } catch (error) {
     throw new Failure(error.response.data.message, error.response.status);

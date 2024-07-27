@@ -35,3 +35,5 @@ export const updateUserProfile = async (
     throw new Failure(error.response.data.message, error.response.status);
   }
 };
+
+

@@ -1,10 +1,11 @@
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { LoginReq } from '../../domain/usecases/Login';
-import { useEffect, useState } from 'react';
-import React from 'react';
 import { useAppSelector } from '../../../../common/context/store';
 import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswordEmail';
 import { Link } from 'react-router-dom';
+import { ValidationError } from '../../../../common/state/ValidationFailure';
+
 
 interface LoginFormProps {
   initialData?: LoginReq;
@@ -23,11 +24,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const { status: sendMailStatus } = useAppSelector(
     (state) => state.auth.sendMailPage,
   );
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    setError,
   } = useForm<LoginReq>({
     defaultValues: initialData || {},
   });
@@ -56,6 +59,29 @@ const LoginForm: React.FC<LoginFormProps> = ({
     }
   }, [initialData, reset]);
 
+  useEffect(() => {
+    if (error) {
+      console.log(typeof error);
+      console.log(error);
+      if (error instanceof ValidationError || error.type === 'validation') {
+        console.log('Validation error:', error);
+        const validationError = error as ValidationError;
+        Object.keys(validationError.errors).forEach((field) => {
+          setError(field as keyof LoginReq, {
+            type: 'manual',
+            message: validationError.errors[field],
+          });
+        });
+      } else if (error.type === 'failure') {
+        console.log('Failure error:', error);
+        // Handle failure error here if needed
+      } else {
+        console.log('Error:', error);
+        // Handle other errors here if needed
+      }
+    }
+  }, [error, setError]);
+
   return (
     <div>
       <form
@@ -77,10 +103,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
           )}
         </div>
         <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block text-sm font-semibold mb-2"
-          >
+          <label htmlFor="password" className="block text-sm font-semibold mb-2">
             Password
           </label>
           <input
@@ -90,9 +113,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.password && (
-            <p className="text-red-500 text-xs italic">
-              {errors.password.message}
-            </p>
+            <p className="text-red-500 text-xs italic">{errors.password.message}</p>
           )}
         </div>
         <div className="flex items-center justify-between">
@@ -111,8 +132,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
             Or Forgot Password?
           </button>
         </div>
-        {error && (
-          <p className="text-red-500 text-xs italic mt-4">{error}</p>
+        {error?.type === 'failure' && (
+          <p className="text-red-500 text-xs italic mt-4">{error.message}</p>
         )}
       </form>
 

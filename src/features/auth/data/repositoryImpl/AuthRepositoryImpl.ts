@@ -23,20 +23,34 @@ import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswo
 import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';
 import { User } from '../../../../common/entities/User';
 import { LogOutReq } from '../../domain/usecases/LogOut';
+import { ValidationError } from '../../../../common/state/ValidationFailure';
+
 class AuthRepositoryImpl implements AuthRepository {
-  async onLogin(
-    loginRequest: LoginReq,
-  ): Promise<{ data?: ApiResponse<JwtResponse>; error?: string }> {
+  async onLogin(loginRequest: LoginReq): Promise<{
+    data?: ApiResponse<JwtResponse>;
+    error?: string | ValidationError | any;
+  }> {
     try {
       const response = await logIn(loginRequest);
-      return { data: response };
-    } catch (error) {
-      if (error instanceof Failure) {
-        return { error: error.message };
+      if (response.type === 'validation') {
+        const formattedErrors = Object.entries(response.errors)
+          .map(([field, message]) => `${field}: ${message}`)
+          .join(', ');
+        console.log('Validation Errors:', response);
+        return { error: response };
+      } else if (response.type === 'failure') {
+        console.log('aaa');
+        console.log(response);
+        return { error: response };
+      } else {
+        return { data: response };
       }
-      return { error: 'Unexpected error occurred on login' };
+    } catch (error) {
+      console.log('Unexpected error:', error.message);
+      return { error: 'An unexpected error occurred during login1' };
     }
   }
+
   async getUser(): Promise<{ data?: User; error?: string }> {
     try {
       const response: UserDto = await getUserWithToken();

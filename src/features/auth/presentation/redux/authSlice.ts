@@ -17,6 +17,7 @@ import AuthRepositoryImpl from '../../data/repositoryImpl/AuthRepositoryImpl';
 
 import handleRegister from './actionHandling/HandleRegister';
 import handleLogOut from './actionHandling/HandleLogout';
+import { ApiResponse, JwtResponse } from '../../domain/usecases/Login';
 
 export interface AuthState {
   user: User | null;
@@ -24,7 +25,7 @@ export interface AuthState {
   token: string | null;
   refreshToken: string | null;
   logoutError: string | null;
-  logInPage: CommonState<null>;
+  logInPage: CommonState<ApiResponse<JwtResponse>>;
   signUpPage: CommonState<{ message: string | undefined }>;
   sendMailPage: CommonState<null>;
   resetPasswordPage: CommonState<null>;

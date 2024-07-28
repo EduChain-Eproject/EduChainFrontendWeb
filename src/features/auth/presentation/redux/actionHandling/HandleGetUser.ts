@@ -10,7 +10,7 @@ const handleGetUser = (builder: ActionReducerMapBuilder<AuthState>) => {
     .addCase(getUserAction.fulfilled, (state, action) => {
       if (action.payload.error) {
         state.logInPage.status = 'failed';
-        state.logInPage.error = action.payload.error;
+        state.logInPage.error = action.payload.error.message;
         console.log(action.payload.error);
         return;
       } else {

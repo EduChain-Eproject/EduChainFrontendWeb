@@ -17,17 +17,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   onSubmitReset,
 }) => {
-  const { status, error, data } = useAppSelector(
+  const { status, error, data, errors } = useAppSelector(
     (state) => state.auth.logInPage,
   );
-  const { status: sendMailStatus } = useAppSelector(
+  const { status: sendMailStatus, errors: resetErrors } = useAppSelector(
     (state) => state.auth.sendMailPage,
   );
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<LoginReq>({
     defaultValues: initialData || {},
   });
@@ -35,7 +35,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const {
     register: registerReset,
     handleSubmit: handleSubmitReset,
-    formState: { errors: resetErrors },
+    // formState: { errors: resetErrors },
   } = useForm<SendResetPasswordEmailReq>({
     defaultValues: {},
   });
@@ -72,8 +72,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
             type="email"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          {errors.email && (
-            <p className="text-red-500 text-xs italic">{errors.email.message}</p>
+          {errors?.email && (
+            <p className="text-red-500 text-xs italic">{errors?.email}</p>
           )}
         </div>
         <div className="mb-6">
@@ -89,10 +89,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
             type="password"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          {errors.password && (
-            <p className="text-red-500 text-xs italic">
-              {errors.password.message}
-            </p>
+          {errors?.password && (
+            <p className="text-red-500 text-xs italic">{errors?.password}</p>
           )}
         </div>
         <div className="flex items-center justify-between">
@@ -111,9 +109,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             Or Forgot Password?
           </button>
         </div>
-        {error && (
-          <p className="text-red-500 text-xs italic mt-4">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-xs italic mt-4">{error}</p>}
       </form>
 
       {/* Forgot Password Modal */}
@@ -142,13 +138,15 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   </label>
                   <input
                     id="forgotEmail"
-                    {...registerReset('email', { required: 'Email is required' })}
+                    {...registerReset('email', {
+                      required: 'Email is required',
+                    })}
                     type="email"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
-                  {resetErrors.email && (
+                  {resetErrors?.email && (
                     <p className="text-red-500 text-xs italic">
-                      {resetErrors.email.message}
+                      {resetErrors?.email}
                     </p>
                   )}
                   {sendMailStatus === 'succeeded' && (

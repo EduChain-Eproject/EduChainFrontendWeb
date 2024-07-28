@@ -11,7 +11,6 @@ import {
 } from '../../domain/usecases/Register';
 import {
   resetPassword,
-  getUserWithToken,
   logIn,
   logOut,
   registerUser,
@@ -23,73 +22,186 @@ import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswo
 import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';
 import User from '../../../../common/entities/User';
 import { LogOutReq } from '../../domain/usecases/LogOut';
+import { getUserWithToken } from '../dataSources/userProfileDataSource';
+
 class AuthRepositoryImpl implements AuthRepository {
-  async onLogin(
-    loginRequest: LoginReq,
-  ): Promise<{ data?: ApiResponse<JwtResponse>; error?: string }> {
+  async onLogin(loginRequest: LoginReq): Promise<{
+    data?: ApiResponse<JwtResponse>;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response = await logIn(loginRequest);
       return { data: response };
     } catch (error) {
       if (error instanceof Failure) {
-        return { error: error.message };
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
       }
-      return { error: 'Unexpected error occurred on login' };
+      return {
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
   }
-  async getUser(): Promise<{ data?: User; error?: string }> {
+
+  async getUser(): Promise<{
+    data?: User;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response: User = await getUserWithToken();
-
       return { data: response };
     } catch (error) {
       if (error instanceof Failure) {
-        return { error: error.message };
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
       }
-      return { error: 'Unexpected error occurred get User' };
+      return {
+        error: {
+          message: 'Unexpected error occurred on getting user',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
   }
 
-  onRegister = async (
-    registerRequest: RegisterReq,
-  ): Promise<{ message: string | undefined; error?: string }> => {
+  async onRegister(registerRequest: RegisterReq): Promise<{
+    message?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response = await registerUser(registerRequest);
       return { message: response };
     } catch (error) {
-      return { message: undefined, error: 'error: ' + error?.message };
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on registration',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
-  };
+  }
 
-  onLogout = async (
-    email: LogOutReq,
-  ): Promise<{ message: string; error?: string }> => {
+  async onLogout(email: LogOutReq): Promise<{
+    message?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response = await logOut(email);
       return { message: response };
     } catch (error) {
-      return { message: error.message || 'unknown error' };
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on logout',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
-  };
-  async onSendResetPasswordEmail(
-    req: SendResetPasswordEmailReq,
-  ): Promise<{ message: RegisterResponseMessage; error?: string | undefined }> {
+  }
+
+  async onSendResetPasswordEmail(req: SendResetPasswordEmailReq): Promise<{
+    message?: RegisterResponseMessage;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response = await sendMailReset(req);
       return { message: response };
     } catch (error) {
-      return { message: error.message || 'unknow error' };
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on sending reset password email',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
   }
 
-  async onResetPassword(
-    req: ResetPasswordReq,
-  ): Promise<{ data: any; error: string }> {
+  async onResetPassword(req: ResetPasswordReq): Promise<{
+    data?: any;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response = await resetPassword(req);
-      return response.data;
+      return { data: response };
     } catch (error) {
-      return error.message || 'unknow error';
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on resetting password',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
   }
 }

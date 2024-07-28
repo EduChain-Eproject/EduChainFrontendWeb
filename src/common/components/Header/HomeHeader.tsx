@@ -36,7 +36,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
       await dispatch(logOutAction(req));
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      navigate('/Auth'); // Redirect to login page after logout
+      navigate('/Auth/login'); // Redirect to login page after logout
     }
   };
   useEffect(() => {
@@ -52,21 +52,28 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
           <h1 className="text-2xl font-bold">{title}</h1>
         </Link>
         <nav className="flex space-x-4">
-          <NavLink to="#">Home</NavLink>
-          <NavLink to="#">Pages</NavLink>
+          <NavLink to="/">Home</NavLink>
           <NavLink to="/courses">Courses</NavLink>
-          <NavLink to="#">Event</NavLink>
           <NavLink to="#">Blog</NavLink>
           <NavLink to="#">Contact Us</NavLink>
         </nav>
         <div className="flex flex-row items-center justify-center">
-          <HomeDropdownUser
-            username="John Doe"
-            avatarUrl="https://example.com/avatar.jpg"
-            onClick={handleUserClick}
-            isOpen={isUserDropdownOpen}
-            onLogout={handleLogout} // Pass the logout handler
-          />
+          {user ? (
+            <HomeDropdownUser
+              username={`${user?.firstName}  ${user?.lastName}`}
+              avatarUrl="https://example.com/avatar.jpg"
+              onClick={handleUserClick}
+              isOpen={isUserDropdownOpen}
+              onLogout={handleLogout} // Pass the logout handler
+            />
+          ) : (
+            <button
+              className="px-3 py-1 bg-meta-5 rounded-xl text-white"
+              onClick={() => navigate('/Auth/login')}
+            >
+              Login
+            </button>
+          )}
           <HomeSearch
             placeholder="Search"
             value={searchQuery}

@@ -14,33 +14,18 @@ interface HomeworkDetailProps {
 
 const HomeworkDetail: React.FC<HomeworkDetailProps> = ({ homeworkId }) => {
   const dispatch = useAppDispatch();
-  const {
-    data: homework,
-    status,
-    error,
-  } = useAppSelector((state) => state.courses.student.homeworkDetailComponent);
+  const { data: homework } = useAppSelector(
+    (state) => state.courses.student.homeworkDetailComponent,
+  );
   const { data: userAward } = useAppSelector(
     (state) => state.courses.student.userAwardComponent,
   );
-
-  const { status: userHomeworkStatus, error: userHomeworkError } =
-    useAppSelector((state) => state.courses.student.userHomeworkComponent);
 
   useEffect(() => {
     if (homeworkId) {
       dispatch(fetchHomeworkDetail(homeworkId));
     }
   }, [homeworkId, dispatch]);
-
-  if (status === 'loading' || userHomeworkStatus === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  if (status === 'failed' || userHomeworkStatus === 'failed') {
-    return <div>Error: {error || userHomeworkError}</div>;
-  }
-
-  console.log(userAward);
 
   return (
     <div className="mt-4">

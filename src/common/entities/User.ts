@@ -1,4 +1,5 @@
 import { Award } from './Award';
+import Course from './Course';
 import { UserHomework } from './UserHomework';
 
 export default class User {
@@ -17,6 +18,9 @@ export default class User {
     this.role = role;
     this.email = email;
   }
+
+  numberOfStudents?: number;
+  mostPopularCourse?: Course;
 }
 
 export enum Role {

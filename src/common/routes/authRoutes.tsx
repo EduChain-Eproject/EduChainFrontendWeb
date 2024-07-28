@@ -12,13 +12,5 @@ export const authRoute: RouteObject = {
   path: 'Auth',
   element: <AuthLayout />,
   errorElement: <ErrorPage />,
-  children: [
-    {
-      path: '',
-      element: <Navigate to={'login'} />,
-    },
-    loginRoute(),
-    registerRoute(),
-    resetPasswordRoute(),
-  ],
+  children: [loginRoute(), registerRoute(), resetPasswordRoute()],
 };

@@ -2,13 +2,13 @@ import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logOutAction } from '../../../features/auth/presentation/redux/AuthAction';
-import { useAppDispatch } from '../../context/store';
-
-import UserOne from '../../public/images/user/user-01.png';
+import { useAppDispatch, useAppSelector } from '../../context/store';
 
 const DropdownUser = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { user } = useAppSelector((state) => state.auth);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -51,13 +51,13 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {user?.firstName} {user?.lastName}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{user?.email}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+          <img src={user?.avatarPath} alt="User" />
         </span>
 
         <svg
@@ -163,7 +163,7 @@ const DropdownUser = () => {
           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
           onClick={() => {
             console.log('logout..');
-            dispatch(logOutAction()).then(() => navigate('/Auth'));
+            dispatch(logOutAction()).then(() => navigate('/Auth/login'));
           }}
         >
           <svg

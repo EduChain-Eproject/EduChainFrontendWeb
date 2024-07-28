@@ -1,5 +1,9 @@
 import React from 'react';
-import { useAppDispatch } from '../../../../../../common/context/store';
+import { useNavigate } from 'react-router-dom';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../common/context/store';
 import Course from '../../../../../../common/entities/Course';
 import { enrollACourse } from '../../data/services/handleEnrollACourse';
 interface EnrollmentProps {
@@ -7,10 +11,16 @@ interface EnrollmentProps {
 }
 
 const Enrollment: React.FC<EnrollmentProps> = ({ course }) => {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   function handleEnrollCourse(id: number) {
-    dispatch(enrollACourse(id));
+    if (isAuthenticated) {
+      dispatch(enrollACourse(id));
+    } else {
+      navigate('/Auth/login');
+    }
   }
 
   return (

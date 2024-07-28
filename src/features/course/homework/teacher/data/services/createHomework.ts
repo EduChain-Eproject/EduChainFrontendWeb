@@ -1,8 +1,7 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import Failure from '../../../../../../common/entities/Failure';
-import { Homework } from '../../../../../../common/entities/Homework';
-import { Question } from '../../../../../../common/entities/Question';
+import Homework from '../../../../../../common/entities/Homework';
 import axiosService from '../../../../../../common/services/axiosService';
 import { HomeworkState } from '../redux/homeworkSlice';
 

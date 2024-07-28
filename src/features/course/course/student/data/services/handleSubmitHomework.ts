@@ -21,7 +21,7 @@ const apiSubmitHomework = async (
     return { data: response.data };
   } catch (error) {
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure(error.response.data, error.response.status),
     };
   }
 };
@@ -47,12 +47,9 @@ const handleSubmitHomework = (
         state.userAwardComponent.data = action.payload?.data?.award;
         state.userHomeworkComponent.data = action.payload.data?.submission;
       } else {
-        state.userAwardComponent.error = action.payload.error?.message;
+        state.userHomeworkComponent.status = 'failed';
+        state.userHomeworkComponent.error = action.payload.error?.message;
       }
-    })
-    .addCase(submitHomework.rejected, (state, action) => {
-      state.userAwardComponent.status = 'failed';
-      state.userAwardComponent.error = action.payload as string;
     });
 };
 

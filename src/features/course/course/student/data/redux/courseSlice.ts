@@ -52,7 +52,17 @@ const initialState: CourseState = {
 const studentCourseSlice = createSlice({
   name: 'courses',
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrorStatus(state, action) {
+      if (action.payload == 'userHomeworkComponent') {
+        state.userHomeworkComponent.status = null;
+        state.userHomeworkComponent.error = undefined;
+      } else if (action.payload == 'userAwardComponent') {
+        state.userAwardComponent.status = null;
+        state.userAwardComponent.error = undefined;
+      }
+    },
+  },
   extraReducers: (builder) => {
     handleGetListCourses(builder);
     handleGetListCategories(builder);
@@ -66,4 +76,5 @@ const studentCourseSlice = createSlice({
   },
 });
 
+export const { clearErrorStatus } = studentCourseSlice.actions;
 export default studentCourseSlice.reducer;

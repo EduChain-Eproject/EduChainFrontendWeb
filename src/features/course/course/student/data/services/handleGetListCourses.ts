@@ -9,7 +9,6 @@ import { CourseState } from '../redux/courseSlice';
 export interface CourseSearchParams {
   search?: string;
   page?: number;
-  size?: number;
   sortBy?: string;
   categoryIds?: number[];
 }

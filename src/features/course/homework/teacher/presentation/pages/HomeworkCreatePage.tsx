@@ -54,8 +54,10 @@ const HomeworkCreatePage: React.FC = () => {
   const handleCreate = (title: string, description: string) => {
     dispatch(createHomework({ lessonId: Number(lessonId), title, description }))
       .unwrap()
-      .then(() => {
-        navigate(`/dashboard/teacher/lessons/${lessonId}`);
+      .then((res) => {
+        if (res.data) {
+          navigate(`/dashboard/teacher/lessons/${lessonId}`);
+        }
       });
   };
 

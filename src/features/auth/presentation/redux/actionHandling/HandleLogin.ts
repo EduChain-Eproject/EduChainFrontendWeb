@@ -2,6 +2,7 @@ import { ActionReducerMapBuilder } from "@reduxjs/toolkit";
 import { AuthState } from "../authSlice";
 import { logInAction } from "../AuthAction";
 import { ValidationError } from '../../../../../common/state/ValidationFailure';
+import { act } from 'react';
 
 const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) => {
   builder
@@ -13,14 +14,10 @@ const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) => {
         console.log(action.payload.error.type);
         if (action.payload.error.type === 'validation') {
           state.logInPage.status = 'failed';
-          state.logInPage.error = {
-            type: 'validation',
-            errors: action.payload.error.errors,
-          } as ValidationError;
-          console.log(typeof state.logInPage.error);
+          state.logInPage.errors = action.payload.error;
         } else {
           state.logInPage.status = 'failed';
-          state.logInPage.error = action.payload.error;
+          state.logInPage.error = action.payload.error.message;
           console.log(state.logInPage.error);
         }
       } else {
@@ -40,7 +37,9 @@ const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) => {
     })
     .addCase(logInAction.rejected, (state, action) => {
       state.logInPage.status = 'failed';
-      state.logInPage.error = action.error.message;
+      if (action.error.message) {
+        state.logInPage.error = action.error.message;
+      }
     });
 };
 

@@ -1,3 +1,4 @@
+import Failure from '../../../../common/entities/Failure';
 import { User } from '../../../../common/entities/User';
 import { ValidationError } from '../../../../common/state/ValidationFailure';
 import { ApiResponse, JwtResponse, LoginReq } from '../usecases/Login';
@@ -10,7 +11,7 @@ export interface AuthRepository {
   //login
   onLogin: (loginRequest: LoginReq) => Promise<{
     data?: ApiResponse<JwtResponse>;
-    error?: string | ValidationError | any;
+    error?: Record<string, string>;
   }>;
   //registers
   onRegister: (

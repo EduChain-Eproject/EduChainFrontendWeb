@@ -19,18 +19,25 @@ export const logIn = async (loginRequest: LoginReq) => {
     if (error.response) {
       const errorData = error.response.data;
       if (errorData.type === 'validation') {
-        console.log('Validation errors:', errorData.errors);
-        return { type: 'validation', errors: errorData.errors };
+        console.log('Validation errors:', errorData);
+        throw new Failure(
+          error.response.data.message,
+          error.response.status,
+          errorData.errors,
+        );
       } else if (errorData.type == null || undefined) {
         console.log('Failure error:', errorData.message);
-        return { type: 'failure', message: errorData.message };
+        throw new Failure(
+          error.response.data.message,
+          error.response.status,
+          errorData.errors,
+        );
       }
+      console.log('Unexpected error:', error.message);
+      return { type: 'unknown', message: 'An unexpected error occurred' };
     }
-    console.log('Unexpected error:', error.message);
-    return { type: 'unknown', message: 'An unexpected error occurred' };
   }
-};
-
+}
 
 export const getUserWithToken = async () => {
   try {

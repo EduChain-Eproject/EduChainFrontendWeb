@@ -28,29 +28,23 @@ import { ValidationError } from '../../../../common/state/ValidationFailure';
 class AuthRepositoryImpl implements AuthRepository {
   async onLogin(loginRequest: LoginReq): Promise<{
     data?: ApiResponse<JwtResponse>;
-    error?: string | ValidationError | any;
+    error?: Record<string, string>;
   }> {
     try {
       const response = await logIn(loginRequest);
-      if (response.type === 'validation') {
-        const formattedErrors = Object.entries(response.errors)
-          .map(([field, message]) => `${field}: ${message}`)
-          .join(', ');
-        console.log('Validation Errors:', response);
-        return { error: response };
-      } else if (response.type === 'failure') {
-        console.log('aaa');
-        console.log(response);
-        return { error: response };
-      } else {
-        return { data: response };
-      }
+      return { data: response };
     } catch (error) {
-      console.log('Unexpected error:', error.message);
-      return { error: 'An unexpected error occurred during login1' };
+      if (error.type === 'validation') {
+        return { error: error.errors };
+      } else {
+        return {
+          error: {
+            message: 'error: ' + error.message,
+          },
+        };
+      }
     }
   }
-
   async getUser(): Promise<{ data?: User; error?: string }> {
     try {
       const response: UserDto = await getUserWithToken();
@@ -81,7 +75,7 @@ class AuthRepositoryImpl implements AuthRepository {
     email: LogOutReq,
   ): Promise<{ message: string; error?: string }> => {
     try {
-      const response = await logOut(email);
+      const response = await logOut();
       return { message: response };
     } catch (error) {
       return { message: error.message || 'unknown error' };

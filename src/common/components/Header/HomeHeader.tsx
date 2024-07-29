@@ -54,7 +54,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
         <nav className="flex space-x-4">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/courses">Courses</NavLink>
-          <NavLink to="#">Blog</NavLink>
+          <NavLink to="/community/blog_ui">Blog</NavLink>
           <NavLink to="#">Contact Us</NavLink>
         </nav>
         <div className="flex flex-row items-center justify-center">

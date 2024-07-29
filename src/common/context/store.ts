@@ -24,6 +24,8 @@ import teacherHomeworkSlice from '../../features/course/homework/teacher/data/re
 
 import teacherQuestionSlice from '../../features/course/question/teacher/data/redux/questionSlice';
 
+import orderAdminSlice from '../../features/admin/order/data/redux/orderAdminSlice'
+
 const courses = combineReducers({
   teacher: teacherCourseSlice,
   censor: censorCourseSlice,
@@ -60,6 +62,7 @@ const rootReducer = combineReducers({
   userCourse: UserCourseSlice,
   homeworks,
   questions,
+  orderAdminSlice
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

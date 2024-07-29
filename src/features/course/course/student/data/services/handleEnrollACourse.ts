@@ -7,9 +7,7 @@ import { CourseState } from '../redux/courseSlice';
 
 const apiEnrollACourse = async (courseId: number): ApiResponse<UserCourse> => {
   try {
-    const response = await axiosService.post(
-      `/STUDENT/api/course/enroll-in-a-course/${courseId}`,
-    );
+    const response = await axiosService.post(`/api/paypal/pay/${courseId}`);
     return { data: response.data };
   } catch (error) {
     return {

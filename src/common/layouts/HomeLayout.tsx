@@ -8,6 +8,13 @@ import { useAppDispatch, useAppSelector } from '../context/store';
 import RoleCheckerHOC from '../hoc/RoleCheckerHOC';
 
 const HomeLayout = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getUserAction());
+  }, [dispatch, navigate]);
+
   return (
     <div>
       <HomeHeader title="educhain" />

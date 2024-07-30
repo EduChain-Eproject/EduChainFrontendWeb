@@ -17,8 +17,3 @@ export type JwtResponse = {
   accessToken: String;
   refreshToken: String;
 };
-
-export type ApiResponse<T> = {
-  object: T;
-  message: String;
-};

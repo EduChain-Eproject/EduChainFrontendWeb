@@ -1,10 +1,6 @@
 import { UserDto } from './../dtos/UserDto';
 import Failure from '../../../../common/entities/Failure';
-import {
-  ApiResponse,
-  JwtResponse,
-  LoginReq,
-} from '../../domain/usecases/Login';
+import { JwtResponse, LoginReq } from '../../domain/usecases/Login';
 import {
   RegisterReq,
   RegisterResponseMessage,
@@ -26,7 +22,7 @@ import { getUserWithToken } from '../dataSources/userProfileDataSource';
 
 class AuthRepositoryImpl implements AuthRepository {
   async onLogin(loginRequest: LoginReq): Promise<{
-    data?: ApiResponse<JwtResponse>;
+    data?: JwtResponse;
     error?: {
       message: string;
       errors: { [key: string]: string };

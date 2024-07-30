@@ -1,20 +1,20 @@
 import axios from 'axios';
 
 const axiosService = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 axiosService.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
+  (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
 );
 
 class ReNewToken {
@@ -101,8 +101,8 @@ const refreshAccessToken = async (req: ReNewToken) => {
     `${baseUrl}Auth/reset-access-token`,
     req,
   );
-  const newAccessToken = response.data?.object.accessToken;
-  const newRefreshToken = response.data?.object.refreshToken;
+  const newAccessToken = response.data?.accessToken;
+  const newRefreshToken = response.data?.refreshToken;
   localStorage.setItem('accessToken', newAccessToken);
   localStorage.setItem('refreshToken', newRefreshToken);
   return newAccessToken;

@@ -1,10 +1,8 @@
-import { ValidationError } from './ValidationFailure';
-
 export interface CommonState<T> {
   data: T | undefined;
   status: string | null;
-  error?: string;
-  errors?: Record<string, string>;
+  error: string | undefined;
+  errors: { [key: string]: string } | undefined;
 }
 
 export const initCommonState = {

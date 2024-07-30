@@ -1,29 +1,40 @@
 import { createAsyncThunk, ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import axiosService from "../../../../../common/services/axiosService";
+import ApiResponse from '../../../../../common/entities/ApiResponse';
+import Course from '../../../../../common/entities/Course';
+import Failure from '../../../../../common/entities/Failure';
+import axiosService from '../../../../../common/services/axiosService';
+import { HomeState } from '../homeSlice';
 
-
-export const apiFetchSignatureCourses = async () => {
-    return await axiosService.get('/COMMON/api/signature-courses');
+export const apiFetchSignatureCourses = async (): ApiResponse<Course[]> => {
+  try {
+    const response = await axiosService.get('/HOME/api/signature-courses');
+    return {
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      error: new Failure(error.response.data.message, error.response.status),
+    };
+  }
 };
+
 export const fetchSignatureCourses = createAsyncThunk(
-    'home/fetchSignatureCourses',
-    async () => {
-        const response = await apiFetchSignatureCourses();
-        return response.data;
-    }
+  'home/fetchSignatureCourses',
+  async () => {
+    const response = await apiFetchSignatureCourses();
+    return response.data;
+  },
 );
 
-export const fetchSignatureCoursesExtraReducers = (builder: ActionReducerMapBuilder<any>) => {
-    builder
-        .addCase(fetchSignatureCourses.pending, (state) => {
-            state.status = 'loading';
-        })
-        .addCase(fetchSignatureCourses.fulfilled, (state, action) => {
-            state.status = 'succeeded';
-            state.signatureCourses = action.payload;
-        })
-        .addCase(fetchSignatureCourses.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
-        });
+export const fetchSignatureCoursesExtraReducers = (
+  builder: ActionReducerMapBuilder<HomeState>,
+) => {
+  builder
+    .addCase(fetchSignatureCourses.pending, (state) => {
+      state.signatureCourses.status = 'loading';
+    })
+    .addCase(fetchSignatureCourses.fulfilled, (state, action) => {
+      state.signatureCourses.status = 'succeeded';
+      state.signatureCourses.data = action.payload;
+    });
 };

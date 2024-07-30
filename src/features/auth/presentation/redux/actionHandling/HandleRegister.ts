@@ -1,6 +1,6 @@
-import { ActionReducerMapBuilder } from "@reduxjs/toolkit";
-import { AuthState } from "../authSlice";
-import { registerAction } from "../AuthAction";
+import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
+import { AuthState } from '../authSlice';
+import { registerAction } from '../AuthAction';
 
 const handleRegister = (builder: ActionReducerMapBuilder<AuthState>) => {
   builder
@@ -12,7 +12,8 @@ const handleRegister = (builder: ActionReducerMapBuilder<AuthState>) => {
     .addCase(registerAction.fulfilled, (state, action) => {
       if (action.payload.error) {
         state.signUpPage.status = 'failed';
-        state.signUpPage.error = action.payload.error;
+        state.signUpPage.error = action.payload.error.message;
+        state.signUpPage.errors = action.payload.error.errors;
         state.signUpPage.data = { message: undefined }; // Reset data structure on failure
         console.log(state.signUpPage.error);
       } else {

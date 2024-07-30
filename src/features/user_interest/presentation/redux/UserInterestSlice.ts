@@ -15,13 +15,23 @@ export interface UserInterestState {
   deleteStatus: CommonState<null>;
 }
 const initialState: UserInterestState = {
-  userInterests: { data: undefined, status: null, error: undefined },
+  userInterests: {
+    data: undefined,
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
   pagination: {
     totalPages: 0,
     totalElements: 0,
     currentPage: 0,
   },
-  deleteStatus: { data: null, status: null, error: undefined },
+  deleteStatus: {
+    data: null,
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
 };
 
 const userInterestSlice = createSlice({

@@ -17,6 +17,7 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
   }> {
     try {
       const response = await apiGetUserCourse(req);
+      console.log(response.content);
       const userCourse = response.content.map((dto: UserCourseDTO) =>
         this.mapDtoToEntity(dto),
       );
@@ -53,10 +54,15 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
       teacherName: dto.teacherName,
       teacherEmail: dto.teacherEmail,
       title: dto.title,
-      enrollmentDate: dto.enrollmentDate,
+      enrollmentDate: new Date(dto.enrollmentDate), // Convert timestamp to Date object
       price: dto.price,
       completionStatus: dto.completionStatus,
-      categoryList: dto.categoryList,
+      categoryList: dto.categoryList.map((category) => ({
+        id: category.id,
+        categoryDescription: category.categoryDescription,
+        categoryName: category.categoryName,
+        courseDtos: category.courseDtos,
+      })), // Ensure the inner mapping is also correct
     };
   }
 }

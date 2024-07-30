@@ -1,91 +1,160 @@
-import { RouteObject, useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../../../../common/context/store";
-import React, { useEffect, useState } from "react";
-import { fetchCourseDetail, fetchLessonDetail } from "../redux/courseActions";
-import AppBreadcrumb from "../../../../../../common/components/Breadcrumbs/AppBreadcrumb";
-import Curriculum from "../components/Curriculum";
-import Enrollment from '../components/Enrollment'
-
+import { RouteObject, useNavigate, useParams } from 'react-router-dom';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../common/context/store';
+import React, { useEffect, useState } from 'react';
+import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
+import Curriculum from '../components/Curriculum';
+import Enrollment from '../components/Enrollment';
+import { fetchLessonDetail } from '../../data/services/handleGetLessonDetail';
+import { fetchCourseDetail } from '../../data/services/handleGetCourseDetail';
+import HomeworkDetail from '../components/homeworks/HomeworkDetail';
 
 export const route: () => RouteObject = () => {
-    return {
-        path: ":courseId/lessons/:lessonId",
-        element: <LessonDetailPage />
-    }
-}
+  return {
+    path: ':courseId/lessons/:lessonId',
+    element: <LessonDetailPage />,
+  };
+};
 
 const LessonDetailPage: React.FC = () => {
-    const navigate = useNavigate();
-    const { lessonId, courseId } = useParams<{ lessonId: string, courseId: string }>();
-    const dispatch = useAppDispatch();
-    const { data: lesson, status, error } = useAppSelector(state => state.courses.student.lessonDetailPage);
-    const { data } = useAppSelector(state => state.courses.student.courseDetailPage);
+  const navigate = useNavigate();
+  const { lessonId, courseId } = useParams<{
+    lessonId: string;
+    courseId: string;
+  }>();
+  const dispatch = useAppDispatch();
+  const {
+    data: lesson, // lesson is Lesson | undefined type
+    status,
+    error,
+  } = useAppSelector((state) => state.courses.student.lessonDetailPage);
+  const { data } = useAppSelector(
+    (state) => state.courses.student.courseDetailPage,
+  );
 
-    const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
+  const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
+  const [showHomeworks, setShowHomeworks] = useState(false);
+  const [selectedHomeworkId, setSelectedHomeworkId] = useState<number | null>(
+    null,
+  );
 
+  useEffect(() => {
+    dispatch(fetchLessonDetail(Number(lessonId)));
+  }, [lessonId, dispatch]);
 
-    useEffect(() => {
-        dispatch(fetchLessonDetail(Number(lessonId)));
-    }, [lessonId, dispatch]);
+  useEffect(() => {
+    dispatch(fetchCourseDetail(Number(courseId)));
+  }, [courseId, dispatch]);
 
-    useEffect(() => {
-        dispatch(fetchCourseDetail(Number(courseId)));
-    }, [lessonId, dispatch]);
+  const breadCrumbItems = [
+    { label: 'Home', href: '' },
+    { label: 'Courses', href: '/courses' },
+    { label: `Course ${data?.title}`, href: `/courses/${courseId}` },
+    {
+      label: `Lesson ${lesson?.lessonTitle}`,
+      href: `/courses/${courseId}/lessons/${lessonId}`,
+    },
+  ];
 
-    const breadCrumbItems = [
-        { label: "Home", href: "" },
-        { label: "Courses", href: "/courses" },
-        { label: `Courses ${data?.title}`, href: `/courses/${courseId}` },
-        { label: `Lesson ${lesson?.lessonTitle}`, href: `/courses/${courseId}/lesson/${lessonId}` },
-    ];
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
-    if (status === 'loading') {
-        return <div>Loading...</div>;
-    }
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
-    }
-
-    return (
-        <div className="p-4">
-            <AppBreadcrumb items={breadCrumbItems} />
-            <div className="flex flex-row justify-between">
-                {data?.chapters &&
-                    <Curriculum chapters={data?.chapters} onLessonClick={(id) => {
-                        if (data && !data.enrolled) {
-                            setShowEnrollmentModal(true);
-                        } else {
-                            navigate(`/courses/${courseId}/lessons/${id}`)
-                        }
-                    }}
-                    />}
-                <div className="flex flex-1 bg-white shadow rounded-lg p-6">
-                    <h1 className="text-2xl font-bold mb-4">Lesson Detail</h1>
-                    {true && <button>Take the test</button>}
-                    {true && <button>View your test</button>}
-                    <div>
-                        <h2 className="text-xl font-semibold">{lesson?.lessonTitle}</h2>
-                        <p>{lesson?.description}</p>
-                        <h3 className="text-lg font-medium">Video</h3>
-                        <p>{lesson?.videoTitle}</p>
-                        <a href={lesson?.videoURL} target="_blank" rel="noopener noreferrer">
-                            {lesson?.videoURL}
-                        </a>
-                        {/* Render other properties */}
-                    </div>
+  return (
+    <div className="mx-auto max-w-4xl px-4">
+      <AppBreadcrumb items={breadCrumbItems} />
+      <div className="flex justify-between">
+        {data?.chapterDtos && (
+          <Curriculum
+            chapters={data?.chapterDtos}
+            onLessonClick={(id) => {
+              if (data && !data.currentUserCourse) {
+                setShowEnrollmentModal(true);
+              } else {
+                navigate(`/courses/${courseId}/lessons/${id}`);
+              }
+            }}
+          />
+        )}
+        <div className="flex flex-1 flex-col bg-white shadow rounded-lg p-6">
+          <h1 className="text-2xl font-bold mb-4">Lesson Detail</h1>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">{lesson?.lessonTitle}</h2>
+            <p>{lesson?.description}</p>
+            <h3 className="text-lg font-medium mt-2">Video</h3>
+            <p>{lesson?.videoTitle}</p>
+            <a
+              href={lesson?.videoURL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline"
+            >
+              {lesson?.videoURL}
+            </a>
+            <button
+              onClick={() => setShowHomeworks((prev) => !prev)}
+              className="text-blue-500 underline"
+            >
+              {!showHomeworks && 'Take Homeworks'}
+            </button>
+          </div>
+          {showHomeworks && (
+            <div className="mt-4">
+              <div className="flex flex-row justify-between">
+                <h2 className="text-xl font-bold">Homeworks</h2>
+                <button
+                  onClick={() => setShowHomeworks((prev) => !prev)}
+                  className="text-blue-500 underline"
+                >
+                  {showHomeworks && 'Close'}
+                </button>
+              </div>
+              {lesson?.homeworkDtos?.map((homework) => (
+                <div key={homework.id} className="mb-2">
+                  <button
+                    onClick={() => setSelectedHomeworkId(homework.id)}
+                    className="text-blue-500 underline"
+                  >
+                    {homework.title}
+                  </button>
+                  <div>
+                    {homework.questionDtos && (
+                      <p>{homework.questionDtos.length} questions</p>
+                    )}
+                    <p>{homework.description}</p>
+                  </div>
                 </div>
-                {showEnrollmentModal && !data?.enrolled && (
-                    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
-                        <div className="bg-white p-4 rounded-md shadow-md">
-                            <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
-                            <p className="mb-4">You need to enroll in this course to access the lesson.</p>
-                            {data && <Enrollment course={data} />}
-                            <button onClick={() => setShowEnrollmentModal(false)} className="px-4 py-2 bg-red-500 text-white rounded-md">Close</button>
-                        </div>
-                    </div>
-                )}
+              ))}
+              {selectedHomeworkId && (
+                <HomeworkDetail homeworkId={selectedHomeworkId} />
+              )}
             </div>
+          )}
         </div>
-    );
+        {showEnrollmentModal && !data?.currentUserCourse && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div className="bg-white p-4 rounded-md shadow-md">
+              <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
+              <p className="mb-4">
+                You need to enroll in this course to access the lesson.
+              </p>
+              {data && <Enrollment course={data} />}
+              <button
+                onClick={() => setShowEnrollmentModal(false)}
+                className="px-4 py-2 bg-red-500 text-white rounded-md"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };

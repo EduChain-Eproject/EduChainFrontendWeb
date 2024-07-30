@@ -1,11 +1,20 @@
-import Course from "./Course";
-import { Lesson } from "./Lesson";
-import { Question } from "./Question";
+import Lesson from './Lesson';
+import { Question } from './Question';
+import { UserHomework } from './UserHomework';
+import { Award } from './Award';
+import User from './User';
 
-export class Homework {
-    id: number;
-    title: string;
-    lesson: Lesson;
-    description: string;
-    questions: Question[] | undefined;
+export default class Homework {
+  id: number;
+  title: string;
+  description: string;
+
+  userId?: number;
+  lessonID?: number;
+
+  userDto?: User;
+  lessonDto?: Lesson;
+  questionDtos?: Question[];
+  userHomeworkDtos?: UserHomework[];
+  userAwardDtos?: Award[];
 }

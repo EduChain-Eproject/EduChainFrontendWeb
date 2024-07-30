@@ -1,11 +1,10 @@
-import { Category } from "./Category";
-import { Chapter } from "./Chapter";
-import Course from "./Course";
+import Course from './Course';
+import User from './User';
 
 export default class CourseFeedback {
-    id: number;
-    message: string;
+  id: number;
+  message: string;
 
-    course: Course | undefined
-    // user: User | undefined
+  courseDto?: Course;
+  userDto?: User;
 }

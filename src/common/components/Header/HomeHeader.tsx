@@ -36,7 +36,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
       await dispatch(logOutAction(req));
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      navigate('/Auth'); // Redirect to login page after logout
+      navigate('/Auth/login'); // Redirect to login page after logout
     }
   };
   useEffect(() => {
@@ -52,21 +52,28 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
           <h1 className="text-2xl font-bold">{title}</h1>
         </Link>
         <nav className="flex space-x-4">
-          <NavLink to="#">Home</NavLink>
-          <NavLink to="#">Pages</NavLink>
-          <NavLink to="#">Courses</NavLink>
-          <NavLink to="#">Event</NavLink>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/courses">Courses</NavLink>
           <NavLink to="#">Blog</NavLink>
           <NavLink to="#">Contact Us</NavLink>
         </nav>
         <div className="flex flex-row items-center justify-center">
-          <HomeDropdownUser
-            username="John Doe"
-            avatarUrl="https://example.com/avatar.jpg"
-            onClick={handleUserClick}
-            isOpen={isUserDropdownOpen}
-            onLogout={handleLogout} // Pass the logout handler
-          />
+          {user ? (
+            <HomeDropdownUser
+              username={`${user?.firstName}  ${user?.lastName}`}
+              avatarUrl="https://example.com/avatar.jpg"
+              onClick={handleUserClick}
+              isOpen={isUserDropdownOpen}
+              onLogout={handleLogout} // Pass the logout handler
+            />
+          ) : (
+            <button
+              className="px-3 py-1 bg-meta-5 rounded-xl text-white"
+              onClick={() => navigate('/Auth/login')}
+            >
+              Login
+            </button>
+          )}
           <HomeSearch
             placeholder="Search"
             value={searchQuery}
@@ -79,7 +86,10 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
   );
 };
 
-const NavLink: React.FC<{ to: string; children: string }> = ({ to, children }) => {
+const NavLink: React.FC<{ to: string; children: string }> = ({
+  to,
+  children,
+}) => {
   return (
     <div className="relative group">
       <a href={to} className="hover:underline">
@@ -87,27 +97,42 @@ const NavLink: React.FC<{ to: string; children: string }> = ({ to, children }) =
       </a>
       {children === 'Pages' && (
         <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">About me</a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">About us 01</a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">View all posts →</a>
+          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+            About me
+          </a>
+          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+            About us 01
+          </a>
+          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+            View all posts →
+          </a>
         </div>
       )}
       {children === 'Courses' && (
         <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">Course 1</a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">Course 2</a>
+          <Link to={'/courses'} className="block px-4 py-2 hover:bg-gray-100">
+            Courses
+          </Link>
         </div>
       )}
       {children === 'Event' && (
         <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">Event 1</a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">Event 2</a>
+          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+            Event 1
+          </a>
+          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+            Event 2
+          </a>
         </div>
       )}
       {children === 'Blog' && (
         <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">Blog post 1</a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">Blog post 2</a>
+          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+            Blog post 1
+          </a>
+          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+            Blog post 2
+          </a>
         </div>
       )}
     </div>
@@ -115,6 +140,3 @@ const NavLink: React.FC<{ to: string; children: string }> = ({ to, children }) =
 };
 
 export { HomeHeader };
-
-
-

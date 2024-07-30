@@ -1,28 +1,39 @@
 import { createAsyncThunk, ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import axiosService from "../../../../../common/services/axiosService";
+import ApiResponse from '../../../../../common/entities/ApiResponse';
+import User from '../../../../../common/entities/User';
+import Failure from '../../../../../common/entities/Failure';
+import axiosService from '../../../../../common/services/axiosService';
+import { HomeState, Statistics } from '../homeSlice';
 
-export const apiFetchStatistics = async () => {
-    return await axiosService.get('/COMMON/api/statistics');
+export const apiFetchStatistics = async (): ApiResponse<Statistics> => {
+  try {
+    const response = await axiosService.get('/HOME/api/statistics');
+    return {
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      error: new Failure(error.response.data.message, error.response.status),
+    };
+  }
 };
 export const fetchStatistics = createAsyncThunk(
-    'home/fetchStatistics',
-    async () => {
-        const response = await apiFetchStatistics();
-        return response.data;
-    }
+  'home/fetchStatistics',
+  async () => {
+    const response = await apiFetchStatistics();
+    return response.data;
+  },
 );
 
-export const fetchStatisticsExtraReducers = (builder: ActionReducerMapBuilder<any>) => {
-    builder
-        .addCase(fetchStatistics.pending, (state) => {
-            state.status = 'loading';
-        })
-        .addCase(fetchStatistics.fulfilled, (state, action) => {
-            state.status = 'succeeded';
-            state.statistics = action.payload;
-        })
-        .addCase(fetchStatistics.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
-        });
+export const fetchStatisticsExtraReducers = (
+  builder: ActionReducerMapBuilder<HomeState>,
+) => {
+  builder
+    .addCase(fetchStatistics.pending, (state) => {
+      state.statistics.status = 'loading';
+    })
+    .addCase(fetchStatistics.fulfilled, (state, action) => {
+      state.statistics.status = 'succeeded';
+      state.statistics.data = action.payload;
+    });
 };

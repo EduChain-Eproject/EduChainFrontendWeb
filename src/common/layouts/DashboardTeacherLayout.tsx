@@ -7,37 +7,8 @@ import TeacherSidebar from '../components/Sidebar/TeacherSidebar';
 import { useAppDispatch, useAppSelector } from '../context/store';
 import RoleCheckerHOC from '../hoc/RoleCheckerHOC';
 
-const DashboardTeacherLayout: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+const DashboardTeacherLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     dispatch(getUserAction());
-  //   } else {
-  //     navigate('/Auth');
-  //   }
-  // }, [isAuthenticated]);
-
-  // useEffect(() => {
-  //   switch (user?.role) {
-  //     case 'ADMIN':
-  //       navigate(`/dashboard`);
-  //       break;
-  //     case 'CENSOR':
-  //       navigate(`/dashboard/censor`);
-  //       break;
-  //     case 'STUDENT':
-  //       navigate(`/`);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }, [user]);
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">

@@ -17,77 +17,71 @@ export const logIn = async (loginRequest: LoginReq) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      const errorData = error.response.data;
-      if (errorData.type === 'validation') {
-        console.log('Validation errors:', errorData);
-        throw new Failure(
-          error.response.data.message,
-          error.response.status,
-          errorData.errors,
-        );
-      } else if (errorData.type == null || undefined) {
-        console.log('Failure error:', errorData.message);
-        throw new Failure(
-          error.response.data.message,
-          error.response.status,
-          errorData.errors,
-        );
-      }
-      console.log('Unexpected error:', error.message);
-      return { type: 'unknown', message: 'An unexpected error occurred' };
-    }
-  }
-}
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
 
-export const getUserWithToken = async () => {
-  try {
-    const response = await axiosService.get(`${baseUrl}COMMON/getUser`);
-    return response.data;
-  } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
-
 export const registerUser = async (registerRequest: RegisterReq) => {
   try {
     const response = await axiosService.post(
       `${baseUrl}Auth/register`,
       registerRequest,
     );
-
     return response.data;
   } catch (error) {
-    console.log(error.status);
-    console.log(error.response.data);
-    throw new Failure(error.response.data, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
-
-// export const logOut = async (email: LogOutReq) => {
-//   try {
-//     const response = await axiosService.post(`${baseUrl}Auth/logout`, email);
-//     return response.data;
-//   } catch (error) {
-//     throw new Failure(error.response.data.message, error.response.status);
-//   }
-// };
 
 export const logOut = async () => {
   try {
     const response = await axiosService.post(`${baseUrl}Auth/logout`);
     return response.data;
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 
 export const sendMailReset = async (req: SendResetPasswordEmailReq) => {
   try {
     const response = await axiosService.post(`${baseUrl}Auth/send_mail`, req);
-    console.log(response.data);
     return response.data;
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 
@@ -97,10 +91,17 @@ export const resetPassword = async (req: ResetPasswordReq) => {
       `${baseUrl}Auth/reset_password`,
       req,
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
-

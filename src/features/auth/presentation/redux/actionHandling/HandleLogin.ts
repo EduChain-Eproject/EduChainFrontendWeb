@@ -1,8 +1,6 @@
-import { ActionReducerMapBuilder } from "@reduxjs/toolkit";
-import { AuthState } from "../authSlice";
-import { logInAction } from "../AuthAction";
-import { ValidationError } from '../../../../../common/state/ValidationFailure';
-import { act } from 'react';
+import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
+import { AuthState } from '../authSlice';
+import { logInAction } from '../AuthAction';
 
 const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) => {
   builder
@@ -11,17 +9,13 @@ const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) => {
     })
     .addCase(logInAction.fulfilled, (state, action) => {
       if (action.payload.error) {
-        console.log(action.payload.error.type);
-        if (action.payload.error.type === 'validation') {
-          state.logInPage.status = 'failed';
-          state.logInPage.errors = action.payload.error;
-        } else {
-          state.logInPage.status = 'failed';
-          state.logInPage.error = action.payload.error.message;
-          console.log(state.logInPage.error);
-        }
+        state.logInPage.status = 'failed';
+        state.logInPage.error = action.payload.error.message;
+        state.logInPage.errors = action.payload.error.errors;
+        console.log(state.logInPage.error);
+        return;
       } else {
-        state.logInPage.status = 'succeeded';
+        state.logInPage.status = 'login succeeded';
         if (action.payload.data) {
           state.isAuthenticated = true;
           localStorage.setItem(
@@ -33,12 +27,6 @@ const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) => {
             action.payload.data.object.refreshToken.toString(),
           );
         }
-      }
-    })
-    .addCase(logInAction.rejected, (state, action) => {
-      state.logInPage.status = 'failed';
-      if (action.error.message) {
-        state.logInPage.error = action.error.message;
       }
     });
 };

@@ -12,12 +12,12 @@ import { CommonState, initCommonState } from '../../../../common/state/index';
 import handleGetUser from './actionHandling/HandleGetUser';
 import handleSendMailReset from './actionHandling/HandleSendMailReset';
 import handleResetPassword from './actionHandling/HandleResetPassword';
-import { User } from '../../../../common/entities/User';
 import AuthRepositoryImpl from '../../data/repositoryImpl/AuthRepositoryImpl';
 
 import handleRegister from './actionHandling/HandleRegister';
 import handleLogOut from './actionHandling/HandleLogout';
 import { ApiResponse, JwtResponse } from '../../domain/usecases/Login';
+import User from '../../../../common/entities/User';
 
 export interface AuthState {
   user: User | null;

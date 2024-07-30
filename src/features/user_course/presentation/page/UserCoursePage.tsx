@@ -23,9 +23,11 @@ const UserCoursePage: React.FC = () => {
   const id = useAppSelector((s) => s.auth.user?.id);
   const [titleSearch, setSearch] = useState('');
   const [size, setSize] = useState(3);
+  const [completionStatus, setCompletionStatus] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
+      console.log(id);
       dispatch(getUserAction());
     }
   }, [dispatch, id]);
@@ -33,17 +35,23 @@ const UserCoursePage: React.FC = () => {
   useEffect(() => {
     if (id) {
       const request: GetUserCourseRequest = {
-        student_id: id,
+        studentId: id,
         titleSearch,
         page: currentPage,
         size,
+        completionStatus,  // Thêm completionStatus vào request
       };
+      console.log(id);
       dispatch(fetchUserCourse(request));
     }
-  }, [dispatch, id, titleSearch, currentPage, size]);
+  }, [dispatch, id, titleSearch, currentPage, size, completionStatus]);
 
   const handlePageChange = (pageNumber: number) => {
     dispatch(setPage(pageNumber));
+  };
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value === '' ? null : event.target.value;
+    setCompletionStatus(value);
   };
 
   if (status === 'loading') {
@@ -56,6 +64,12 @@ const UserCoursePage: React.FC = () => {
 
   return (
     <div>
+      <select onChange={handleStatusChange} value={completionStatus ?? ''}>
+        <option value="">All Statuses</option>
+        <option value="NOT_STARTED">Not Started</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="COMPLETED">Completed</option>
+      </select>
       <GetUserCourseComp data={data!} />
       <Pagination 
         totalPages={totalPages}
@@ -67,5 +81,6 @@ const UserCoursePage: React.FC = () => {
     </div>
   );
 };
+
 
 export default UserCoursePage;

@@ -19,8 +19,12 @@ export const apiGetUserCourse = async (
         'Content-Type': 'application/json',
       },
     });
-    console.log(req);
-    return response.data;
+    console.log(response.data.content);
+    return {
+      totalPages: response.data.totalPages,
+      totalElements: response.data.totalElements,
+      content: response.data.content,
+    };
   } catch (error) {
     throw new Failure(error.response.data.message, error.response.status);
   }

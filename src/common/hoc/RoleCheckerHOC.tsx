@@ -15,11 +15,13 @@ const RoleCheckerHOC = <P extends object>(
 
     useEffect(() => {
       if (!isAuthenticated) {
-        navigate('/Auth');
+        navigate('/Auth/login');
       } else {
         dispatch(getUserAction());
       }
     }, [isAuthenticated, dispatch, navigate]);
+
+    console.log(user);
 
     useEffect(() => {
       if (user?.role && user.role !== requiredRole && requiredRole !== 'NONE') {

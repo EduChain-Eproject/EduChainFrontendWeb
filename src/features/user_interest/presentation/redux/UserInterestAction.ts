@@ -8,6 +8,9 @@ import GetUserInterestsUseCase, {
 import DeleteUserInterestUseCase, {
   DeleteUserInterestRes,
 } from '../../domain/usecase/DeleteUserInterestUseCase';
+import AddUserInterestUseCase, {
+  AddUserInterestReq,
+} from '../../domain/usecase/AddUserInterestUseCase';
 
 const userInterestRepository: UserInterestRepository =
   new UserInterestRepositoryImpl();
@@ -35,8 +38,8 @@ export const fetchUserInterests = createAsyncThunk(
 
 export const fetchAddUserInterest = createAsyncThunk(
   'userInterests/addUserInterests',
-  async (req: GetUserInterestReq, { getState }) => {
-    const getUserInterestsUseCase = new GetUserInterestsUseCase(
+  async (req: AddUserInterestReq, { getState }) => {
+    const getUserInterestsUseCase = new AddUserInterestUseCase(
       userInterestRepository,
     );
     const response = await getUserInterestsUseCase.execute(req);

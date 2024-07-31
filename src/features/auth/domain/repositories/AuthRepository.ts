@@ -1,6 +1,6 @@
 
 import User from '../../../../common/entities/User';
-import { ApiResponse, JwtResponse, LoginReq } from '../usecases/Login';
+import { JwtResponse, LoginReq } from '../usecases/Login';
 import { LogOutReq } from '../usecases/LogOut';
 import { RegisterReq, RegisterResponseMessage } from '../usecases/Register';
 import { ResetPasswordReq } from '../usecases/ResetPassword';
@@ -9,7 +9,7 @@ import { SendResetPasswordEmailReq } from '../usecases/SendResetPasswordEmail';
 export interface AuthRepository {
   //login
   onLogin: (loginRequest: LoginReq) => Promise<{
-    data?: ApiResponse<JwtResponse>;
+    data?: JwtResponse;
     error?: {
       message: string;
       errors: { [key: string]: string };

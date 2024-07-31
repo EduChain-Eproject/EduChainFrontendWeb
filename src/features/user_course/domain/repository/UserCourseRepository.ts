@@ -7,7 +7,11 @@ export interface UserCourseRepository {
     totalPages: number;
     totalElements: number;
     data?: UserCourseDTO[];
-    error?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
   }>;
 
   addUserCourse: (

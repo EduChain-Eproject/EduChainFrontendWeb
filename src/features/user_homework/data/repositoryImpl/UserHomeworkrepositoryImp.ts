@@ -1,3 +1,4 @@
+import Failure from '../../../../common/entities/Failure';
 import { UserHomework } from '../../../../common/entities/UserHomework';
 import { UserHomeworkRepository } from '../../domain/repository/UserHomeworkRepository';
 import { UserHomeworkRequest } from '../../domain/usecase/UserHomeworkUsecase';
@@ -9,7 +10,11 @@ export class UserHomeworkRepositoryImpl implements UserHomeworkRepository {
     totalPages: number;
     totalElements: number;
     data?: UserHomeworkDto[];
-    error?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
   }> {
     try {
       const response = await apiTakeUserHomeworks(listUserHomework);
@@ -24,10 +29,24 @@ export class UserHomeworkRepositoryImpl implements UserHomeworkRepository {
         data: userHomework,
       };
     } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          totalPages: 0,
+          totalElements: 0,
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
       return {
         totalPages: 0,
         totalElements: 0,
-        error: 'Failed to fetch user interests',
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
       };
     }
   }

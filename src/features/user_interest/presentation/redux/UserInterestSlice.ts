@@ -7,6 +7,7 @@ import { handleDeleteInterests } from './action-handling/HandleDeleteUserInteres
 
 export interface UserInterestState {
   userInterests: CommonState<UserInterest[]>;
+  userInterest: CommonState<UserInterest> | null;
   pagination: {
     totalPages: number;
     totalElements: number;
@@ -32,6 +33,7 @@ const initialState: UserInterestState = {
     error: undefined,
     errors: undefined,
   },
+  userInterest: null,
 };
 
 const userInterestSlice = createSlice({

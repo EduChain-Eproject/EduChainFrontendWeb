@@ -25,8 +25,17 @@ export const apiGetUserCourse = async (
       totalElements: response.data.totalElements,
       content: response.data.content,
     };
-  } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+  }catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 

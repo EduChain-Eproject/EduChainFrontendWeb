@@ -5,11 +5,9 @@ import { UserCourse } from '../../../../../../common/entities/UserCourse';
 import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
 
-const apiEnrollACourse = async (courseId: number): ApiResponse<UserCourse> => {
+const apiEnrollACourse = async (courseId: number): ApiResponse<string> => {
   try {
-    const response = await axiosService.post(
-      `/STUDENT/api/course/enroll-in-a-course/${courseId}`,
-    );
+    const response = await axiosService.post(`/api/paypal/pay/${courseId}`);
     return { data: response.data };
   } catch (error) {
     return {
@@ -34,13 +32,7 @@ export const handleEnrollACourse = (
     })
     .addCase(enrollACourse.fulfilled, (state, action) => {
       state.courseDetailPage.status = 'succeeded';
-
-      if (state.courseDetailPage.data && action.payload.data) {
-        state.courseDetailPage.data = {
-          ...state.courseDetailPage.data,
-          currentUserCourse: action.payload.data, // TODO
-        };
-      }
+      state.coursePaymentUrl.data = action.payload.data;
     })
     .addCase(enrollACourse.rejected, (state, action) => {
       state.courseDetailPage.status = 'failed';

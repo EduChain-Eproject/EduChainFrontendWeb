@@ -34,7 +34,9 @@ const GetUserProfilePage: React.FC = () => {
   }
 
   if (status === 'failed') {
-    return <div>error:{error}</div>;
+    return<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <span className="block sm:inline">{error}</span>
+  </div>;
   }
 
   console.log('profile');

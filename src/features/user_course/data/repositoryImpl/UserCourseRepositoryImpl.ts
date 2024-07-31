@@ -1,3 +1,4 @@
+import Failure from '../../../../common/entities/Failure';
 import { UserCourse } from '../../domain/entities/UserCourse';
 import { UserCourseRepository } from '../../domain/repository/UserCourseRepository';
 import { AddUserCourseReq } from '../../domain/usecase/AddUserCourseUseCase';
@@ -13,7 +14,11 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
     totalPages: number;
     totalElements: number;
     data?: UserCourse[];
-    error?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
   }> {
     try {
       const response = await apiGetUserCourse(req);
@@ -27,10 +32,24 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
         data: userCourse,
       };
     } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          totalPages: 0,
+          totalElements: 0,
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
       return {
         totalPages: 0,
         totalElements: 0,
-        error: 'Fail to fetch usercourse',
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
       };
     }
   }
@@ -62,7 +81,7 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
         categoryDescription: category.categoryDescription,
         categoryName: category.categoryName,
         courseDtos: category.courseDtos,
-      })), // Ensure the inner mapping is also correct
+      })),
     };
   }
 }

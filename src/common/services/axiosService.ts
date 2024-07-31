@@ -103,8 +103,8 @@ const refreshAccessToken = async (req: ReNewToken) => {
     `${baseUrl}Auth/reset-access-token`,
     req,
   );
-  const newAccessToken = response.data?.object.accessToken;
-  const newRefreshToken = response.data?.object.refreshToken;
+  const newAccessToken = response.data?.accessToken;
+  const newRefreshToken = response.data?.refreshToken;
   localStorage.setItem('accessToken', newAccessToken);
   localStorage.setItem('refreshToken', newRefreshToken);
   return newAccessToken;

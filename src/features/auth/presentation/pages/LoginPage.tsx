@@ -25,9 +25,8 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen sm:h-auto bg-gray-200">
-            <div className="bg-white shadow-md rounded px-8 py-6 w-full sm:w-96">
-                <h1 className="text-2xl font-bold mb-4 text-center">Log In</h1>
+        <div>
+            <div>
                 <LoginForm onSubmit={handleSubmit} onSubmitReset={handleSubmitReset} />
             </div>
         </div>

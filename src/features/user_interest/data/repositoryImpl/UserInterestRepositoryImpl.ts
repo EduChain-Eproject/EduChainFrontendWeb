@@ -18,7 +18,11 @@ export class UserInterestRepositoryImpl implements UserInterestRepository {
     totalPages: number;
     totalElements: number;
     data?: UserInterest[];
-    error?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
   }> {
     try {
       const response = await apiTakeUserInterests(userInterest);
@@ -32,27 +36,87 @@ export class UserInterestRepositoryImpl implements UserInterestRepository {
         data: userInterests,
       };
     } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          totalPages: 0,
+          totalElements: 0,
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
       return {
         totalPages: 0,
         totalElements: 0,
-        error: 'Failed to fetch user interests',
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
       };
     }
   }
 
-  async deleteUserInterests(
-    deleteReq: DeleteUserInterestRes,
-  ): Promise<{ data?: boolean; error?: string }> {
-    await apiDeleteUserInterest(deleteReq);
-    return { data: true };
+  async deleteUserInterests(deleteReq: DeleteUserInterestRes): Promise<{
+    data?: boolean;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
+    try {
+      await apiDeleteUserInterest(deleteReq);
+      return { data: true };
+    } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
+    }
   }
 
-  async addUserInterests(
-    req: AddUserInterestReq,
-  ): Promise<{ data?: UserInterest; error?: string }> {
-    const response = await apiAddUserInterest(req);
-    const userInterest = this.mapDtoToEntity(response);
-    return { data: userInterest };
+  async addUserInterests(req: AddUserInterestReq): Promise<{
+    data?: UserInterest;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
+    try {
+      const response = await apiAddUserInterest(req);
+      const userInterest = this.mapDtoToEntity(response);
+      return { data: userInterest };
+    } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
+    }
   }
 
   private mapDtoToEntity(dto: UserInterestDto): UserInterest {

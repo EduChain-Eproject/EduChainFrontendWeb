@@ -56,30 +56,40 @@ const UserHomeworkPage: React.FC = () => {
     }
 
     if (status === 'failed') {
-        return <div>Error: {error}</div>;
+        return <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <span className="block sm:inline">{error}</span>
+      </div>
     }
-
     return (
-        <div>
-            <h1>User Homework</h1>
-            <label>
-                Status Filter:
-                <select onChange={handleStatusChange} value={isSubmitted === null ? '' : isSubmitted ? 'submitted' : 'notSubmitted'}>
-                    <option value="">All Statuses</option>
-                    <option value="submitted">Submitted</option>
-                    <option value="notSubmitted">Not Submitted</option>
-                </select>
+        <div className="p-6 bg-gray-100 min-h-screen">
+          <h1 className="text-3xl font-bold mb-6">User Homework</h1>
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700">
+              Status Filter:
+              <select
+                className="ml-2 p-2 border border-gray-300 rounded shadow-sm"
+                onChange={handleStatusChange}
+                value={isSubmitted === null ? '' : isSubmitted ? 'submitted' : 'notSubmitted'}
+              >
+                <option value="">All Statuses</option>
+                <option value="submitted">Submitted</option>
+                <option value="notSubmitted">Not Submitted</option>
+              </select>
             </label>
-            {data && <UserHomeworkComp data={data} onView={(id) => console.log('View:', id)} />}
-            <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-                titleSearch={''}
-                setSearch={() => {}}
-            />
+          </div>
+          {data && (
+            <div className="mb-4">
+              <UserHomeworkComp data={data} onView={(id) => console.log('View:', id)} />
+            </div>
+          )}
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
-    );
-};
+      );
+    };
+
 
 export default UserHomeworkPage;

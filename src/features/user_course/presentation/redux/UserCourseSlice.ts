@@ -14,13 +14,23 @@ export interface UserCourseState {
   userCourse: CommonState<UserCourse>;
 }
 const initialState: UserCourseState = {
-  listUserCourse: { data: undefined, status: null, error: undefined },
+  listUserCourse: {
+    data: undefined,
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
   pagination: {
     totalPages: 0,
     totalElements: 0,
     currentPage: 0,
   },
-  userCourse: { data: undefined, status: null, error: undefined },
+  userCourse: {
+    data: undefined,
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
 };
 
 const useCourseSlice = createSlice({

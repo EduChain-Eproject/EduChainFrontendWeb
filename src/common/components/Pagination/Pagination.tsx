@@ -1,14 +1,14 @@
+
 import React from 'react';
 
 interface PaginationProps {
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
-  titleSearch: string;
-  setSearch: (search: string) => void;
+
 }
 
-const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange, titleSearch, setSearch }) => {
+const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
   const handleChangePage = (newPage: number) => {
     if (newPage >= 0 && newPage < totalPages) {
         console.log('pagechange')
@@ -17,22 +17,29 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={titleSearch}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search by title"
-      />
-      <button onClick={() => handleChangePage(currentPage - 1)} disabled={currentPage === 0}>
+    <div className="flex flex-col items-center space-y-4 mt-6">
+    <div className="flex items-center space-x-4">
+      <button
+        onClick={() => handleChangePage(currentPage - 1)}
+        disabled={currentPage === 0}
+        className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
+      >
         Previous
       </button>
-      <span>Page {currentPage + 1} of {totalPages}</span>
-      <button onClick={() => handleChangePage(currentPage + 1)} disabled={currentPage === totalPages - 1}>
+      <span className="text-lg">
+        Page {currentPage + 1} of {totalPages}
+      </span>
+      <button
+        onClick={() => handleChangePage(currentPage + 1)}
+        disabled={currentPage === totalPages - 1}
+        className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
+      >
         Next
       </button>
     </div>
+  </div>
   );
+
 };
 
 export default Pagination;

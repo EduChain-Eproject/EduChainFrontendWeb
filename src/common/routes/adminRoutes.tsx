@@ -15,6 +15,7 @@ import Buttons from '../temp_pages/UiElements/Buttons';
 import { dashboardRoute } from "../../features/dashboard/presentation/pages";
 import { getBlogsRoute } from "../../features/community/blog/presentation/pages";
 import { getBlogCateCreateRoute, getBlogCateDetailRoute, getBlogCateRoute, getBlogCateUpdateRoute } from "../../features/community/blogCategory/presentation/pages";
+import { OrderDetailRoute, OrderListByCourseRoute, OrderListByUserRoute, OrderListRoute } from "../../features/admin/order/presentation/pages";
 
 const tempRoutes: RouteObject[] = [
     {
@@ -66,6 +67,12 @@ export const adminRoutes: RouteObject = {
         getBlogCateRoute(),
         getBlogCateDetailRoute(),
         getBlogCateCreateRoute(),
-        getBlogCateUpdateRoute()
+        getBlogCateUpdateRoute(),
+
+        //order
+        OrderListRoute(),
+        OrderDetailRoute(),
+        OrderListByCourseRoute(),
+        OrderListByUserRoute(),
     ],
 }

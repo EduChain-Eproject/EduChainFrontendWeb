@@ -32,6 +32,7 @@ export interface CourseState {
   homeworkDetailComponent: CommonState<Homework>;
   userHomeworkComponent: CommonState<UserHomework>;
   userAwardComponent: CommonState<Award>;
+  coursePaymentUrl: CommonState<string>;
 }
 
 const initialState: CourseState = {
@@ -47,6 +48,7 @@ const initialState: CourseState = {
   homeworkDetailComponent: initCommonState,
   userHomeworkComponent: initCommonState,
   userAwardComponent: initCommonState,
+  coursePaymentUrl: initCommonState,
 };
 
 const studentCourseSlice = createSlice({

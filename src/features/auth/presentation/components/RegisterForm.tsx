@@ -45,7 +45,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           </label>
           <input
             id="email"
-            {...register('email', { required: 'Email is required' })}
+            {...register('email')}
             type="email"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -62,7 +62,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           </label>
           <input
             id="firstName"
-            {...register('firstName', { required: 'First name is required' })}
+            {...register('firstName')}
             type="text"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -79,7 +79,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           </label>
           <input
             id="lastName"
-            {...register('lastName', { required: 'Last name is required' })}
+            {...register('lastName')}
             type="text"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -96,7 +96,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           </label>
           <input
             id="phone"
-            {...register('phone', { required: 'Phone number is required' })}
+            {...register('phone')}
             type="text"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -113,7 +113,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           </label>
           <input
             id="address"
-            {...register('address', { required: 'Address is required' })}
+            {...register('address')}
             type="text"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -130,7 +130,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           </label>
           <input
             id="password"
-            {...register('password', { required: 'Password is required' })}
+            {...register('password')}
             type="password"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           />

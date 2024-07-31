@@ -12,14 +12,14 @@ import VoteButton from './VoteButton';
 
 const BlogUIList: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { blogs, status } = useAppSelector((state: RootState) => state.blogUiSlice);
+    const { blogs } = useAppSelector((state: RootState) => state.blogUiSlice);
     const { data: blogCategories } = useAppSelector((state) => state.blogUiSlice.blogCategories);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [blogToDelete, setBlogToDelete] = useState<number | null>(null);
     const [searchKeyword, setSearchKeyword] = useState('');
     const [sortStrategy, setSortStrategy] = useState('descTime');
     const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
-    const [userID, setUserId] = useState(1);
+    const userId = useAppSelector((s) => s.auth?.user?.id);
 
     useEffect(() => {
         dispatch(fetchBlogs());
@@ -163,7 +163,7 @@ const BlogUIList: React.FC = () => {
                                 <h2 className="text-2xl font-bold mb-4">{blog.title}</h2>
                                 <div className="flex justify-between items-center mb-4">
                                     <div className="flex items-center w-full mr-2">
-                                        <VoteButton blogId={blog.id} userId={userID} initialLikes={blog.voteUp}/>
+                                        <VoteButton blogId={blog.id} userId={userId} initialLikes={blog.voteUp}/>
                                     </div>
                                     <div className="flex items-center w-full ml-2">
                                         <Link to={`/community/blog_ui/${blog.id}`} className="flex w-full">

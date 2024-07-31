@@ -6,6 +6,10 @@ export interface UserHomeworkRepository {
     totalPages: number;
     totalElements: number;
     data?: UserHomeworkDto[];
-    error?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
   }>;
 }

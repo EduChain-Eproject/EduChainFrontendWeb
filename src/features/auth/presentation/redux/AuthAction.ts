@@ -1,4 +1,8 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import AuthRepositoryImpl from '../../data/repositoryImpl/AuthRepositoryImpl';
 
 import { AuthRepository } from './../../domain/repositories/AuthRepository';
@@ -65,5 +69,4 @@ export const logOutAction = createAsyncThunk(
     return await logtOutCase.execute(data);
   },
 );
-
-
+export const resetSignUpStatus = createAction('auth/resetSignUpStatus');

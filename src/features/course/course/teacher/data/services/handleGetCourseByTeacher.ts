@@ -13,19 +13,29 @@ export type GetCoursesByTeacherRequest = {
   sortBy: string;
 };
 
+const baseUrl = 'http://localhost:8080/';
 export const apiGetCoursesByTeacher = async (
   request: GetCoursesByTeacherRequest,
 ): ApiResponse<Course[]> => {
   try {
     const response = await axiosService.post(
-      `/TEACHER/api/course/list`,
+      `${baseUrl}TEACHER/api/course/list`,
       request,
     );
 
     return { data: response.data.content };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };

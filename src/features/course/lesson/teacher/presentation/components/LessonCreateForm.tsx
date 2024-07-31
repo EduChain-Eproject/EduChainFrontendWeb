@@ -16,7 +16,7 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<CreateLessonReq>();
 
   const onSubmit = (formData: CreateLessonReq) => {
@@ -26,7 +26,9 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
       }),
     ).then(() => navigate(`/dashboard/teacher/chapters/${chapterId}`));
   };
-
+  const { error, errors } = useAppSelector(
+    (state) => state.lessons.teacher.createLessonPage,
+  );
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="mb-4">
@@ -40,17 +42,14 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
             <input
               {...field}
               type="text"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.lessonTitle ? 'border-red-500' : ''
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50
               }`}
             />
           )}
         />
-        {errors.lessonTitle && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.lessonTitle.message}
-          </p>
-        )}
+            {errors?.lessonTitle && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.lessonTitle}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -62,17 +61,14 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
           render={({ field }) => (
             <textarea
               {...field}
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.description ? 'border-red-500' : ''
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 
               }`}
             />
           )}
         />
-        {errors.description && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.description.message}
-          </p>
-        )}
+          {errors?.description && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.description}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -85,17 +81,13 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
             <input
               {...field}
               type="text"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.videoTitle ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
             />
           )}
         />
-        {errors.videoTitle && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.videoTitle.message}
-          </p>
-        )}
+           {errors?.videoTitle && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.videoTitle}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -107,16 +99,11 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
           render={({ field }) => (
             <input
               type="file"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.file ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
               onChange={(e) => field.onChange(e.target.files)}
             />
           )}
         />
-        {errors.file && (
-          <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
-        )}
       </div>
       <div className="space-x-2">
         <button

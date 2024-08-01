@@ -11,6 +11,7 @@ import handleUpdateAnswer from '../services/updateAnswer';
 export interface QuestionState {
   questionDetailPage: CommonState<Question>;
   createQuestionPage: CommonState<Question>;
+  updateQuestionPage: CommonState<Question>;
   deleteQuestionPage: CommonState<number>;
 }
 
@@ -18,6 +19,7 @@ const initialState: QuestionState = {
   questionDetailPage: initCommonState,
   createQuestionPage: initCommonState,
   deleteQuestionPage: initCommonState,
+  updateQuestionPage: initCommonState,
 };
 
 const questionSlice = createSlice({

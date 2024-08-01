@@ -10,7 +10,7 @@ export interface UpdateQuestionReq {
   questionText: string;
   correctAnswerId: number;
 }
-
+const baseUrl = 'http://localhost:8080/';
 export const apiUpdateQuestion = async (
   questionData: UpdateQuestionReq,
 ): ApiResponse<Question> => {
@@ -18,7 +18,7 @@ export const apiUpdateQuestion = async (
 
   try {
     const response = await axiosService.put(
-      `/TEACHER/api/question/update/${questionData.questionId}`,
+      `${baseUrl}TEACHER/api/question/update/${questionData.questionId}`,
       {
         questionText: questionData.questionText,
         correctAnswerId: questionData.correctAnswerId,
@@ -26,12 +26,19 @@ export const apiUpdateQuestion = async (
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
-
 export const updateQuestion = createAsyncThunk(
   'question/updateQuestion',
   async (questionData: UpdateQuestionReq) => {
@@ -44,22 +51,23 @@ const handleUpdateQuestion = (
 ) => {
   builder
     .addCase(updateQuestion.pending, (state) => {
-      state.questionDetailPage.status = 'updating question';
+      state.updateQuestionPage.status = 'updating question';
     })
     .addCase(updateQuestion.fulfilled, (state, action) => {
       if (action.payload.error) {
-        state.questionDetailPage.status = 'update question failed';
-        state.questionDetailPage.error = action.payload.error.message;
+        state.updateQuestionPage.status = 'update question failed';
+        state.updateQuestionPage.error = action.payload.error.message;
+        state.updateQuestionPage.errors = action.payload.error.errors;
       } else {
-        state.questionDetailPage.status = 'update question succeeded';
-        if (state.questionDetailPage.data && action.payload.data) {
-          state.questionDetailPage.data = action.payload.data;
+        state.updateQuestionPage.status = 'update question succeeded';
+        if (state.updateQuestionPage.data && action.payload.data) {
+          state.updateQuestionPage.data = action.payload.data;
         }
       }
     })
     .addCase(updateQuestion.rejected, (state, action) => {
-      state.questionDetailPage.status = 'update question failed';
-      state.questionDetailPage.error = action.error.message;
+      state.updateQuestionPage.status = 'update question failed';
+      state.updateQuestionPage.error = action.error.message;
     });
 };
 

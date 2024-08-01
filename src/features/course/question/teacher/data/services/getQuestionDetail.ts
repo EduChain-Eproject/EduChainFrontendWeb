@@ -4,13 +4,13 @@ import Failure from '../../../../../../common/entities/Failure';
 import { Question } from '../../../../../../common/entities/Question';
 import axiosService from '../../../../../../common/services/axiosService';
 import { QuestionState } from '../redux/questionSlice';
-
+const baseUrl = 'http://localhost:8080/';
 export const apiGetQuestionDetail = async (
   questionId: number,
 ): ApiResponse<Question> => {
   try {
     const response = await axiosService.get(
-      `/TEACHER/api/question/detail/${questionId}`,
+      `${baseUrl}TEACHER/api/question/detail/${questionId}`,
     );
     return { data: response.data };
   } catch (error) {

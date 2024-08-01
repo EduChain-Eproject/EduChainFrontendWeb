@@ -9,13 +9,13 @@ export interface UpdateAnswerReq {
   answerId: number;
   answerText: string;
 }
-
+const baseUrl = 'http://localhost:8080/';
 export const apiUpdateAnswer = async (
   answerData: UpdateAnswerReq,
 ): ApiResponse<Answer> => {
   try {
     const response = await axiosService.put(
-      `/TEACHER/api/answer/update/${answerData.answerId}`,
+      `${baseUrl}TEACHER/api/answer/update/${answerData.answerId}`,
       {
         answerText: answerData.answerText,
       },

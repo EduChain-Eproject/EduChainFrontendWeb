@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AnswerInput from './AnswerInput';
+import { useAppSelector } from '../../../../../../common/context/store';
 
 interface QuestionUpdateFormProps {
   onSubmitQuestion: (questionText: string, correctAnswerId: number) => void;
@@ -31,7 +32,7 @@ const QuestionUpdateForm: React.FC<QuestionUpdateFormProps> = ({
   const [correctAnswerId, setCorrectAnswerId] = useState(
     initialData?.correctAnswerId || 0,
   );
-
+  const {status,errors} = useAppSelector((s) => s.questions.teacher.updateQuestionPage);
   const handleSubmitQuestion = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmitQuestion(questionText, correctAnswerId);
@@ -52,8 +53,10 @@ const QuestionUpdateForm: React.FC<QuestionUpdateFormProps> = ({
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
         />
+             {errors?.questionText && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.questionText}</p>
+            )}
       </div>
       {initialData?.answers.map((answer, index) => (
         <AnswerInput
@@ -63,6 +66,9 @@ const QuestionUpdateForm: React.FC<QuestionUpdateFormProps> = ({
           onSubmit={onSubmitAnswer}
         />
       ))}
+               {errors?.correctAnswerId && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.correctAnswerId}</p>
+            )}
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"

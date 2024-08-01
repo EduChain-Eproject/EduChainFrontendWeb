@@ -1,4 +1,4 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import Failure from '../../../../../../common/entities/Failure';
 import { Question } from '../../../../../../common/entities/Question';
@@ -11,19 +11,27 @@ export interface CreateQuestionReq {
   answerTexts: string[];
   correctAnswerIndex: number;
 }
-
+const baseUrl = 'http://localhost:8080/';
 export const apiCreateQuestion = async (
   questionData: CreateQuestionReq,
 ): ApiResponse<Question> => {
   try {
     const response = await axiosService.post(
-      `/TEACHER/api/question/create`,
+      `${baseUrl}TEACHER/api/question/create`,
       questionData,
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -33,6 +41,9 @@ export const createQuestion = createAsyncThunk(
   async (questionData: CreateQuestionReq) => {
     return await apiCreateQuestion(questionData);
   },
+);
+export const resetcreateQuestionStatus = createAction(
+  'userProfile/resetcreateChapterStatus',
 );
 
 const handleCreateQuestion = (
@@ -46,6 +57,7 @@ const handleCreateQuestion = (
       if (action.payload.error) {
         state.createQuestionPage.status = 'failed';
         state.createQuestionPage.error = action.payload.error.message;
+        state.createQuestionPage.errors = action.payload.error.errors;
       } else {
         state.createQuestionPage.status = 'succeeded';
         state.createQuestionPage.data = action.payload.data;

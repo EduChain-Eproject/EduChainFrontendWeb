@@ -14,7 +14,7 @@ export const route: () => RouteObject = () => {
 const CreateRegisterPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { status, error } = useAppSelector((state) => state.auth.signUpPage);
+  const { data,status, error } = useAppSelector((state) => state.auth.signUpPage);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleSubmit = (data: any) => {
@@ -24,7 +24,7 @@ const CreateRegisterPage: React.FC = () => {
   useEffect(() => {
     if (status === 'succeeded') {
       setSuccessMessage('Registration successful! Please log in.');
-      alert('success register')
+      alert('success register , please check your email to verify')
       dispatch(resetSignUpStatus()); // Reset status after success
       navigate('/Auth/login');
     }

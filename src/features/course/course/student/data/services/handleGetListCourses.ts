@@ -12,13 +12,13 @@ export interface CourseSearchParams {
   sortBy?: string;
   categoryIds?: number[];
 }
-
+const baseUrl = 'http://localhost:8080/';
 const apiSearchCourses = async (
   params: CourseSearchParams,
 ): ApiResponse<Page<Course>> => {
   try {
     const response = await axiosService.post(
-      '/STUDENT/api/course/list',
+      `${baseUrl}STUDENT/api/course/list`,
       params,
     );
     return {

@@ -10,19 +10,27 @@ export interface CreateHomeworkReq {
   title: string;
   description: string;
 }
-
+const baseUrl = 'http://localhost:8080/';
 export const apiCreateHomework = async (
   homeworkData: CreateHomeworkReq,
 ): ApiResponse<Homework> => {
   try {
     const response = await axiosService.post(
-      `/TEACHER/api/homework/create`,
+      `${baseUrl}TEACHER/api/homework/create`,
       homeworkData,
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -45,6 +53,7 @@ const handleCreateHomework = (
       if (action.payload.error) {
         state.createHomeworkPage.status = 'failed';
         state.createHomeworkPage.error = action.payload.error.message;
+        state.createHomeworkPage.errors = action.payload.error.errors;
       } else {
         state.createHomeworkPage.status = 'succeeded';
         state.createHomeworkPage.data = action.payload.data;

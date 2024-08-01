@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -13,6 +13,9 @@ import {
 const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const {status, error, errors } = useAppSelector(
+    (state) => state.lessons.teacher.createLessonPage,
+  );
   const {
     handleSubmit,
     control,
@@ -24,11 +27,14 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
       createLesson({
         lessonData: { ...formData, chapterId: chapterId.toString() },
       }),
-    ).then(() => navigate(`/dashboard/teacher/chapters/${chapterId}`));
+    )
   };
-  const { error, errors } = useAppSelector(
-    (state) => state.lessons.teacher.createLessonPage,
-  );
+useEffect(() => {
+  if(status === 'succeeded'){
+    navigate(`/dashboard/teacher/chapters/${chapterId}`)
+  }
+})
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="mb-4">

@@ -12,6 +12,8 @@ import {
   fetchCoursesByTeacher,
   GetCoursesByTeacherRequest,
 } from '../../data/services/handleGetCourseByTeacher';
+import { getUserAction } from '../../../../../auth/presentation/redux/AuthAction';
+import { getUserProfileAction } from '../../../../../userprofile/presentation/redux/UserProfileAction';
 
 export const route: () => RouteObject = () => {
   return {
@@ -41,18 +43,34 @@ const CoursesPage: React.FC = () => {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [sortBy, setSortBy] = useState('title');
+  const email = useAppSelector((s)=> s.auth.user?.email)
+  const user = useAppSelector((s) => s.auth.user);
 
   useEffect(() => {
-    const request: GetCoursesByTeacherRequest = {
-      teacherId: 1, // Example teacherId
-      search,
-      page,
-      size,
-      sortBy,
-    };
+    dispatch(getUserAction());
+  }, [dispatch]);
 
-    dispatch(fetchCoursesByTeacher(request));
-  }, [dispatch, search, page, size, sortBy]);
+  // useEffect(() => {
+  //   if (email) {
+  //     console.log(email);
+
+  //     dispatch(getUserProfileAction(email));
+  //   }
+  // }, [dispatch, email]);
+
+  useEffect(() => {
+    if (user && user.id) {
+      const request: GetCoursesByTeacherRequest = {
+        teacherId: user.id, 
+        search,
+        page,
+        size,
+        sortBy,
+      };
+
+      dispatch(fetchCoursesByTeacher(request));
+    }
+  }, [dispatch, search, page, size, sortBy, user]);
 
   if (status === 'loading') {
     return <div>Loading...</div>;

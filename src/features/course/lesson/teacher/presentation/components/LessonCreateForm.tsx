@@ -105,7 +105,7 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
           )}
         />
       </div>
-      <div className="space-x-2">
+      <div className="space-x-2"> 
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"

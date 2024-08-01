@@ -26,7 +26,7 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     defaultValues: courseData || {},
   });
 
-  const { status, error } = useAppSelector(
+  const { status, error,errors } = useAppSelector(
     (state) => state.courses.teacher.updateCoursePage,
   );
 
@@ -66,9 +66,12 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
         </label>
         <input
           id="title"
-          {...register('title', { required: true })}
+          {...register('title')}
           className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+             {errors?.title && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.title}</p>
+            )}
       </div>
       <div>
         <label
@@ -79,9 +82,12 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
         </label>
         <textarea
           id="description"
-          {...register('description', { required: true })}
+          {...register('description')}
           className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+         {errors?.description && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.description}</p>
+            )}
       </div>
       <div>
         <label
@@ -93,9 +99,12 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
         <input
           id="price"
           type="number"
-          {...register('price', { required: true })}
+          {...register('price')}
           className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+         {errors?.price && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.price}</p>
+            )}
       </div>
       <div>
         <label className="block font-medium text-meta-4 text-2xl">
@@ -124,6 +133,9 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
               </label>
             </div>
           ))}
+             {errors?.categoryIds && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.categoryIds}</p>
+            )}
         </div>
       </div>
       <button

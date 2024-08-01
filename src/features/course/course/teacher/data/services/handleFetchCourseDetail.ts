@@ -5,11 +5,14 @@ import Failure from '../../../../../../common/entities/Failure';
 import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
 
+const baseUrl = 'http://localhost:8080/';
 export const apiFetchCourseDetail: (
   courseId: number,
 ) => ApiResponse<Course> = async (courseId: number) => {
   try {
-    const response = await axiosService.get(`/TEACHER/api/course/${courseId}`);
+    const response = await axiosService.get(
+      `${baseUrl}TEACHER/api/course/${courseId}`,
+    );
     return { data: response.data };
   } catch (error) {
     return {

@@ -5,6 +5,7 @@ import Lesson from '../../../../../../common/entities/Lesson';
 import axiosService from '../../../../../../common/services/axiosService';
 import { LessonState } from '../redux/lessonSlice';
 
+
 export const apiGetLessonDetail = async (
   lessonId: number,
 ): ApiResponse<Lesson> => {

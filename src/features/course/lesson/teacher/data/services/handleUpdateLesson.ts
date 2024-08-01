@@ -11,20 +11,26 @@ export type UpdateLessonReq = {
   videoTitle: string;
   file: FileList;
 };
-
+const baseUrl = 'http://localhost:8080/';
 export const apiUpdateLesson = async (
   lessonId: number,
   lessonData: UpdateLessonReq,
 ): ApiResponse<Lesson> => {
   try {
     const formData = new FormData();
-    formData.append('file', lessonData.file[0]);
-    formData.append('lessonTitle', lessonData.lessonTitle);
-    formData.append('description', lessonData.description);
-    formData.append('videoTitle', lessonData.videoTitle);
+    // Kiểm tra và thêm tệp vào FormData
+    if (lessonData.file && lessonData.file.length > 0) {
+      formData.append('file', lessonData.file[0]);
+    } else {
+      // Thêm một trường tệp rỗng để server có thể xử lý
+      formData.append('file', new Blob());
+    }
+    formData.append('lessonTitle', lessonData.lessonTitle || '');
+    formData.append('description', lessonData.description || '');
+    formData.append('videoTitle', lessonData.videoTitle || '');
 
     const response = await axiosService.put(
-      `/TEACHER/api/lesson/update/${lessonId}`,
+      `${baseUrl}TEACHER/api/lesson/update/${lessonId}`,
       formData,
       {
         headers: {
@@ -34,8 +40,16 @@ export const apiUpdateLesson = async (
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -62,6 +76,7 @@ const handleUpdateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
       if (action.payload.error) {
         state.updateLessonPage.status = 'failed';
         state.updateLessonPage.error = action.payload.error.message;
+        state.updateLessonPage.errors = action.payload.error.errors;
       } else {
         state.updateLessonPage.status = 'succeeded';
         state.updateLessonPage.data = action.payload.data;

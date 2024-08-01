@@ -24,7 +24,7 @@ export const apiCreateLesson = async (
       formData.append('file', lessonData.file[0]);
     } else {
       // Thêm một trường tệp rỗng để server có thể xử lý
-      formData.append('file', new Blob(), 'empty.txt');
+      formData.append('file', new Blob());
     }
     formData.append('chapterId', lessonData.chapterId || '');
     formData.append('lessonTitle', lessonData.lessonTitle || '');

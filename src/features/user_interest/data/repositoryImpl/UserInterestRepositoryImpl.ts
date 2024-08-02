@@ -1,17 +1,14 @@
-import { UserInterestDto } from './../dto/UserInterestDto';
-import { UserProfileModel } from './../../../userprofile/domain/entities/UserProfileModel';
-// import { UserInterestModel } from './../../domain/entities/UserInterestModel';
-import Failure from '../../../../common/entities/Failure';
 import {
   apiAddUserInterest,
   apiDeleteUserInterest,
   apiTakeUserInterests,
 } from '../dataSource/UserInterestDataSource';
-import { UserInterest } from '../../domain/entities/UserInterest';
-import { DeleteUserInterestRes } from '../../domain/usecase/DeleteUserInterestUseCase';
+
+import { DeleteUserInterestReq } from '../../domain/usecase/DeleteUserInterestUseCase';
 import { GetUserInterestReq } from '../../domain/usecase/GetUserInterests UserCase';
 import { UserInterestRepository } from '../../domain/repository/UserInterestRepository';
 import { AddUserInterestReq } from '../../domain/usecase/AddUserInterestUseCase';
+import UserInterest from '../../../../common/entities/UserInterest';
 
 export class UserInterestRepositoryImpl implements UserInterestRepository {
   async getUserInterests(userInterest: GetUserInterestReq): Promise<{
@@ -22,14 +19,11 @@ export class UserInterestRepositoryImpl implements UserInterestRepository {
   }> {
     try {
       const response = await apiTakeUserInterests(userInterest);
-      console.log(response);
-      const userInterests = response.content.map((dto: UserInterestDto) =>
-        this.mapDtoToEntity(dto),
-      );
+
       return {
         totalPages: response.totalPages,
         totalElements: response.totalElements,
-        data: userInterests,
+        data: response.content,
       };
     } catch (error) {
       return {
@@ -41,7 +35,7 @@ export class UserInterestRepositoryImpl implements UserInterestRepository {
   }
 
   async deleteUserInterests(
-    deleteReq: DeleteUserInterestRes,
+    deleteReq: DeleteUserInterestReq,
   ): Promise<{ data?: boolean; error?: string }> {
     await apiDeleteUserInterest(deleteReq);
     return { data: true };
@@ -51,20 +45,7 @@ export class UserInterestRepositoryImpl implements UserInterestRepository {
     req: AddUserInterestReq,
   ): Promise<{ data?: UserInterest; error?: string }> {
     const response = await apiAddUserInterest(req);
-    const userInterest = this.mapDtoToEntity(response);
-    return { data: userInterest };
-  }
-
-  private mapDtoToEntity(dto: UserInterestDto): UserInterest {
-    return {
-      course_id: dto.course_id,
-      student_id: dto.student_id,
-      description: dto.description,
-      title: dto.title,
-      price: dto.price,
-      teacherName: dto.teacherName,
-      categoryList: dto.categoryList,
-    };
+    return { data: response };
   }
 }
 

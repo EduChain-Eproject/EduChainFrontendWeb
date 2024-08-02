@@ -1,7 +1,4 @@
-import { ApiResponse } from '../../../auth/domain/usecases/Login';
-
 import { UserProfileModel } from '../entities/UserProfileModel';
-import { UpdateUserProfileReq } from '../usecases/UpdateUserProfileUseCase';
 
 export interface UserProfileRepository {
   onGetUserProfile(

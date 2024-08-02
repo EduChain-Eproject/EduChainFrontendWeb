@@ -1,7 +1,6 @@
-import { UserInterestDto } from './../../data/dto/UserInterestDto';
-import { UserInterest } from '../entities/UserInterest';
+import UserInterest from '../../../../common/entities/UserInterest';
 import { AddUserInterestReq } from '../usecase/AddUserInterestUseCase';
-import { DeleteUserInterestRes } from '../usecase/DeleteUserInterestUseCase';
+import { DeleteUserInterestReq } from '../usecase/DeleteUserInterestUseCase';
 import { GetUserInterestReq } from '../usecase/GetUserInterests UserCase';
 
 export interface UserInterestRepository {
@@ -13,7 +12,7 @@ export interface UserInterestRepository {
   }>;
 
   deleteUserInterests: (
-    deleteUserInterest: DeleteUserInterestRes,
+    deleteUserInterest: DeleteUserInterestReq,
   ) => Promise<{ data?: boolean; error?: string }>;
 
   addUserInterests: (

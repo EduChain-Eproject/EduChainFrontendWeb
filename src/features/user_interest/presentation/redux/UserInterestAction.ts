@@ -5,15 +5,16 @@ import UserInterestRepositoryImpl from '../../data/repositoryImpl/UserInterestRe
 import GetUserInterestsUseCase, {
   GetUserInterestReq,
 } from '../../domain/usecase/GetUserInterests UserCase';
-import { DeleteUserInterest } from '../../domain/entities/DeleteUserInterest';
-import DeleteUserInterestUseCase from '../../domain/usecase/DeleteUserInterestUseCase';
+import DeleteUserInterestUseCase, {
+  DeleteUserInterestReq,
+} from '../../domain/usecase/DeleteUserInterestUseCase';
 
 const userInterestRepository: UserInterestRepository =
   new UserInterestRepositoryImpl();
 
 export const fetchDeleteUserInterest = createAsyncThunk(
   'userInterests/deleteUserInterest',
-  async (deleteUserInterest: DeleteUserInterest) => {
+  async (deleteUserInterest: DeleteUserInterestReq) => {
     const deleteInterestUseCase = new DeleteUserInterestUseCase(
       userInterestRepository,
     );

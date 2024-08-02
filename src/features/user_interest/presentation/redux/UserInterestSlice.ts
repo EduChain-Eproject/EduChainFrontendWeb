@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { CommonState, initCommonState } from '../../../../common/state';
 // import GetUserInterestHandling from './action-handling/GetUserInterestHandling';
-import { UserInterest } from '../../domain/entities/UserInterest';
 import { handleGetUserInterests } from './action-handling/HandleGetUserInterests';
 import { handleDeleteInterests } from './action-handling/HandleDeleteUserInterest';
+import UserInterest from '../../../../common/entities/UserInterest';
 
 export interface UserInterestState {
   userInterests: CommonState<UserInterest[]>;
@@ -15,13 +15,13 @@ export interface UserInterestState {
   deleteStatus: CommonState<null>;
 }
 const initialState: UserInterestState = {
-  userInterests: { data: undefined, status: null, error: undefined },
+  userInterests: initCommonState,
   pagination: {
     totalPages: 0,
     totalElements: 0,
     currentPage: 0,
   },
-  deleteStatus: { data: null, status: null, error: undefined },
+  deleteStatus: initCommonState,
 };
 
 const userInterestSlice = createSlice({

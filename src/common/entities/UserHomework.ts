@@ -6,7 +6,7 @@ import { UserAnswer } from './UserAnswer';
 export class UserHomework {
   id: number;
   submissionDate: Date;
-  progress: number; // This can be a percentage or any metric that makes sense
+  progress: number;
   grade: number;
   isSubmitted: boolean;
 

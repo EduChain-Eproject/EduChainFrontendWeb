@@ -1,4 +1,4 @@
-import { UserCourse } from '../../domain/entities/UserCourse';
+import UserCourse from '../../../../common/entities/UserCourse';
 import { UserCourseRepository } from '../../domain/repository/UserCourseRepository';
 import { AddUserCourseReq } from '../../domain/usecase/AddUserCourseUseCase';
 import { GetUserCourseRequest } from '../../domain/usecase/GetUserCourseUseCase';
@@ -6,7 +6,6 @@ import {
   apiAddUserCouse,
   apiGetUserCourse,
 } from '../dataSrouce/UserCourseDataSrouce';
-import { UserCourseDTO } from '../dto/UserCourseDTO';
 
 export class UserCourseRepositoryImpl implements UserCourseRepository {
   async getUserCourse(req: GetUserCourseRequest): Promise<{
@@ -17,13 +16,11 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
   }> {
     try {
       const response = await apiGetUserCourse(req);
-      const userCourse = response.content.map((dto: UserCourseDTO) =>
-        this.mapDtoToEntity(dto),
-      );
+
       return {
         totalPages: response.totalPages,
         totalElements: response.totalElements,
-        data: userCourse,
+        data: response.content,
       };
     } catch (error) {
       return {
@@ -36,27 +33,14 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
 
   async addUserCourse(
     req: AddUserCourseReq,
-  ): Promise<{ data?: UserCourseDTO; error?: string }> {
+  ): Promise<{ data?: UserCourse; error?: string }> {
     try {
       const response = await apiAddUserCouse(req);
-      const userCourse = this.mapDtoToEntity(response);
-      return { data: userCourse };
+      return { data: response };
     } catch (error) {
       return {
         error: 'Fail to fetch usercourse',
       };
     }
-  }
-
-  private mapDtoToEntity(dto: UserCourseDTO): UserCourse {
-    return {
-      teacherName: dto.teacherName,
-      teacherEmail: dto.teacherEmail,
-      title: dto.title,
-      enrollmentDate: dto.enrollmentDate,
-      price: dto.price,
-      completionStatus: dto.completionStatus,
-      categoryList: dto.categoryList,
-    };
   }
 }

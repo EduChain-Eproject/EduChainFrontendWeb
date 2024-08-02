@@ -1,12 +1,10 @@
 import { UserProfileDto } from '../dto/UserProfileDto';
 import Failure from '../../../../common/entities/Failure';
-import { ApiResponse } from '../../../auth/domain/usecases/Login';
 import { UserProfileRepository } from '../../domain/repository/UserRepository';
 import {
   getUserProfile,
   updateUserProfile,
 } from '../dataSource/ProfileRemoteDataSource';
-import { UpdateUserProfileReq } from '../../domain/usecases/UpdateUserProfileUseCase';
 import { UserProfileModel } from '../../domain/entities/UserProfileModel';
 
 class UserProfileRepositoryImpl implements UserProfileRepository {

@@ -1,8 +1,8 @@
 import Failure from '../../../../common/entities/Failure';
+import UserCourse from '../../../../common/entities/UserCourse';
 import axiosService from '../../../../common/services/axiosService';
 import { AddUserCourseReq } from '../../domain/usecase/AddUserCourseUseCase';
 import { GetUserCourseRequest } from '../../domain/usecase/GetUserCourseUseCase';
-import { UserCourseDTO } from '../dto/UserCourseDTO';
 
 const baseUrl: String = 'http://localhost:8080/STUDENT/';
 
@@ -11,7 +11,7 @@ export const apiGetUserCourse = async (
 ): Promise<{
   totalPages: number;
   totalElements: number;
-  content: UserCourseDTO[];
+  content: UserCourse[];
 }> => {
   try {
     const response = await axiosService.post(`${baseUrl}all-user-course`, req, {
@@ -28,7 +28,7 @@ export const apiGetUserCourse = async (
 
 export const apiAddUserCouse = async (
   req: AddUserCourseReq,
-): Promise<UserCourseDTO> => {
+): Promise<UserCourse> => {
   try {
     const response = await axiosService.post(`${baseUrl}add-user-course`, req, {
       headers: {

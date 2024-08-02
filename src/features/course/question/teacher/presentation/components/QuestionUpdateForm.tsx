@@ -65,10 +65,8 @@ const QuestionUpdateForm: React.FC<QuestionUpdateFormProps> = ({
           initialAnswerText={answers[index]}
           onSubmit={onSubmitAnswer}
         />
+        
       ))}
-               {errors?.correctAnswerId && (
-              <p className="text-red-500 text-xs italic mt-1">{errors?.correctAnswerId}</p>
-            )}
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -88,6 +86,9 @@ const QuestionUpdateForm: React.FC<QuestionUpdateFormProps> = ({
             </option>
           ))}
         </select>
+        {errors?.correctAnswerId && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.correctAnswerId}</p>
+            )}
       </div>
       <button
         type="submit"

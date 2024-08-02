@@ -22,8 +22,18 @@ export const apiUpdateAnswer = async (
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      console.log(data.errors);
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
+    console.log('err');
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -40,14 +50,17 @@ const handleUpdateAnswer = (
 ) => {
   builder
     .addCase(updateAnswer.pending, (state) => {
-      state.questionDetailPage.status = 'updating answer';
+      state.updateAnswer.status = 'updating answer';
     })
     .addCase(updateAnswer.fulfilled, (state, action) => {
       if (action.payload.error) {
-        state.questionDetailPage.status = 'update answer failed';
-        state.questionDetailPage.error = action.payload.error.message;
+        state.updateAnswer.status = 'update answer failed';
+        state.updateAnswer.error = action.payload.error.message;
+        state.updateAnswer.errors = action.payload.error.errors;
+        console.log('err');
       } else {
-        state.questionDetailPage.status = 'update answer succeeded';
+        state.updateAnswer.status = 'update answer succeeded';
+        console.log('succ');
         if (state.questionDetailPage.data && action.payload.data) {
           const updatedAnswers = state.questionDetailPage.data.answerDtos?.map(
             (a) => {
@@ -66,8 +79,10 @@ const handleUpdateAnswer = (
       }
     })
     .addCase(updateAnswer.rejected, (state, action) => {
-      state.questionDetailPage.status = 'update answer failed';
-      state.questionDetailPage.error = action.error.message;
+      console.log(action.payload);
+
+      state.updateAnswer.status = 'update answer failed';
+      state.updateAnswer.error = action.error.message;
     });
 };
 

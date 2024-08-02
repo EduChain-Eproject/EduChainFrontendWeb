@@ -10,13 +10,13 @@ export interface AnswerQuestionReq {
   questionId: number;
   answerId: number;
 }
-
+const baseUrl = 'http://localhost:8080/';
 const apiAnswerAQuestion = async (
   req: AnswerQuestionReq,
 ): ApiResponse<UserAnswer> => {
   try {
     const response = await axiosService.post(
-      `/STUDENT/api/homework/answer/${req.homeworkId}`,
+      `${baseUrl}STUDENT/api/homework/answer/${req.homeworkId}`,
       req,
     );
     return { data: response.data };
@@ -73,6 +73,7 @@ const handleAnswerAQuestion = (
         };
       } else {
         state.homeworkDetailComponent.error = action.payload.error?.message;
+        state.homeworkDetailComponent.errors = action.payload.error?.errors;
       }
     })
     .addCase(answerAQuestion.rejected, (state, action) => {

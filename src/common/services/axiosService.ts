@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { logOut } from '../../features/auth/data/dataSources/AuthRemoteDataSource';
 
 const axiosService = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -81,6 +82,7 @@ axiosService.interceptors.response.use(
           })
           .catch((err) => {
             processQueue(err, null);
+            logOut();
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
             reject(err);

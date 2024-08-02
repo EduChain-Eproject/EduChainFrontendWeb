@@ -7,16 +7,18 @@ export const handleDeleteInterests = (
 ) => {
   builder
     .addCase(fetchDeleteUserInterest.pending, (state) => {
-      state.deleteStatus = { ...state.deleteStatus, status: 'loading' };
+      state.deleteStatus.status = 'loading';
     })
-    .addCase(fetchDeleteUserInterest.fulfilled, (state) => {
-      state.deleteStatus = { ...state.deleteStatus, status: 'succeeded' };
+    .addCase(fetchDeleteUserInterest.fulfilled, (state, action) => {
+      if (action.payload.error) {
+        state.deleteStatus.status = 'failed';
+        state.deleteStatus.error = action.payload.error.message;
+      } else {
+        state.deleteStatus.status = 'succeeded';
+      }
     })
     .addCase(fetchDeleteUserInterest.rejected, (state, action) => {
-      state.deleteStatus = {
-        ...state.deleteStatus,
-        status: 'failed',
-        error: action.error.message,
-      };
+      state.deleteStatus.status = 'failed';
+      state.deleteStatus.error = action.error.message;
     });
 };

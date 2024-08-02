@@ -5,12 +5,13 @@ import Lesson from '../../../../../../common/entities/Lesson';
 import axiosService from '../../../../../../common/services/axiosService';
 import { LessonState } from '../redux/lessonSlice';
 
+const baseUrl = 'http://localhost:8080/';
 export const apiGetLessonDetail = async (
   lessonId: number,
 ): ApiResponse<Lesson> => {
   try {
     const response = await axiosService.get(
-      `/TEACHER/api/lesson/detail/${lessonId}`,
+      `${baseUrl}TEACHER/api/lesson/detail/${lessonId}`,
     );
     return { data: response.data };
   } catch (error) {

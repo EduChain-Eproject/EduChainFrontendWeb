@@ -4,11 +4,11 @@ import Course from '../../../../../../common/entities/Course';
 import Failure from '../../../../../../common/entities/Failure';
 import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
-
+const baseUrl = 'http://localhost:8080/';
 const apiGetCourseDetail = async (courseId: number): ApiResponse<Course> => {
   try {
     const response = await axiosService.get(
-      `/STUDENT/api/course/detail/${courseId}`,
+      `${baseUrl}STUDENT/api/course/detail/${courseId}`,
     );
     return { data: response.data };
   } catch (error) {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../common/context/store';
 import UpdateUserProfileComp from '../components/UpdateUserProfileComp';
 import { RouteObject, useNavigate } from 'react-router-dom';
-import { getUserProfileAction, updateUserProfileAction } from '../redux/UserProfileAction';
+import { getUserProfileAction, resetUpdateProfileStatus, updateUserProfileAction } from '../redux/UserProfileAction';
 import { UpdateUserProfileReq } from '../../domain/usecases/UpdateUserProfileUseCase';
 
 export const route: () => RouteObject = () => {
@@ -15,16 +15,18 @@ export const route: () => RouteObject = () => {
 const UpdateUserProfilePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate(); 
-  const { data, error, status } = useAppSelector((state) => state.userProfile.profilePage);
+  const  profile  = useAppSelector((state) => state.userProfile.profilePage);
   const email = useAppSelector((s) => s.auth.user?.email);
-
+  const { data, error, status } = useAppSelector((state) => state.userProfile.updateProfilePage);
   useEffect(() => {
     if (email) {
       dispatch(getUserProfileAction(email));
     }
   }, [dispatch, email]);
 
-  const handleSubmit = (newdata: UpdateUserProfileReq) => {
+
+  const handleSubmit = async (newdata: UpdateUserProfileReq) => {
+
     const formData = new FormData();
     formData.append('id', newdata.id.toString());
     formData.append('email', newdata.email);
@@ -36,25 +38,26 @@ const UpdateUserProfilePage = () => {
     if (newdata.avatarFile[0]) {
       formData.append('avatarFile', newdata.avatarFile[0]);
     }
+      dispatch(updateUserProfileAction(formData));
 
-       // Dispatch the update action
-    dispatch(updateUserProfileAction(formData))
-      .then((result) => {
-        if (result.type.endsWith('fulfilled')) {
-          // Navigate to another page after successful update
-          navigate('/profile'); // Replace with the desired path
-        }
-      })
-      .catch((err) => {
-        console.error('Update failed:', err);
-      });
   };
+  useEffect(() => {
+    if(status === 'succeeded'){
+      console.log(status)
+      dispatch(resetUpdateProfileStatus());
+      navigate('/profile') ;
+    }
+  }, [ status, navigate,dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading</div>;
+  }
 
   return (
     <div className="p-4">
       <UpdateUserProfileComp 
         onSubmit={handleSubmit} 
-        initialData={data} 
+        initialData={profile.data} 
         serverError={error}
       />
     </div>

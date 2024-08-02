@@ -4,7 +4,7 @@ import Course from '../../../../../../common/entities/Course';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import axiosService from '../../../../../../common/services/axiosService';
 import Failure from '../../../../../../common/entities/Failure';
-
+const baseUrl = 'http://localhost:8080/';
 export type CreateCourseReq = {
   title: string;
   description: string;
@@ -17,13 +17,22 @@ export const apiCreateCourse = async (
 ): ApiResponse<Course> => {
   try {
     const response = await axiosService.post(
-      '/TEACHER/api/course/create',
+      `${baseUrl}TEACHER/api/course/create`,
       courseData,
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -44,6 +53,7 @@ const handleCreateCourse = (builder: ActionReducerMapBuilder<CourseState>) => {
       if (action.payload.error) {
         state.createCoursePage.status = 'create course failed';
         state.createCoursePage.error = action.payload.error.message;
+        state.createCoursePage.errors = action.payload.error.errors;
       } else {
         state.createCoursePage.status = 'create course succeeded';
         action.payload.data &&

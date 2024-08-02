@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import AppPagination from '../../../../common/components/Pagination/AppPagination';
+import React from 'react';
 import UserInterest from '../../../../common/entities/UserInterest';
 
 interface GetUserInterestCompProps {
   data: UserInterest[];
   onDelete: (courseId: number, studentId: number) => void;
 }
+
 const GetUserInterestComp: React.FC<GetUserInterestCompProps> = ({
   data,
   onDelete,
 }) => {
   return (
-    <div>
-      <h2>User Interests Table</h2>
-      <table>
-        <thead>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">User Interests Table</h2>
+      <table className="min-w-full bg-white border border-gray-300">
+        <thead className="bg-gray-100">
           <tr>
             <th>Course ID</th>
             <th>Student ID</th>
@@ -27,8 +27,8 @@ const GetUserInterestComp: React.FC<GetUserInterestCompProps> = ({
         </thead>
         <tbody>
           {data &&
-            data.map((interest) => (
-              <tr key={interest.courseDto?.id}>
+            data.map((interest, index) => (
+              <tr key={index} className="hover:bg-gray-50">
                 <td>{interest.courseDto?.title}</td>
                 <td>{interest.userDto?.email}</td>
                 <td>{interest.courseDto?.title}</td>
@@ -54,13 +54,8 @@ const GetUserInterestComp: React.FC<GetUserInterestCompProps> = ({
             ))}
         </tbody>
       </table>
-      {/* <Pagination
-          totalPages={totalPage}
-          currentPage={currentPage}
-          onPageChange={onPageChange} titleSearch={""} setSearch={function (search: string): void {
-            throw new Error("Function not implemented.");
-          } }      /> */}
     </div>
   );
 };
+
 export default GetUserInterestComp;

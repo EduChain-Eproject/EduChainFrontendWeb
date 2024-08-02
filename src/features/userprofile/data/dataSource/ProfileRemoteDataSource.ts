@@ -18,19 +18,40 @@ export const getUserProfile = async (
     console.log(respose.data);
     return respose.data;
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 
 export const updateUserProfile = async (
   req: FormData,
 ): Promise<{
-  content: UserProfileDto;
+  data: UserProfileDto;
 }> => {
   try {
-    const respose = await axiosService.post(`${baseUrl}updateProfile`, req);
-    return respose.data;
+    const response = await axiosService.post(`${baseUrl}updateProfile`, req);
+    console.log(response.data);
+    return { data: response.data };
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
+
+

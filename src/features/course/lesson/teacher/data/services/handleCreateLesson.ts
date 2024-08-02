@@ -10,22 +10,29 @@ export type CreateLessonReq = {
   lessonTitle: string;
   description: string;
   videoTitle: string;
-  file: FileList;
+  file: FileList | null;
 };
-
+const baseUrl = 'http://localhost:8080/';
 export const apiCreateLesson = async (
   lessonData: CreateLessonReq,
 ): ApiResponse<Lesson> => {
   try {
+    console.log(lessonData);
     const formData = new FormData();
-    formData.append('file', lessonData.file[0]);
-    formData.append('chapterId', lessonData.chapterId);
-    formData.append('lessonTitle', lessonData.lessonTitle);
-    formData.append('description', lessonData.chapterId);
-    formData.append('videoTitle', lessonData.videoTitle);
+    // Kiểm tra và thêm tệp vào FormData
+    if (lessonData.file && lessonData.file.length > 0) {
+      formData.append('file', lessonData.file[0]);
+    } else {
+      // Thêm một trường tệp rỗng để server có thể xử lý
+      formData.append('file', new Blob());
+    }
+    formData.append('chapterId', lessonData.chapterId || '');
+    formData.append('lessonTitle', lessonData.lessonTitle || '');
+    formData.append('description', lessonData.description || '');
+    formData.append('videoTitle', lessonData.videoTitle || '');
 
     const response = await axiosService.post(
-      `/TEACHER/api/lesson/create`,
+      `${baseUrl}TEACHER/api/lesson/create`,
       formData,
       {
         headers: {
@@ -36,8 +43,18 @@ export const apiCreateLesson = async (
 
     return { data: response.data };
   } catch (error) {
+    console.log(error);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -58,6 +75,7 @@ const handleCreateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
       if (action.payload.error) {
         state.createLessonPage.status = 'failed';
         state.createLessonPage.error = action.payload.error.message;
+        state.createLessonPage.errors = action.payload.error.errors;
       } else {
         state.createLessonPage.status = 'succeeded';
         state.createLessonPage.data = action.payload.data;

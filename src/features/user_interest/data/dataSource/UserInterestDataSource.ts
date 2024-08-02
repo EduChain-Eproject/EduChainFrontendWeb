@@ -27,7 +27,16 @@ export const apiTakeUserInterests = async (
     console.log(req);
     return response.data;
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 export const apiDeleteUserInterest = async (
@@ -39,7 +48,16 @@ export const apiDeleteUserInterest = async (
     });
     return response.data;
   } catch (error) {
-    throw new Error(`Failed to delete user interest: ${error.message}`);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 
@@ -49,7 +67,16 @@ export const apiAddUserInterest = async (
   try {
     const response = await axiosService.post(`${baseUrl}add-to-wishlist`, req);
     return response.data;
-  } catch (error) {
-    throw new Error(`Failed to delete user interest: ${error.message}`);
+  }  catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };

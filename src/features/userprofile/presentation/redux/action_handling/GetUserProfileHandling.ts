@@ -12,7 +12,7 @@ const GetUserProfileHandling = (
     .addCase(getUserProfileAction.fulfilled, (state, action) => {
       if (action.payload.error) {
         state.profilePage.status = 'failed';
-        state.profilePage.error = action.payload.error;
+        state.profilePage.error = action.payload.error.message;
       } else {
         state.profilePage.status = 'succeeded';
         state.profilePage.data = action.payload.data;

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteObject, useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../../../../../common/context/store';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
 import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
 import QuestionForm from '../components/QuestionForm';
-import { createQuestion } from '../../data/services/createQuestion';
+import { createQuestion, resetcreateQuestionStatus } from '../../data/services/createQuestion';
 
 export const route: () => RouteObject = () => {
   return {
@@ -16,7 +16,7 @@ const QuestionCreatePage: React.FC = () => {
   const { homeworkId } = useParams<{ homeworkId: string }>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const {error,status} = useAppSelector((s) => s.questions.teacher.createQuestionPage) 
   const breadCrumbItems = [
     { label: 'Home', href: '/dashboard/teacher' },
     { label: 'Course by you', href: '/dashboard/teacher/courses' },
@@ -39,15 +39,22 @@ const QuestionCreatePage: React.FC = () => {
         correctAnswerIndex,
       }),
     )
-      .unwrap()
-      .then(() => {
-        navigate(`/dashboard/teacher/homeworks/${homeworkId}`);
-      });
+      // .unwrap()
+      // .then(() => {
+      //   navigate(`/dashboard/teacher/homeworks/${homeworkId}`);
+      // });
   };
 
+  useEffect(()=>{
+    if(status === 'succeeded'){
+      dispatch(resetcreateQuestionStatus());
+      navigate(`/dashboard/teacher/homeworks/${homeworkId}`);
+    }
+  })
   return (
     <div className="p-4">
       <AppBreadcrumb items={breadCrumbItems} />
+      <div>{error}</div>
       <h1 className="text-2xl font-bold mb-4">Create Question</h1>
       <QuestionForm onSubmit={handleCreate} />
     </div>

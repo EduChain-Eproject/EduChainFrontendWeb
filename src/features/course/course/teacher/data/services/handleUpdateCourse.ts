@@ -5,6 +5,7 @@ import Failure from '../../../../../../common/entities/Failure';
 import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
 
+const baseUrl = 'http://localhost:8080/';
 export type UpdateCourseReq = {
   title: string;
   description: string;
@@ -18,13 +19,22 @@ export const apiUpdateCourse = async (
 ): ApiResponse<Course> => {
   try {
     const response = await axiosService.put(
-      `/TEACHER/api/course/update/${courseId}`,
+      `${baseUrl}TEACHER/api/course/update/${courseId}`,
       courseData,
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -45,6 +55,7 @@ const handleUpdateCourse = (builder: ActionReducerMapBuilder<CourseState>) => {
       if (action.payload.error) {
         state.updateCoursePage.status = 'failed';
         state.updateCoursePage.error = action.payload.error.message;
+        state.updateCoursePage.errors = action.payload.error.errors;
       } else {
         state.updateCoursePage.status = 'succeeded';
         state.courseDetailPage.data = action.payload.data;

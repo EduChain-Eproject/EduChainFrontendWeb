@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAppSelector } from '../../../../../../common/context/store';
 
 interface QuestionFormProps {
   onSubmit: (
@@ -27,6 +28,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
     initialData?.correctAnswerIndex || 0,
   );
 
+  const {errors,error} = useAppSelector((s) => s.questions.teacher.createQuestionPage) 
   const handleAnswerChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value;
@@ -52,9 +54,11 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
           id="questionText"
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"    
         />
+               {errors?.questionText && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.questionText}</p>
+            )}
       </div>
       {answers.map((answer, index) => (
         <div key={index} className="mb-4">
@@ -71,8 +75,12 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
             onChange={(e) => handleAnswerChange(index, e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+            {errors?.answerTexts && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.answerTexts}</p>
+            )}
         </div>
       ))}
+       
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -93,6 +101,9 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
             </option>
           ))}
         </select>
+        {errors?.correctAnswerIndex && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.correctAnswerIndex}</p>
+            )}
       </div>
       <button
         type="submit"

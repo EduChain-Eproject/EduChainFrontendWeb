@@ -8,14 +8,28 @@ export interface UserInterestRepository {
     totalPages: number;
     totalElements: number;
     data?: UserInterest[];
-    error?: string;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
   }>;
 
-  deleteUserInterests: (
-    deleteUserInterest: DeleteUserInterestReq,
-  ) => Promise<{ data?: boolean; error?: string }>;
+  deleteUserInterests: (deleteUserInterest: DeleteUserInterestReq) => Promise<{
+    data?: boolean;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }>;
 
-  addUserInterests: (
-    req: AddUserInterestReq,
-  ) => Promise<{ data?: UserInterest; error?: string }>;
+  addUserInterests: (req: AddUserInterestReq) => Promise<{
+    data?: UserInterest;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }>;
 }

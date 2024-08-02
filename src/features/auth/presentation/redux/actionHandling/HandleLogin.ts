@@ -20,11 +20,11 @@ const handleLogin = (builder: ActionReducerMapBuilder<AuthState>) => {
           state.isAuthenticated = true;
           localStorage.setItem(
             'accessToken',
-            action.payload.data.object.accessToken.toString(),
+            action.payload.data.accessToken.toString(),
           );
           localStorage.setItem(
             'refreshToken',
-            action.payload.data.object.refreshToken.toString(),
+            action.payload.data.refreshToken.toString(),
           );
         }
       }

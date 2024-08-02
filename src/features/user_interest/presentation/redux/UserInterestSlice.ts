@@ -7,6 +7,7 @@ import UserInterest from '../../../../common/entities/UserInterest';
 
 export interface UserInterestState {
   userInterests: CommonState<UserInterest[]>;
+  userInterest: CommonState<UserInterest> | null;
   pagination: {
     totalPages: number;
     totalElements: number;
@@ -22,6 +23,7 @@ const initialState: UserInterestState = {
     currentPage: 0,
   },
   deleteStatus: initCommonState,
+  userInterest: initCommonState,
 };
 
 const userInterestSlice = createSlice({

@@ -9,20 +9,31 @@ import { ChapterState } from '../redux/chapterSlice';
 export type UpdateChapterReq = {
   chapterTitle: string;
 };
-
+const baseUrl = 'http://localhost:8080/';
 export const apiUpdateChapter = async (
   chapterId: number,
   chapterData: UpdateChapterReq,
 ): ApiResponse<Chapter> => {
   try {
+    console.log(chapterData);
+    console.log(chapterId);
     const response = await axiosService.put(
-      `/TEACHER/api/chapter/update/${chapterId}`,
+      `${baseUrl}TEACHER/api/chapter/update/${chapterId}`,
       chapterData,
     );
     return { data: response.data };
   } catch (error) {
+    console.log(error);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -51,6 +62,8 @@ const handleUpdateChapter = (
       if (action.payload.error) {
         state.updateChapterPage.status = 'failed';
         state.updateChapterPage.error = action.payload.error.message;
+        state.updateChapterPage.errors = action.payload.error.errors;
+        console.log(state.updateChapterPage.errors);
       } else {
         state.updateChapterPage.status = 'succeeded';
         state.updateChapterPage.data = action.payload.data;

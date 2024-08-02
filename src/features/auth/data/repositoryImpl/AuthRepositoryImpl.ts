@@ -120,7 +120,7 @@ class AuthRepositoryImpl implements AuthRepository {
     };
   }> {
     try {
-      const response = await logOut(email);
+      const response = await logOut();
       return { message: response };
     } catch (error) {
       if (error instanceof Failure) {

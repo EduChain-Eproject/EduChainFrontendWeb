@@ -8,9 +8,14 @@ import {
 import { UserProfileModel } from '../../domain/entities/UserProfileModel';
 
 class UserProfileRepositoryImpl implements UserProfileRepository {
-  async onGetUserProfile(
-    email: string,
-  ): Promise<{ data?: UserProfileModel | undefined; error?: string }> {
+  async onGetUserProfile(email: string): Promise<{
+    data?: UserProfileModel | undefined;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response = await getUserProfile(email);
       const userProfile = this.mapDtoToModel(response);
@@ -18,24 +23,51 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
       return { data: userProfile };
     } catch (error) {
       if (error instanceof Failure) {
-        return { error: error.message };
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
       }
-      console.log(error);
-      return { error: 'Unexpected error occurred Get Profile' };
+      return {
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
   }
-  async onUpdateUserProfile(
-    formData: FormData,
-  ): Promise<{ data?: UserProfileModel; error?: string | undefined }> {
+  async onUpdateUserProfile(formData: FormData): Promise<{
+    data?: UserProfileModel;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
     try {
       const response = await updateUserProfile(formData);
-      const userProfile = this.mapDtoToModel(response.content);
+      console.log(response.data);
+      const userProfile = this.mapDtoToModel(response.data);
       return { data: userProfile };
     } catch (error) {
       if (error instanceof Failure) {
-        return { error: error.message };
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
       }
-      return { error: 'Unexpected error occurred update profile' };
+      return {
+        error: {
+          message: 'Unexpected error occurred on update',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
     }
   }
 

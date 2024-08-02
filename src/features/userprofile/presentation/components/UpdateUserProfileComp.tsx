@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { UpdateUserProfileReq } from '../../domain/usecases/UpdateUserProfileUseCase';
 import { useForm } from 'react-hook-form';
 import { UserProfileModel } from '../../domain/entities/UserProfileModel';
+import { useAppSelector } from '../../../../common/context/store';
 
 interface Props {
   initialData: UserProfileModel | undefined;
@@ -14,16 +15,15 @@ const UpdateUserProfileComp: React.FC<Props> = ({
   onSubmit,
   serverError,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<UpdateUserProfileReq>({
+  const { register, handleSubmit, setValue } = useForm<UpdateUserProfileReq>({
     defaultValues: {
       id: initialData?.id,
     },
   });
+
+  const { status, error, data, errors } = useAppSelector(
+    (state) => state.userProfile.updateProfilePage,
+  );
 
   useEffect(() => {
     if (initialData) {
@@ -53,13 +53,11 @@ const UpdateUserProfileComp: React.FC<Props> = ({
           <input
             id="email"
             type="email"
-            {...register('email', { required: 'Email is required' })}
-            className={`mt-1 p-2 border rounded w-full ${
-              errors.email ? 'border-red-500' : 'border-gray-300'
-            }`}
+            {...register('email')}
+            className={`mt-1 p-2 border rounded w-full `}
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          {errors?.email && (
+            <p className="text-red-500 text-xs italic mt-1">{errors?.email}</p>
           )}
         </div>
 
@@ -72,13 +70,14 @@ const UpdateUserProfileComp: React.FC<Props> = ({
           </label>
           <input
             id="firstName"
-            {...register('firstName', { required: 'First Name is required' })}
-            className={`mt-1 p-2 border rounded w-full ${
-              errors.firstName ? 'border-red-500' : 'border-gray-300'
-            }`}
+            {...register('firstName')}
+            className={`mt-1 p-2 border rounded w-full
+              `}
           />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+          {errors?.firstName && (
+            <p className="text-red-500 text-xs italic mt-1">
+              {errors?.firstName}
+            </p>
           )}
         </div>
 
@@ -88,13 +87,13 @@ const UpdateUserProfileComp: React.FC<Props> = ({
           </label>
           <input
             id="lastName"
-            {...register('lastName', { required: 'Last Name is required' })}
-            className={`mt-1 p-2 border rounded w-full ${
-              errors.lastName ? 'border-red-500' : 'border-gray-300'
-            }`}
+            {...register('lastName')}
+            className={`mt-1 p-2 border rounded w-full`}
           />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+          {errors?.lastName && (
+            <p className="text-red-500 text-xs italic mt-1">
+              {errors?.lastName}
+            </p>
           )}
         </div>
 
@@ -105,13 +104,11 @@ const UpdateUserProfileComp: React.FC<Props> = ({
           <input
             id="phone"
             type="tel"
-            {...register('phone', { required: 'Phone number is required' })}
-            className={`mt-1 p-2 border rounded w-full ${
-              errors.phone ? 'border-red-500' : 'border-gray-300'
-            }`}
+            {...register('phone')}
+            className={`mt-1 p-2 border rounded w-full `}
           />
-          {errors.phone && (
-            <p className="text-red-500 text-sm">{errors.phone.message}</p>
+          {errors?.phone && (
+            <p className="text-red-500 text-xs italic mt-1">{errors?.phone}</p>
           )}
         </div>
 
@@ -121,13 +118,13 @@ const UpdateUserProfileComp: React.FC<Props> = ({
           </label>
           <input
             id="address"
-            {...register('address', { required: 'Address is required' })}
-            className={`mt-1 p-2 border rounded w-full ${
-              errors.address ? 'border-red-500' : 'border-gray-300'
-            }`}
+            {...register('address')}
+            className={`mt-1 p-2 border rounded w-full `}
           />
-          {errors.address && (
-            <p className="text-red-500 text-sm">{errors.address.message}</p>
+          {errors?.address && (
+            <p className="text-red-500 text-xs italic mt-1">
+              {errors?.address}
+            </p>
           )}
         </div>
 

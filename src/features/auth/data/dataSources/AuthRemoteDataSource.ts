@@ -6,8 +6,8 @@ import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';
 import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswordEmail';
 import { LogOutReq } from '../../domain/usecases/LogOut';
 
-const baseUrl = 'http://localhost:8080/';
 
+const baseUrl = 'http://localhost:8080/';
 export const logIn = async (loginRequest: LoginReq) => {
   try {
     const response = await axiosService.post(
@@ -49,9 +49,9 @@ export const registerUser = async (registerRequest: RegisterReq) => {
   }
 };
 
-export const logOut = async (email: LogOutReq) => {
+export const logOut = async () => {
   try {
-    const response = await axiosService.post(`${baseUrl}Auth/logout`, email);
+    const response = await axiosService.post(`${baseUrl}Auth/logout`);
     return response.data;
   } catch (error) {
     if (error.response) {

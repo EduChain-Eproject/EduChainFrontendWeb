@@ -23,6 +23,8 @@ import UserCourseSlice from '../../features/user_course/presentation/redux/UserC
 import teacherHomeworkSlice from '../../features/course/homework/teacher/data/redux/homeworkSlice';
 
 import teacherQuestionSlice from '../../features/course/question/teacher/data/redux/questionSlice';
+import UserHomeworkSlice from '../../features/user_homework/presentation/redux/UserHomeworkForProfileSlice';
+import UserHomeworkForProfileSlice from '../../features/user_homework/presentation/redux/UserHomeworkForProfileSlice';
 
 import orderAdminSlice from '../../features/admin/order/data/redux/orderAdminSlice'
 
@@ -60,6 +62,7 @@ const rootReducer = combineReducers({
   userProfile: UserProfileSlice,
   userInterest: UserInterestSlice,
   userCourse: UserCourseSlice,
+  userhomeworkForPrile: UserHomeworkForProfileSlice,
   homeworks,
   questions,
   orderAdminSlice

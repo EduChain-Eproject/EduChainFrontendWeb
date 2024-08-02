@@ -21,11 +21,13 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
     handleSubmit,
     control,
     setValue,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<UpdateLessonReq>();
   const { data: lesson } = useAppSelector(
     (state) => state.lessons.teacher.lessonDetailPage,
   );
+
+  const {status,error,errors} = useAppSelector((state) => state.lessons.teacher.updateLessonPage);
 
   useEffect(() => {
     if (lesson) {
@@ -54,17 +56,13 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
             <input
               {...field}
               type="text"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.lessonTitle ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
             />
           )}
         />
-        {errors.lessonTitle && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.lessonTitle.message}
-          </p>
-        )}
+            {errors?.lessonTitle && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.lessonTitle}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -76,17 +74,13 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
           render={({ field }) => (
             <textarea
               {...field}
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.description ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
             />
           )}
         />
-        {errors.description && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.description.message}
-          </p>
-        )}
+             {errors?.description && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.description}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -99,17 +93,13 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
             <input
               {...field}
               type="text"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.videoTitle ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50`}
             />
           )}
         />
-        {errors.videoTitle && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.videoTitle.message}
-          </p>
-        )}
+            {errors?.videoTitle && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.videoTitle}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -122,16 +112,12 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
             <input
               // {...field}
               type="file"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.file ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
               onChange={(e) => field.onChange(e.target.files)}
             />
           )}
         />
-        {errors.file && (
-          <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
-        )}
+      
       </div>
       <div className="space-x-2">
         <button

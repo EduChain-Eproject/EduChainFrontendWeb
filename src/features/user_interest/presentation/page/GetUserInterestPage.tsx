@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { RouteObject } from 'react-router-dom';
-
 import {
   useAppDispatch,
   useAppSelector,
@@ -12,10 +11,12 @@ import {
   fetchUserInterests,
 } from '../redux/UserInterestAction';
 import { setPage } from '../redux/UserInterestSlice';
-import { GetUserInterestReq } from '../../domain/usecase/GetUserInterests UserCase';
 import { useSelector } from 'react-redux';
 import { getUserAction } from '../../../auth/presentation/redux/AuthAction';
 import Pagination from '../../../../common/components/Pagination/Pagination';
+
+import SearchComponent from '../../../../common/components/Pagination/Search';
+import { GetUserInterestReq } from '../../domain/usecase/GetUserInterests UserCase';
 
 export const route: () => RouteObject = () => {
   return {
@@ -35,19 +36,18 @@ const UserInterestsPage: React.FC = () => {
   const id = useAppSelector((s) => s.auth.user?.id);
 
   const [titleSearch, setSearch] = useState('');
-  // const [page, setPage] = useState(0);
   const [size, setSize] = useState(3);
   const deleteStatus = useAppSelector(
     (state) => state.userInterest.deleteStatus,
   );
+
   const handlePageChange = (pageNumber: number) => {
     dispatch(setPage(pageNumber));
   };
+
   useEffect(() => {
     if (id) {
-      console.log('run');
       dispatch(getUserAction());
-      console.log(id);
     }
   }, [dispatch, id]);
 
@@ -58,16 +58,14 @@ const UserInterestsPage: React.FC = () => {
       page: currentPage,
       size,
     };
-    console.log(id);
     dispatch(fetchUserInterests(request));
-  }, [dispatch, titleSearch, currentPage, size]);
+  }, [dispatch, titleSearch, currentPage, size, id]);
 
   const handleDelete = async (courseId: number, studentId: number) => {
-    console.log(`Deleting course ${courseId} for student ${studentId}`);
     await dispatch(
       fetchDeleteUserInterest({ course_id: courseId, student_id: studentId }),
     );
-    // Fetch updated user interests after deletion
+
     const request: GetUserInterestReq = {
       student_id: id!,
       titleSearch,
@@ -77,17 +75,37 @@ const UserInterestsPage: React.FC = () => {
     dispatch(fetchUserInterests(request));
   };
 
+  const handleSearch = (query: string) => {
+    setSearch(query);
+  };
+
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return (
+      <div
+        className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <span className="block sm:inline">{error}</span>
+      </div>
+    );
   }
 
   return (
     <div>
-      <h1>User Interests</h1>
+      <h1 className="text-4xl font-extrabold text-gray-900 mb-6">
+        User Interests
+      </h1>
+
+      <SearchComponent
+        onSearch={handleSearch}
+        placeholder="Search by title..."
+        value={titleSearch}
+      />
+
       {deleteStatus.status === 'loading' && <div>Deleting...</div>}
       {deleteStatus.status === 'failed' && (
         <div>Error deleting interest: {deleteStatus.error}</div>
@@ -97,8 +115,6 @@ const UserInterestsPage: React.FC = () => {
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={handlePageChange}
-        titleSearch={titleSearch}
-        setSearch={setSearch}
       />
     </div>
   );

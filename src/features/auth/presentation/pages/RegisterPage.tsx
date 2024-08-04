@@ -26,7 +26,7 @@ const CreateRegisterPage: React.FC = () => {
       setSuccessMessage('Registration successful! Please log in.');
       alert('success register , please check your email to verify')
       dispatch(resetSignUpStatus()); // Reset status after success
-      navigate('/Auth/login');
+      navigate('/Auth/verify');
     }
   }, [status, navigate, dispatch]);
 

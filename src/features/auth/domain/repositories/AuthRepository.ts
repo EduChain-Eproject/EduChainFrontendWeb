@@ -3,6 +3,7 @@ import User from '../../../../common/entities/User';
 import { JwtResponse, LoginReq } from '../usecases/Login';
 import { LogOutReq } from '../usecases/LogOut';
 import { RegisterReq, RegisterResponseMessage } from '../usecases/Register';
+import { ReSendVerifyCodeReq } from '../usecases/ResendVerifyCode';
 import { ResetPasswordReq } from '../usecases/ResetPassword';
 import { SendResetPasswordEmailReq } from '../usecases/SendResetPasswordEmail';
 
@@ -53,6 +54,24 @@ export interface AuthRepository {
   }>;
 
   onResetPassword: (req: ResetPasswordReq) => Promise<{
+    data?: any;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }>;
+
+  onVerifyCode: (req: number) => Promise<{
+    data?: any;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }>;
+
+  onReSendVerifyCode: (email: ReSendVerifyCodeReq) => Promise<{
     data?: any;
     error?: {
       message: string;

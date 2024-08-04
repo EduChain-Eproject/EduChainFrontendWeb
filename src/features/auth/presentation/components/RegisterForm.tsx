@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { RegisterReq } from '../../domain/usecases/Register';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../common/context/store';
 
 interface RegisterFormProps {
@@ -21,13 +21,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   const { register, handleSubmit, reset } = useForm<RegisterReq>({
     defaultValues: initialData || {},
   });
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (initialData) {
       reset(initialData);
     }
   }, [initialData, reset]);
-
+  const handleNavigate = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.preventDefault(); // Prevent default link behavior
+    navigate('/Auth/verify');
+  };
   return (
     <div className="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <h2 className="text-2xl font-bold text-center mb-8">Register</h2>
@@ -152,6 +155,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         <Link to="/Auth/login" className="text-blue-500 hover:text-blue-700">
           Login here
         </Link>
+      </p>
+      <p className="text-center text-gray-500 text-xs mt-4">
+        Verify your account?{' '}
+        <a href="/Auth/verify" onClick={handleNavigate} className="text-blue-500 hover:text-blue-700">
+          Verify here
+        </a>
       </p>
     </div>
   );

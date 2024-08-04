@@ -14,8 +14,8 @@ export const route: () => RouteObject = () => {
 }
 
 const LoginPage: React.FC = () => {
-    const dispatch = useAppDispatch();
-
+    const dispatch = useAppDispatch();  
+    
     const handleSubmit = (data: any) => {
         dispatch(logInAction({ loginReq: data }));
     };

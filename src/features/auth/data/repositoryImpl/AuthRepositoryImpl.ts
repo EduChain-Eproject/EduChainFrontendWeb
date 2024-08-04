@@ -11,6 +11,8 @@ import {
   logOut,
   registerUser,
   sendMailReset,
+  verifyCode,
+  reSendVerifyCode,
 } from '../dataSources/AuthRemoteDataSource';
 
 import { AuthRepository } from './../../domain/repositories/AuthRepository';
@@ -19,6 +21,7 @@ import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';
 import User from '../../../../common/entities/User';
 import { LogOutReq } from '../../domain/usecases/LogOut';
 import { getUserWithToken } from '../dataSources/userProfileDataSource';
+import { ReSendVerifyCodeReq } from '../../domain/usecases/ResendVerifyCode';
 
 class AuthRepositoryImpl implements AuthRepository {
   async onLogin(loginRequest: LoginReq): Promise<{
@@ -200,6 +203,67 @@ class AuthRepositoryImpl implements AuthRepository {
       };
     }
   }
+
+  async onVerifyCode(data: number): Promise<{
+    data?: any;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
+    try {
+      const response = await verifyCode(data);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
+    }
+  }
+
+  async onReSendVerifyCode(email: ReSendVerifyCodeReq): Promise<{
+    data?: any;
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
+    try {
+      const response = await reSendVerifyCode(email);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on login',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
+    }
+  }
 }
+
 
 export default AuthRepositoryImpl;

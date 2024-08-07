@@ -6,6 +6,7 @@ import {
 } from '../../../../../../common/context/store';
 import { useNavigate } from 'react-router-dom';
 import {
+  resetUpdateLesson,
   updateLesson,
   UpdateLessonReq,
 } from '../../data/services/handleUpdateLesson';
@@ -39,15 +40,15 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
   }, [lesson, setValue]);
 
   const onSubmit = (formData: UpdateLessonReq) => {
-    dispatch(updateLesson({ lessonId, lessonData: formData })).then(() =>
-      navigate(`/dashboard/teacher/lessons/${lessonId}`),
-    );
+    dispatch(updateLesson({ lessonId, lessonData: formData }))
   };
   useEffect(() => {
+    console.log(status)
     if(status === 'succeeded'){
+      dispatch(resetUpdateLesson());
       navigate(`/dashboard/teacher/lessons/${lessonId}`)
     }
-  })
+  },[dispatch,navigate,status])
   return (
     <div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -124,7 +125,7 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
           )}
         />
             {errors?.videoFile && (
-              <p className="text-red-500 text-xs italic mt-1">{errors?.videoTitle}</p>
+              <p className="text-red-500 text-xs italic mt-1">{errors?.videoFile}</p>
             )}
       </div>
       <div className="space-x-2">

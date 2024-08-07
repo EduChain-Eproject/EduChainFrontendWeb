@@ -10,10 +10,11 @@ export type CreateCourseReq = {
   description: string;
   price: number;
   categoryIds: number[];
+  avatarCourse: File;
 };
 
 export const apiCreateCourse = async (
-  courseData: CreateCourseReq,
+  courseData: FormData,
 ): ApiResponse<Course> => {
   try {
     const response = await axiosService.post(
@@ -39,7 +40,7 @@ export const apiCreateCourse = async (
 
 export const createCourse = createAsyncThunk(
   'courses/createCourse',
-  async (courseData: CreateCourseReq) => {
+  async (courseData: FormData) => {
     return await apiCreateCourse(courseData);
   },
 );

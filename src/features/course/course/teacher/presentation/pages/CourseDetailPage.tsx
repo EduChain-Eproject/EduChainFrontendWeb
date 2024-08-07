@@ -100,7 +100,9 @@ const CourseDetailPage: React.FC = () => {
             courseId={Number(courseId)}
           />
         </div>
+      
       </div>
+      <img src={data.avatarPath} alt="" />
     </div>
   );
 };

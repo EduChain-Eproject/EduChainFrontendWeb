@@ -1,4 +1,8 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import Lesson from '../../../../../../common/entities/Lesson';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import axiosService from '../../../../../../common/services/axiosService';
@@ -64,6 +68,7 @@ export const updateLesson = createAsyncThunk(
     return await apiUpdateLesson(lessonId, lessonData);
   },
 );
+export const resetUpdateLesson = createAction('lessons/resetUpdateLesson');
 
 const handleUpdateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
   builder
@@ -77,12 +82,19 @@ const handleUpdateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
         state.updateLessonPage.errors = action.payload.error.errors;
       } else {
         state.updateLessonPage.status = 'succeeded';
+        console.log(state.updateLessonPage.status);
         state.updateLessonPage.data = action.payload.data;
       }
     })
     .addCase(updateLesson.rejected, (state, action) => {
       state.updateLessonPage.status = 'failed';
       state.updateLessonPage.error = action.error.message;
+    })
+    .addCase(resetUpdateLesson, (state) => {
+      state.updateLessonPage.status = 'idle';
+      state.updateLessonPage.error = undefined;
+      state.updateLessonPage.data = undefined;
+      state.updateLessonPage.errors = undefined;
     });
 };
 export default handleUpdateLesson;

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Course from '../../../../../../common/entities/Course';
-import { useAppSelector } from '../../../../../../common/context/store';
 import Category from '../../../../../../common/entities/Category';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { CreateCourseReq } from '../../data/services/handleCreateCourse';
+import { useAppSelector } from '../../../../../../common/context/store';
 import { clearErrorStatus } from '../../data/redux/courseSlice';
+import { CreateCourseReq } from '../../data/services/handleCreateCourse';
+import { useDispatch } from 'react-redux';
 
 interface CourseFormProps {
   initialData?: CreateCourseReq;
-  onSubmit: (data: CreateCourseReq) => void;
+  onSubmit: (data: FormData) => void;
 }
 
 const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
@@ -32,8 +30,27 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
     }
   }, [initialData, reset]);
 
+  const handleFormSubmit = (data: CreateCourseReq) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('price', data.price.toString());
+
+    if (data.avatarCourse) {
+      formData.append('avatarCourse', data.avatarCourse[0]);
+    }
+
+    const categoryIds = Object.keys(data.categoryIds)
+      .filter((key) => data.categoryIds[key])
+      .map((key) => parseInt(key, 10));
+
+    categoryIds.forEach((id) => formData.append('categoryIds', id.toString()));
+
+    onSubmit(formData);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
       {error && (
         <div className="text-red-500 mb-4">
           {error}
@@ -59,9 +76,9 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
           {...register('title')}
           className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
-          {errors?.title && (
-              <p className="text-red-500 text-xs italic mt-1">{errors?.title}</p>
-            )}
+        {errors?.title && (
+          <p className="text-red-500 text-xs italic mt-1">{errors?.title}</p>
+        )}
       </div>
       <div>
         <label
@@ -75,9 +92,11 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
           {...register('description')}
           className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
-          {errors?.description && (
-              <p className="text-red-500 text-xs italic mt-1">{errors?.description}</p>
-            )}
+        {errors?.description && (
+          <p className="text-red-500 text-xs italic mt-1">
+            {errors?.description}
+          </p>
+        )}
       </div>
       <div>
         <label
@@ -92,9 +111,26 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
           {...register('price')}
           className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
-             {errors?.price && (
-              <p className="text-red-500 text-xs italic mt-1">{errors?.price}</p>
-            )}
+        {errors?.price && (
+          <p className="text-red-500 text-xs italic mt-1">{errors?.price}</p>
+        )}
+      </div>
+      <div>
+        <label
+          htmlFor="avatarCourse"
+          className="block font-medium text-meta-4 text-2xl"
+        >
+          Image
+        </label>
+        <input
+          id="avatarCourse"
+          type="file"
+          {...register('avatarCourse')}
+          className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+        {errors?.avatarCourse && (
+          <p className="text-red-500 text-xs italic mt-1">{errors?.avatarCourse}</p>
+        )}
       </div>
       <div>
         <label className="block font-medium text-meta-4 text-2xl">
@@ -106,7 +142,6 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
               <Controller
                 name={`categoryIds.${cate.id}`}
                 control={control}
-                // defaultValue={false}
                 render={({ field }) => (
                   <input
                     type="checkbox"
@@ -120,9 +155,11 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
               </label>
             </div>
           ))}
-               {errors?.categoryIds && (
-              <p className="text-red-500 text-xs italic mt-1">{errors?.categoryIds}</p>
-            )}
+          {errors?.categoryIds && (
+            <p className="text-red-500 text-xs italic mt-1">
+              {errors?.categoryIds}
+            </p>
+          )}
         </div>
       </div>
       <button

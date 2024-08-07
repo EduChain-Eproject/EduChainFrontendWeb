@@ -31,7 +31,6 @@ const CreateRegisterPage: React.FC = () => {
   }, [status, navigate, dispatch]);
 
   useEffect(() => {
-    // Clear success message when navigating back to the page
     setSuccessMessage(null);
   }, []);
 

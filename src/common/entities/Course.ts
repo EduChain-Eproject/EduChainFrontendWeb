@@ -11,6 +11,7 @@ export default class Course {
   title: string;
   description: string;
   status: string;
+  avatarPath: string;
 
   teacherDto?: User;
   categoryDtos?: Category[];

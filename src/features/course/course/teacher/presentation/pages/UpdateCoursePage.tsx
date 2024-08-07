@@ -1,16 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../../../../../common/context/store';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
 import { RouteObject } from 'react-router-dom';
 import CourseFormUpdate from '../components/CourseFormUpdate';
 import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
-import {
-  updateCourse,
-  UpdateCourseReq,
-} from '../../data/services/handleUpdateCourse';
+import { updateCourse, UpdateCourseReq } from '../../data/services/handleUpdateCourse';
 import { fetchCourseDetail } from '../../data/services/handleFetchCourseDetail';
 import { fetchListCategories } from '../../data/services/handleGetListCategories';
 
@@ -25,7 +19,7 @@ const UpdateCoursePage: React.FC = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { data, status, error } = useAppSelector(
+  const { status, error } = useAppSelector(
     (state) => state.courses.teacher.updateCoursePage,
   );
   const { data: courseDetailData } = useAppSelector(
@@ -57,28 +51,17 @@ const UpdateCoursePage: React.FC = () => {
     dispatch(fetchListCategories());
   }, [dispatch]);
 
-  const handleSubmit = (data: UpdateCourseReq) => {
-    const categoryIds = Object.keys(data.categoryIds)
-      .filter((key) => data.categoryIds[key])
-      .map((key) => parseInt(key, 10));
-
-    const submitData = {
-      ...data,
-      categoryIds,
-    };
-
+  const handleSubmit = (formData: FormData) => {
     if (courseId) {
       dispatch(
-        updateCourse({ courseId: Number(courseId), courseData: submitData }),
+        updateCourse({ courseId: Number(courseId), courseData: formData }),
       );
     }
   };
 
   useEffect(() => {
     if (status === 'succeeded') {
-      console.log('dkmmm ?');
-
-      navigate(`/dashboard/teacher/course/${courseId}`);
+      navigate(`/dashboard/teacher/courses/${courseId}`);
     }
   }, [status, navigate, courseId]);
 
@@ -89,7 +72,7 @@ const UpdateCoursePage: React.FC = () => {
   return (
     <div>
       <AppBreadcrumb items={breadCrumbItems} />
-      <div className="text-center mt-4 text-red-500"> {error}</div>;
+      <div className="text-center mt-4 text-red-500"> {error}</div>
       <div className="max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg mt-4">
         <h2 className="text-2xl font-bold mb-2">Update Course</h2>
         <CourseFormUpdate onSubmit={handleSubmit} />

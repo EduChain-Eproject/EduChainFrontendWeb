@@ -14,7 +14,6 @@ export default class User {
   userAwardDtos: Award[] | undefined;
   userHomeworkDtos: UserHomework[] | undefined;
   isActive: boolean;
-
   constructor(role: Role, email: string) {
     this.role = role;
     this.email = email;

@@ -24,7 +24,6 @@ export const apiTakeUserInterests = async (
         },
       },
     );
-    console.log(req);
     return response.data;
   } catch (error) {
     if (error.response) {

@@ -23,7 +23,7 @@ const GetUserProfilePage: React.FC = () => {
 
   useEffect(() => {
     if (email) {
-      console.log(email);
+
 
       dispatch(getUserProfileAction(email));
     }

@@ -31,7 +31,7 @@ export class UserInterestRepositoryImpl implements UserInterestRepository {
         this.mapDtoToEntity(dto),
       );
       return {
-        totalPages: response.totalPages,
+        totalPages: response.totalElements,
         totalElements: response.totalElements,
         data: userInterests,
       };

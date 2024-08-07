@@ -27,6 +27,7 @@ import UserHomeworkSlice from '../../features/user_homework/presentation/redux/U
 import UserHomeworkForProfileSlice from '../../features/user_homework/presentation/redux/UserHomeworkForProfileSlice';
 
 import orderAdminSlice from '../../features/admin/order/data/redux/orderAdminSlice'
+import GetUserListSlice from '../../features/admin/get-user-list/data/redux/GetUserListSlice';
 
 const courses = combineReducers({
   teacher: teacherCourseSlice,
@@ -65,7 +66,8 @@ const rootReducer = combineReducers({
   userhomeworkForPrile: UserHomeworkForProfileSlice,
   homeworks,
   questions,
-  orderAdminSlice
+  orderAdminSlice,
+  getUserList: GetUserListSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

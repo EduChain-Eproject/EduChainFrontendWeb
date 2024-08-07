@@ -33,7 +33,7 @@ const LessonCreatePage: React.FC = () => {
     { label: 'Course by you', href: '/dashboard/teacher/courses' },
     {
       label: `Course ${data?.courseDto?.title}`,
-      href: `/dashboard/teacher/courses/${data?.courseDto.id}`,
+      href: `/dashboard/teacher/courses/${data?.courseDto!.id}`,
     },
     {
       label: `Chapter ${data?.chapterTitle}`,

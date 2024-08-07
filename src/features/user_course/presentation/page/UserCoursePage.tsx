@@ -28,7 +28,7 @@ const UserCoursePage: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      console.log(id);
+
       dispatch(getUserAction());
     }
   }, [dispatch, id]);

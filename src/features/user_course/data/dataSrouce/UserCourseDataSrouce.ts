@@ -19,7 +19,6 @@ export const apiGetUserCourse = async (
         'Content-Type': 'application/json',
       },
     });
-    console.log(response.data.content);
     return {
       totalPages: response.data.totalPages,
       totalElements: response.data.totalElements,
@@ -48,7 +47,7 @@ export const apiAddUserCouse = async (
         'Content-Type': 'application/json',
       },
     });
-    console.log(req);
+
     return response.data;
   } catch (error) {
     throw new Failure(error.response.data.message, error.response.status);

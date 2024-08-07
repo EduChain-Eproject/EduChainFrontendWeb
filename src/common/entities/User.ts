@@ -13,6 +13,7 @@ export default class User {
   email: string;
   userAwardDtos: Award[] | undefined;
   userHomeworkDtos: UserHomework[] | undefined;
+  isActive: boolean;
 
   constructor(role: Role, email: string) {
     this.role = role;

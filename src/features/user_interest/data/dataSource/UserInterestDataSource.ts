@@ -43,7 +43,7 @@ export const apiDeleteUserInterest = async (
   deleteReq: DeleteUserInterestReq,
 ): Promise<void> => {
   try {
-    const response = await axiosService.delete(`${baseUrl}delete-wishlist`, {
+    const response = await axiosService.delete(`${baseUrl}delete-wishlist/${deleteReq.course_id}`, {
       data: deleteReq,
     });
     return response.data;
@@ -65,9 +65,9 @@ export const apiAddUserInterest = async (
   req: AddUserInterestReq,
 ): Promise<UserInterest> => {
   try {
-    const response = await axiosService.post(`${baseUrl}add-to-wishlist`, req);
+    const response = await axiosService.post(`${baseUrl}add-to-wishlist/${req.course_id}`,);
     return response.data;
-  }  catch (error) {
+  } catch (error) {
     if (error.response) {
       const data = error.response.data;
       const message = data.errors.message || 'Validation error';

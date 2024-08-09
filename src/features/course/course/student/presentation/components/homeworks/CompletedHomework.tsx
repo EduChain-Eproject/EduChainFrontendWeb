@@ -42,8 +42,8 @@ const CompletedHomework = () => {
                           ? 'text-green-500'
                           : question.currentUserAnswerDto?.answerId ===
                             answer.id
-                          ? 'text-red-500'
-                          : ''
+                            ? 'text-red-500'
+                            : ''
                       }
                     >
                       {answer.answerText}
@@ -56,7 +56,7 @@ const CompletedHomework = () => {
         ))}
       </div>
 
-      {homework?.id && <UserAward homeworkId={homework.id} />}
+      <UserAward />
     </div>
   );
 };

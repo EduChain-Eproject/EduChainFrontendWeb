@@ -7,7 +7,7 @@ import {
 import { AwardStatus } from '../../../../../../../common/entities/Award';
 import { receiveAward } from '../../../data/services/handleReceiveAward';
 
-const UserAward = ({ homeworkId }: { homeworkId: number }) => {
+const UserAward = () => {
   const dispatch = useAppDispatch();
 
   const { data: userAward } = useAppSelector(
@@ -15,7 +15,9 @@ const UserAward = ({ homeworkId }: { homeworkId: number }) => {
   );
 
   const handleReceiveAward = () => {
-    dispatch(receiveAward({ homeworkId })); // TODO
+    if (userAward?.id) {
+      dispatch(receiveAward({ awardId: userAward?.id }));
+    }
   };
 
   if (!userAward) return null;

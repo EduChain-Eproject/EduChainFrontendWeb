@@ -16,7 +16,6 @@ const GetUserProfileHandling = (
       } else {
         state.profilePage.status = 'succeeded';
         state.profilePage.data = action.payload.data;
-        console.log(state.profilePage.data);
       }
     })
     .addCase(getUserProfileAction.rejected, (state, action) => {

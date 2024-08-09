@@ -26,7 +26,7 @@ export class UserInterestRepositoryImpl implements UserInterestRepository {
       const response = await apiTakeUserInterests(userInterest);
 
       return {
-        totalPages: response.totalPages,
+        totalPages: response.totalElements,
         totalElements: response.totalElements,
         data: response.content,
       };

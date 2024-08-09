@@ -6,6 +6,7 @@ import {
 } from '../../../../../../common/context/store';
 import { useNavigate } from 'react-router-dom';
 import {
+  resetUpdateLesson,
   updateLesson,
   UpdateLessonReq,
 } from '../../data/services/handleUpdateLesson';
@@ -34,17 +35,23 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
       setValue('lessonTitle', lesson.lessonTitle);
       setValue('description', lesson.description);
       setValue('videoTitle', lesson.videoTitle);
+      setValue('videoFile',lesson.videoFile)
     }
   }, [lesson, setValue]);
 
   const onSubmit = (formData: UpdateLessonReq) => {
-    dispatch(updateLesson({ lessonId, lessonData: formData })).then(() =>
-      navigate(`/dashboard/teacher/lessons/${lessonId}`),
-    );
+    dispatch(updateLesson({ lessonId, lessonData: formData }))
   };
-
+  useEffect(() => {
+    console.log(status)
+    if(status === 'succeeded'){
+      dispatch(resetUpdateLesson());
+      navigate(`/dashboard/teacher/lessons/${lessonId}`)
+    }
+  },[dispatch,navigate,status])
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
           Lesson Title
@@ -106,7 +113,7 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
           Video File
         </label>
         <Controller
-          name="file"
+          name="videoFile"
           control={control}
           render={({ field }) => (
             <input
@@ -117,7 +124,9 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
             />
           )}
         />
-      
+            {errors?.videoFile && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.videoFile}</p>
+            )}
       </div>
       <div className="space-x-2">
         <button
@@ -135,6 +144,15 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
         </button>
       </div>
     </form>
+    <video controls className="mt-4 w-full">
+  <source
+    src={`http://localhost:8080/uploadsVideo/${lesson?.videoURL}`}
+    type="video/mp4" // or the appropriate type for your video file
+  />
+  Your browser does not support the video tag.
+</video>
+    </div>
+  
   );
 };
 

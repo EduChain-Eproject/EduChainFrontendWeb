@@ -5,10 +5,12 @@ import Category from '../../../../../../common/entities/Category';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import { CourseState } from '../redux/courseSlice';
 
-
+const baseUrl = 'http://localhost:8080/';
 const apiFetchListCategories: () => ApiResponse<Category[]> = async () => {
   try {
-    const response = await axiosService.get('/COMMON/api/category/list');
+    const response = await axiosService.get(
+      `${baseUrl}COMMON/api/category/list`,
+    );
 
     console.log(response.data);
 

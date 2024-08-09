@@ -10,5 +10,5 @@ export default class ResetPassword {
 export type ResetPasswordReq = {
   email: string;
   password: string;
-  code: string;
+  code: number;
 };

@@ -17,6 +17,12 @@ export default class User {
   userHomeworkDtos: UserHomework[] | undefined;
   courseDtosParticipated: UserCourse[] | undefined;
   userInterestDtos: UserInterest[] | undefined;
+  isActive: boolean;
+  constructor(role: Role, email: string) {
+    this.role = role;
+    this.email = email;
+  }
+
   numberOfStudents?: number;
   mostPopularCourse?: Course;
 }

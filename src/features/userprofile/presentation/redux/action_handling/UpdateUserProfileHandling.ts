@@ -17,9 +17,6 @@ const updateUserProfileHandling = (
         state.updateProfilePage.status = 'failed';
         state.updateProfilePage.error = action.payload.error.message;
         state.updateProfilePage.errors = action.payload.error.errors;
-        console.log('aaa');
-        console.log(state.updateProfilePage.errors);
-        console.log(state.updateProfilePage.error);
       } else {
         state.updateProfilePage.status = 'succeeded';
         state.updateProfilePage.data = action.payload.data;

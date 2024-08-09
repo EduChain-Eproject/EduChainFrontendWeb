@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { AuthState } from '../authSlice';
-import { ResetPasswordAction } from '../AuthAction';
+import { AuthState } from '../../authSlice';
+import { ResetPasswordAction, resetPasswordPageAction } from '../../AuthAction';
 
 const handleResetPassword = (builder: ActionReducerMapBuilder<AuthState>) => {
   builder
@@ -17,6 +17,12 @@ const handleResetPassword = (builder: ActionReducerMapBuilder<AuthState>) => {
       } else {
         state.resetPasswordPage.status = 'succeeded';
       }
+    })
+    .addCase(resetPasswordPageAction, (state) => {
+      state.resetPasswordPage.status = 'idle';
+      state.resetPasswordPage.error = undefined;
+      state.resetPasswordPage.data = undefined;
+      state.resetPasswordPage.errors = undefined;
     });
 };
 

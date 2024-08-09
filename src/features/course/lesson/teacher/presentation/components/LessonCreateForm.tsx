@@ -100,7 +100,7 @@ useEffect(() => {
           Video File
         </label>
         <Controller
-          name="file"
+          name="videoFile"
           control={control}
           render={({ field }) => (
             <input
@@ -110,6 +110,9 @@ useEffect(() => {
             />
           )}
         />
+            {errors?.videoFile && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.videoFile}</p>
+            )}
       </div>
       <div className="space-x-2"> 
         <button

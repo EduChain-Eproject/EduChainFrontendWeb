@@ -8,6 +8,7 @@ import {
 } from '../../../../../../common/context/store';
 import { fetchLessonDetail } from '../../data/services/handleGetLessonDetail';
 import LessonUpdateForm from '../components/LessonUpdateForm';
+import { resetUpdateLesson } from '../../data/services/handleUpdateLesson';
 
 export const route: () => RouteObject = () => {
   return {

@@ -8,13 +8,14 @@ export default class Register {
 }
 
 export type RegisterReq = {
-    email: string;  
-    firstName: string;
-    lastName: string;
-    phone: string;
-    address: string;
-    password: string;
-  };
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  address: string;
+  password: string;
+  accountType: string;
+};
 
 
 export type RegisterResponseMessage = {

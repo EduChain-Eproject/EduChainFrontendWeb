@@ -3,6 +3,7 @@ import { registerAction, resetSignUpStatus } from '../redux/AuthAction';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../common/context/store';
 import RegisterForm from '../components/RegisterForm';
+import { RegisterReq } from '../../domain/usecases/Register';
 
 export const route: () => RouteObject = () => {
   return {
@@ -17,21 +18,20 @@ const CreateRegisterPage: React.FC = () => {
   const { data,status, error } = useAppSelector((state) => state.auth.signUpPage);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: RegisterReq) => {
     dispatch(registerAction({ registerReq: data }));
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     if (status === 'succeeded') {
       setSuccessMessage('Registration successful! Please log in.');
       alert('success register , please check your email to verify')
       dispatch(resetSignUpStatus()); // Reset status after success
-      navigate('/Auth/login');
+      navigate('/Auth/verify');
     }
   }, [status, navigate, dispatch]);
 
   useEffect(() => {
-    // Clear success message when navigating back to the page
     setSuccessMessage(null);
   }, []);
 

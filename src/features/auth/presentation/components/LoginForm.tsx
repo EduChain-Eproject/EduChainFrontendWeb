@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { LoginReq } from '../../domain/usecases/Login';
-import { useAppSelector } from '../../../../common/context/store';
+import { useAppDispatch, useAppSelector } from '../../../../common/context/store';
 import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswordEmail';
-import { Link } from 'react-router-dom';
-import { ValidationError } from '../../../../common/state/ValidationFailure';
-import Failure from '../../../../common/entities/Failure';
+import { Link, useNavigate } from 'react-router-dom';
+import {  resetSendEmailResetPassword } from '../redux/AuthAction';
 
 
 interface LoginFormProps {
@@ -33,14 +32,14 @@ const LoginForm: React.FC<LoginFormProps> = ({
   } = useForm<LoginReq>({
     defaultValues: initialData || {},
   });
-
+  const navigate = useNavigate();
   const {
     register: registerReset,
     handleSubmit: handleSubmitReset,
   } = useForm<SendResetPasswordEmailReq>({
     defaultValues: {},
   });
-
+  const dispatch = useAppDispatch();
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const openForgotPasswordModal = () => {
@@ -50,7 +49,14 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const closeForgotPasswordModal = () => {
     setShowForgotPassword(false);
   };
-
+  useEffect(() => {
+    console.log(sendMailStatus);
+    if(sendMailStatus === 'succeeded'){
+      alert('success sending code to your email')
+      dispatch(resetSendEmailResetPassword());
+      navigate('/Auth/reset_action');
+    }
+  })
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -129,15 +135,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   </label>
                   <input
                     id="forgotEmail"
-                    {...registerReset('email', {
-                      required: 'Email is required',
-                    })}
+                    {...registerReset('email')}
                     type="email"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  {resetErrors?.email && (
+                  {resetErrors?.message && (
                     <p className="text-red-500 text-xs italic mt-1">
-                      {resetErrors?.email}
+                      {resetErrors?.message}
                     </p>
                   )}
                   {sendMailStatus === 'succeeded' && (

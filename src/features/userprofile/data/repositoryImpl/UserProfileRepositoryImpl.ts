@@ -49,7 +49,6 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   }> {
     try {
       const response = await updateUserProfile(formData);
-      console.log(response.data);
       const userProfile = this.mapDtoToModel(response.data);
       return { data: userProfile };
     } catch (error) {

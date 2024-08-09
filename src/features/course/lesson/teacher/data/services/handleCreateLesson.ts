@@ -10,21 +10,17 @@ export type CreateLessonReq = {
   lessonTitle: string;
   description: string;
   videoTitle: string;
-  file: FileList | null;
+  videoFile: File | null;
 };
 const baseUrl = 'http://localhost:8080/';
 export const apiCreateLesson = async (
   lessonData: CreateLessonReq,
 ): ApiResponse<Lesson> => {
   try {
-    console.log(lessonData);
     const formData = new FormData();
     // Kiểm tra và thêm tệp vào FormData
-    if (lessonData.file && lessonData.file.length > 0) {
-      formData.append('file', lessonData.file[0]);
-    } else {
-      // Thêm một trường tệp rỗng để server có thể xử lý
-      formData.append('file', new Blob());
+    if (lessonData.videoFile && lessonData.videoFile.length > 0) {
+      formData.append('videoFile', lessonData.videoFile[0]);
     }
     formData.append('chapterId', lessonData.chapterId || '');
     formData.append('lessonTitle', lessonData.lessonTitle || '');

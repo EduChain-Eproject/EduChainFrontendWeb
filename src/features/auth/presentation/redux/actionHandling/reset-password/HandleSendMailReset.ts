@@ -1,6 +1,9 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { AuthState } from '../authSlice';
-import { SendResetPasswordEmailAction } from '../AuthAction';
+import { AuthState } from '../../authSlice';
+import {
+  resetSendEmailResetPassword,
+  SendResetPasswordEmailAction,
+} from '../../AuthAction';
 
 const handleSendMailReset = (builder: ActionReducerMapBuilder<AuthState>) => {
   builder
@@ -15,11 +18,15 @@ const handleSendMailReset = (builder: ActionReducerMapBuilder<AuthState>) => {
         console.log(action.payload.error);
         return;
       } else {
-        state.resetPasswordPage.status = 'succeeded';
+        state.sendMailPage.status = 'succeeded';
       }
+    })
+    .addCase(resetSendEmailResetPassword, (state) => {
+      state.sendMailPage.status = 'idle';
+      state.sendMailPage.error = undefined;
+      state.sendMailPage!.data = null;
+      state.sendMailPage.errors = undefined;
     });
 };
 
 export default handleSendMailReset;
-
-// this is belong to login

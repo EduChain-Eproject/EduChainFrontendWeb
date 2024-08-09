@@ -1,4 +1,8 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import Lesson from '../../../../../../common/entities/Lesson';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import axiosService from '../../../../../../common/services/axiosService';
@@ -9,7 +13,7 @@ export type UpdateLessonReq = {
   lessonTitle: string;
   description: string;
   videoTitle: string;
-  file: FileList;
+  videoFile: File;
 };
 const baseUrl = 'http://localhost:8080/';
 export const apiUpdateLesson = async (
@@ -19,11 +23,8 @@ export const apiUpdateLesson = async (
   try {
     const formData = new FormData();
     // Kiểm tra và thêm tệp vào FormData
-    if (lessonData.file && lessonData.file.length > 0) {
-      formData.append('file', lessonData.file[0]);
-    } else {
-      // Thêm một trường tệp rỗng để server có thể xử lý
-      formData.append('file', new Blob());
+    if (lessonData.videoFile && lessonData.videoFile.length > 0) {
+      formData.append('videoFile', lessonData.videoFile[0]);
     }
     formData.append('lessonTitle', lessonData.lessonTitle || '');
     formData.append('description', lessonData.description || '');
@@ -38,6 +39,7 @@ export const apiUpdateLesson = async (
         },
       },
     );
+    console.log(formData);
     return { data: response.data };
   } catch (error) {
     if (error.response) {
@@ -66,6 +68,7 @@ export const updateLesson = createAsyncThunk(
     return await apiUpdateLesson(lessonId, lessonData);
   },
 );
+export const resetUpdateLesson = createAction('lessons/resetUpdateLesson');
 
 const handleUpdateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
   builder
@@ -79,12 +82,19 @@ const handleUpdateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
         state.updateLessonPage.errors = action.payload.error.errors;
       } else {
         state.updateLessonPage.status = 'succeeded';
+        console.log(state.updateLessonPage.status);
         state.updateLessonPage.data = action.payload.data;
       }
     })
     .addCase(updateLesson.rejected, (state, action) => {
       state.updateLessonPage.status = 'failed';
       state.updateLessonPage.error = action.error.message;
+    })
+    .addCase(resetUpdateLesson, (state) => {
+      state.updateLessonPage.status = 'idle';
+      state.updateLessonPage.error = undefined;
+      state.updateLessonPage.data = undefined;
+      state.updateLessonPage.errors = undefined;
     });
 };
 export default handleUpdateLesson;

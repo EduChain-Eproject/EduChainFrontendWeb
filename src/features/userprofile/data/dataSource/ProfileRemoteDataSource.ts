@@ -38,7 +38,6 @@ export const updateUserProfile = async (
 }> => {
   try {
     const response = await axiosService.post(`${baseUrl}updateProfile`, req);
-    console.log(response.data);
     return { data: response.data };
   } catch (error) {
     if (error.response) {

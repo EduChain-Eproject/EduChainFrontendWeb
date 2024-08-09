@@ -38,11 +38,11 @@ const LessonDetailPage: React.FC = () => {
     { label: 'Course by you', href: '/dashboard/teacher/courses' },
     {
       label: `Course ${lesson?.chapterDto?.courseDto?.title}`,
-      href: `/dashboard/teacher/courses/${lesson?.chapterDto?.courseDto.id}`,
+      href: `/dashboard/teacher/courses/${lesson?.chapterDto?.courseDto!.id}`,
     },
     {
       label: `Chapter ${lesson?.chapterDto?.chapterTitle}`,
-      href: `/dashboard/teacher/chapters/${lesson?.chapterDto.id}`,
+      href: `/dashboard/teacher/chapters/${lesson?.chapterDto!.id}`,
     },
     {
       label: `Lesson ${lesson?.lessonTitle}`,
@@ -77,6 +77,16 @@ const LessonDetailPage: React.FC = () => {
               {lesson?.videoURL}
             </a>
             <div className="space-x-2 mt-4">
+            <div>
+            <video controls className="mt-4 w-full max-w-md mx-auto border border-gray-300 rounded-lg shadow-lg">
+  <source
+    src={`http://localhost:8080/uploadsVideo/${lesson?.videoURL}`}
+    type="video/mp4" // or the appropriate type for your video file
+  />
+  Your browser does not support the video tag.
+</video>
+
+            </div>
               <button
                 onClick={() =>
                   navigate(`/dashboard/teacher/lessons/update/${lessonId}`)
@@ -115,6 +125,8 @@ const LessonDetailPage: React.FC = () => {
           />
         )}
       </div>
+
     </div>
+    
   );
 };

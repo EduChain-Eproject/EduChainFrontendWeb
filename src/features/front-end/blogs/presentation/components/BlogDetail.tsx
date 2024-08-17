@@ -54,7 +54,7 @@ const BlogDetail: React.FC = () => {
                                     <p className="text-sm text-gray-500">Category: {blogDetail.data?.blogCategory.categoryName}</p>
                                 </div>
                             </div>
-                            {/* <p className="text-sm text-gray-500">{new Date(blogDetail.data?.createdAt).toLocaleDateString()}</p> */}
+                    
                         </div>
                         <h2 className="text-xl font-bold mb-4">{blogDetail.data?.title}</h2>
                         <img

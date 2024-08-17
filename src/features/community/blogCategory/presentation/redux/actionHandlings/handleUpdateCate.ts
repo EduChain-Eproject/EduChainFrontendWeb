@@ -5,25 +5,22 @@ import { updateCate } from '../cateAction';
 const handleUpdateCate = (builder: ActionReducerMapBuilder<CateState>) => {
     builder
         .addCase(updateCate.pending, (state) => {
-            state.status = 'loading';
+            state.updateCateState.status = 'loading';
         })
         .addCase(updateCate.fulfilled, (state, action) => {
             if (action.payload.error) {
-                state.status = 'failed';
-                state.errorUpdate = action.payload.error;
+                state.updateCateState.status = 'failed';
+                state.updateCateState.errors = action.payload.error.errors
                 console.log(action.payload.error);
             } else {
-                state.status = 'succeeded';
-                const updatedCourse = action.payload.data;
-                const index = state.cates?.findIndex(course => course.id === updatedCourse?.id);
-                if (index !== undefined && index !== -1 && updatedCourse != undefined && state.cates != undefined) {
-                    state.cates[index] = updatedCourse;
-                }
+                state.updateCateState.status = 'succeeded';
+                state.updateCateState.data  = action.payload.data;
+                
             }
         })
         .addCase(updateCate.rejected, (state, action) => {
-            state.status = 'failed';
-            state.errorUpdate = action.error.message;
+            state.updateCateState.status = 'failed';
+            state.updateCateState.error = action.error.message;
         });
 };
 

@@ -10,6 +10,7 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
   const handleChangePage = (newPage: number) => {
+    console.log(currentPage)
     if (newPage >= 0 && newPage < totalPages) {
         console.log('pagechange')
       onPageChange(newPage);

@@ -32,8 +32,7 @@ const UserHomeworkPage: React.FC = () => {
 
     useEffect(() => {
         if (id) {
-            const request: UserHomeworkRequest = {
-                userId: id,
+            const request: UserHomeworkRequest = {      
                 isSubmitted,
                 page: currentPage,
                 size,

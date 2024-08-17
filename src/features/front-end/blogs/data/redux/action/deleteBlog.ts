@@ -22,7 +22,7 @@ export const deleteBlogExtraReducers = (builder: ActionReducerMapBuilder<BlogSta
             state.blogDetail.data = action.payload;
         })
         .addCase(deleteBlog.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
+          state.status = 'failed';
+          state.error = action.error.message;
         });
 };

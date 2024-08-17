@@ -14,8 +14,9 @@ export const route: () => RouteObject = () => {
 }
 
 const LoginPage: React.FC = () => {
-    const dispatch = useAppDispatch();  
-    
+    const dispatch = useAppDispatch(); 
+    // const navigate = useNavigate(); 
+    // const status = useAppSelector((s)=>s.auth.logInPage.status);
     const handleSubmit = (data: any) => {
         dispatch(logInAction({ loginReq: data }));
     };
@@ -23,6 +24,7 @@ const LoginPage: React.FC = () => {
     const handleSubmitReset = (data: any) => {
         dispatch(SendResetPasswordEmailAction({ req: data }));
     };
+
 
     return (
         <div>

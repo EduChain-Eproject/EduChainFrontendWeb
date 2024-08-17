@@ -7,7 +7,7 @@ import { GetUserListState } from '../redux/GetUserListSlice';
 import User from '../../../../../common/entities/User';
 
 export type GetListUserReq = {
-  nameSearch: string;
+  emailSearch: string;
   page: number;
   size: number;
 };

@@ -20,7 +20,7 @@ import axiosService from '../../../../common/services/axiosService';
 import { AuthState } from './authSlice';
 import { logOut } from '../../data/dataSources/AuthRemoteDataSource';
 import LogOut, { LogOutReq } from '../../domain/usecases/LogOut';
-import VerifyCode from '../../domain/usecases/VerifyCode';
+import VerifyCode, { VerifyRequest } from '../../domain/usecases/VerifyCode';
 import ReSendVerifyCode, {
   ReSendVerifyCodeReq,
 } from '../../domain/usecases/ResendVerifyCode';
@@ -78,7 +78,7 @@ export const resetSignUpStatus = createAction('auth/resetSignUpStatus');
 
 export const verifyCodeAction = createAsyncThunk(
   'Auth/verify',
-  async (data: number) => {
+  async (data: VerifyRequest) => {
     const verifyCase = new VerifyCode(authRepository);
     return await verifyCase.execute(data);
   },

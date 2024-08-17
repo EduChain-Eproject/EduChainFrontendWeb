@@ -6,6 +6,7 @@ import { ResetPasswordReq } from '../../domain/usecases/ResetPassword';
 import { SendResetPasswordEmailReq } from '../../domain/usecases/SendResetPasswordEmail';
 import { LogOutReq } from '../../domain/usecases/LogOut';
 import { ReSendVerifyCodeReq } from '../../domain/usecases/ResendVerifyCode';
+import { VerifyRequest } from '../../domain/usecases/VerifyCode';
 
 const baseUrl = 'http://localhost:8080/';
 export const logIn = async (loginRequest: LoginReq) => {
@@ -106,7 +107,7 @@ export const resetPassword = async (req: ResetPasswordReq) => {
   }
 };
 
-export const verifyCode = async (req: number) => {
+export const verifyCode = async (req: VerifyRequest) => {
   try {
     const response = await axiosService.post(
       `${baseUrl}Auth/verify`,

@@ -7,7 +7,7 @@ const BlogCate: React.FC = () => {
     const { cateId } = useParams<{ cateId: string }>();
     const cId = Number(cateId)
     const dispatch = useAppDispatch();
-    const { cate, status } = useAppSelector((state) => state.cates);
+    const { data, status } = useAppSelector((state) => state.cates.fetchCateState);
 
     useEffect(() => {
         if (cId) {
@@ -19,18 +19,20 @@ const BlogCate: React.FC = () => {
         return <div>Loading...</div>;
     }
 
-
     return (
-        <div>
-            {cate && (
+        <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto mt-8">
+            {data && (
                 <>
-                    <h1>{cate.id}</h1>
-                    <p>{cate.categoryName}</p>
-                    <p>Created at : {new Date(cate.createdAt).toLocaleDateString()}</p>
+                    <h1 className="text-2xl font-semibold text-gray-800 mb-2">ID: {data.id}</h1>
+                    <p className="text-lg text-gray-600 mb-1">Category: {data.categoryName}</p>
+                    <p className="text-sm text-gray-500">
+                        Created at: {new Date(data.createdAt).toLocaleDateString()}
+                    </p>
                 </>
             )}
         </div>
     );
+
 };
 
 export default BlogCate;

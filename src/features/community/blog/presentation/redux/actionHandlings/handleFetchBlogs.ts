@@ -5,19 +5,22 @@ import { fetchBlogs } from "../blogActions";
 const handleFetchBlogs = (builder: ActionReducerMapBuilder<BlogState>) => {
     builder
         .addCase(fetchBlogs.pending, (state) => {
-            state.status = 'loading';
+            state.blogs.status = 'loading';
         })
         .addCase(fetchBlogs.fulfilled, (state, action) => {
-            if (action.payload.error) {
-                state.status = 'failed';
-                state.error = action.payload.error;
+            if (action.payload.error) { 
+                state.blogs.status  = 'failed';
+                state.blogs.error = action.payload.error.message;
             } else {
                 state.status = 'succeeded';
-                state.blogs = action.payload.data;
+                state.blogs.data = action.payload.data;    
+                state.pagination.totalPages = action.payload.totalPages;
+                state.pagination.totalElements = action.payload.totalElements;    
+                console.log( state.blogs.data);
             }
         })
         .addCase(fetchBlogs.rejected, (state, action) => {
-            state.status = 'failed';
+            state.blogs.status = 'failed';
             state.error = action.error.message;
         });
 };

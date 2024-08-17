@@ -9,13 +9,10 @@ export default class UpdateUserProfileUseCase {
 }
 
 export type UpdateUserProfileReq = {
-  id: number;
-  email: string;
   password: string;
   firstName: string;
   lastName: string;
   phone: string;
   address: string;
   avatarFile: File;
-  avatarPath: string;
 };

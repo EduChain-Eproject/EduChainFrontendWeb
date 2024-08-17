@@ -28,6 +28,13 @@ import {
   questionUpdatePageRoute,
 } from '../../features/course/question/teacher/presentation/pages';
 
+import {
+  BlogDetailRoute,
+  BlogListRoute,
+  CreateBlogRoute,
+  UpdateBlogRoute
+} from '../../features/front-end/blogs/presentation/pages';
+
 export const teacherRoutes: RouteObject = {
   path: 'dashboard/teacher',
   element: <DashboardTeacherLayout />,
@@ -56,5 +63,13 @@ export const teacherRoutes: RouteObject = {
     // questions
     questionCreatePageRoute(),
     questionUpdatePageRoute(),
+
+    //blog
+    BlogListRoute(),
+    BlogDetailRoute(),
+    CreateBlogRoute(),
+    UpdateBlogRoute()
   ],
 };
+
+

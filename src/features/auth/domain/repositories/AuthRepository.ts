@@ -6,6 +6,7 @@ import { RegisterReq, RegisterResponseMessage } from '../usecases/Register';
 import { ReSendVerifyCodeReq } from '../usecases/ResendVerifyCode';
 import { ResetPasswordReq } from '../usecases/ResetPassword';
 import { SendResetPasswordEmailReq } from '../usecases/SendResetPasswordEmail';
+import { VerifyRequest } from '../usecases/VerifyCode';
 
 export interface AuthRepository {
   //login
@@ -62,7 +63,7 @@ export interface AuthRepository {
     };
   }>;
 
-  onVerifyCode: (req: number) => Promise<{
+  onVerifyCode: (req: VerifyRequest) => Promise<{
     data?: any;
     error?: {
       message: string;

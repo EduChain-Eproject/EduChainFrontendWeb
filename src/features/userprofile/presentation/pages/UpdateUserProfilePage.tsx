@@ -28,9 +28,6 @@ const UpdateUserProfilePage = () => {
   const handleSubmit = async (newdata: UpdateUserProfileReq) => {
 
     const formData = new FormData();
-    formData.append('id', newdata.id.toString());
-    formData.append('email', newdata.email);
-    formData.append('password', newdata.password);
     formData.append('firstName', newdata.firstName);
     formData.append('lastName', newdata.lastName);
     formData.append('phone', newdata.phone);

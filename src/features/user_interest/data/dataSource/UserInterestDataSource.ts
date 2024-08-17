@@ -38,6 +38,9 @@ export const apiTakeUserInterests = async (
     });
   }
 };
+
+
+
 export const apiDeleteUserInterest = async (
   deleteReq: DeleteUserInterestRes,
 ): Promise<void> => {

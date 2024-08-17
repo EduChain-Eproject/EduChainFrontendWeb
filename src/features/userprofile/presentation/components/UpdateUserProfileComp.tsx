@@ -13,7 +13,6 @@ interface Props {
 const UpdateUserProfileComp: React.FC<Props> = ({ initialData, onSubmit, serverError }) => {
   const { register, handleSubmit, setValue } = useForm<UpdateUserProfileReq>({
     defaultValues: {
-      id: initialData?.id,
     }
   });
 
@@ -23,13 +22,10 @@ const UpdateUserProfileComp: React.FC<Props> = ({ initialData, onSubmit, serverE
 
   useEffect(() => {
     if (initialData) {
-      setValue('id', initialData.id);
-      setValue('email', initialData.email);
       setValue('firstName', initialData.firstName);
       setValue('lastName', initialData.lastName);
       setValue('phone', initialData.phone);
       setValue('address', initialData.address);
-      setValue('avatarPath', initialData.avatarPath);
     }
   }, [initialData, setValue]);
 
@@ -41,19 +37,6 @@ const UpdateUserProfileComp: React.FC<Props> = ({ initialData, onSubmit, serverE
             {serverError}
           </div>
         )}
-
-        <div className="form-group">
-          <label htmlFor="email" className="block text-gray-700 font-medium">Email</label>
-          <input 
-            id="email" 
-            type="email" 
-            {...register('email')} 
-            className={`mt-1 p-2 border rounded w-full `}
-          />
-           {errors?.email && (
-              <p className="text-red-500 text-xs italic mt-1">{errors?.email}</p>
-            )}
-        </div>
 
         <div className="form-group">
           <label htmlFor="firstName" className="block text-gray-700 font-medium">First Name</label>

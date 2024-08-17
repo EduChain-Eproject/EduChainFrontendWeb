@@ -3,14 +3,15 @@ import { useDispatch } from 'react-redux';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../../common/context/store';
 import { fetchCates, deleteCate } from '../redux/cateAction';
 import { Link } from 'react-router-dom';
+import { BlogCategory } from '../../domain/entities/BlogCategory';
 
 const BlogCateList: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { cates, status } = useAppSelector((state: RootState) => state.cates);
+    const { data, status } = useAppSelector((state: RootState) => state.cates.fetchCatesState);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [cateToDelete, setCateToDelete] = useState<number | null>(null);
-
+    
     useEffect(() => {
         dispatch(fetchCates());
     }, [dispatch]);
@@ -56,11 +57,15 @@ const BlogCateList: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {cates?.map((cate: any) => (
+                                {data && data.map((cate: BlogCategory) => (
                                     <tr key={cate.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">{cate.id}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{cate.name}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{cate.createdAt}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{cate.categoryName}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+    {cate.createdAt ? new Date(cate.createdAt).toLocaleDateString() : 'N/A'}
+</td>
+
+
                                         <td className="px-6 py-4 whitespace-nowrap flex items-center space-x-2">
                                             <Link to={`/dashboard/blog_category/${cate.id}`}>
                                                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

@@ -13,7 +13,7 @@ import Tables from '../temp_pages/Tables';
 import Alerts from '../temp_pages/UiElements/Alerts';
 import Buttons from '../temp_pages/UiElements/Buttons';
 import { dashboardRoute } from "../../features/dashboard/presentation/pages";
-import { getBlogsRoute } from "../../features/community/blog/presentation/pages";
+import { blogDetailAdminRoute, createBlogRoute, getBlogsRoute } from "../../features/community/blog/presentation/pages";
 import { getBlogCateCreateRoute, getBlogCateDetailRoute, getBlogCateRoute, getBlogCateUpdateRoute } from "../../features/community/blogCategory/presentation/pages";
 import { OrderDetailRoute, OrderListByCourseRoute, OrderListByUserRoute, OrderListRoute } from "../../features/admin/order/presentation/pages";
 import { GetListUserRoute } from "../../features/admin/get-user-list/presentation/page";
@@ -68,6 +68,8 @@ export const adminRoutes: RouteObject = {
         getBlogCateDetailRoute(),
         getBlogCateCreateRoute(),
         getBlogCateUpdateRoute(),
+        createBlogRoute(),
+        blogDetailAdminRoute(),
 
         //order
         OrderListRoute(),

@@ -9,8 +9,7 @@ export default class GetUserhomeworkUsecase {
 }
 
 export type UserHomeworkRequest = {
-  userId: number;
-  isSubmitted: boolean | null; // null to allow for no filtering
+  isSubmitted: boolean | null;
   page: number;
   size: number;
 };

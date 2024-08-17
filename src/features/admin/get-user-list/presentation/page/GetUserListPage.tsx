@@ -25,16 +25,16 @@ export const route: () => RouteObject = () => {
     };
     const blockOrUnblock = useAppSelector((state) => state.getUserList.blockResultState);
     const [size, setSize] = useState(3);
-    const [nameSearch, setSearch] = useState('');
+    const [emailSearch, setSearch] = useState('');
     console.log(data);
     useEffect(() => {
       const request: GetListUserReq = {
-        nameSearch,
+        emailSearch,
         page: currentPage,
         size,
       };
       dispatch(GetUserListAction(request));
-    }, [dispatch, nameSearch, currentPage, size]);
+    }, [dispatch, emailSearch, currentPage, size]);
 
   const handleSearch = (query: string) => {
     setSearch(query); 
@@ -47,13 +47,13 @@ export const route: () => RouteObject = () => {
     // Re-fetch the user list when block/unblock action succeeds
     if (blockOrUnblock.status === 'succeeded') {
       const request: GetListUserReq = {
-        nameSearch,
+        emailSearch,
         page: currentPage,
         size,
       };
       dispatch(GetUserListAction(request));
     }
-  }, [blockOrUnblock.status, dispatch, nameSearch, currentPage, size]);
+  }, [blockOrUnblock.status, dispatch, emailSearch, currentPage, size]);
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
@@ -65,7 +65,7 @@ export const route: () => RouteObject = () => {
   }
 
     return (<div>
-      <SearchComponent onSearch={handleSearch} placeholder="Search by name..." value={nameSearch} />
+      <SearchComponent onSearch={handleSearch} placeholder="Search by name..." value={emailSearch} />
        <GetUserListComp data={data!} onBlock={handleBlock} />
        <Pagination 
         totalPages={totalPages}

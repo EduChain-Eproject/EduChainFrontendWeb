@@ -34,7 +34,7 @@ const BlogList: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {blogs?.map((bl: any) => (
+                        {blogs.data?.map((bl: any) => (
                             <tr key={bl.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">{bl.id}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{bl.title}</td>

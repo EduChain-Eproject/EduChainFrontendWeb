@@ -5,20 +5,21 @@ import { fetchCates } from '../cateAction';
 const handleFetchCates = (builder: ActionReducerMapBuilder<CateState>) => {
     builder
         .addCase(fetchCates.pending, (state) => {
-            state.status = 'loading';
+            state.fetchCatesState.status = 'loading';
         })
         .addCase(fetchCates.fulfilled, (state, action) => {
             if (action.payload.error) {
-                state.status = 'failed';
-                state.errorFetchCates = action.payload.error;
+                state.fetchCatesState.status = 'fail';
+                state.fetchCatesState.error = action.payload.error.message;
             } else {
-                state.status = 'succeeded';
-                state.cates = action.payload.data;
+                state.fetchCatesState.status = 'succeeded';
+                state.fetchCatesState.data = action.payload.data;
+                console.log(state.fetchCatesState.data);
             }
         })
         .addCase(fetchCates.rejected, (state, action) => {
-            state.status = 'failed';
-            state.errorFetchCates = action.error.message;
+            state.fetchCatesState.status = 'failed';
+            state.fetchCatesState.error = action.error.message;
         });
 };
 

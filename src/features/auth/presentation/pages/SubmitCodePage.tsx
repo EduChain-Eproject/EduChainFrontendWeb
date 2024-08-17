@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../../common/context/store
 import { reSenVerifyCodeAction, resetVerifyPage, verifyCodeAction } from '../redux/AuthAction';
 import { RouteObject, useNavigate } from 'react-router-dom';
 import ReSendVerifyCode, { ReSendVerifyCodeReq } from '../../domain/usecases/ResendVerifyCode';
+import { VerifyRequest } from '../../domain/usecases/VerifyCode';
 
 export const route: () => RouteObject = () => {
     return {
@@ -70,8 +71,14 @@ const SubmitCodePage: React.FC = () => {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (!validateCode()) return;
+        const email = localStorage.getItem('email');
+
         const numericCode = parseInt(code.join(''), 10);
-        dispatch(verifyCodeAction(numericCode));
+        const req:VerifyRequest = {
+            code:numericCode,
+            email:email!
+        }
+        dispatch(verifyCodeAction(req));
     };
 
     const handleResendClick = () => {
@@ -84,7 +91,8 @@ const SubmitCodePage: React.FC = () => {
     useEffect(() => {
         if(result.status == 'succeeded'){
             dispatch(resetVerifyPage()); 
-            navigate('Auth/login');
+            navigate('/Auth/login');
+            alert('you can login now if you are student, but if you are teacher you need to wait for admin accept your access')
         }
     })
 

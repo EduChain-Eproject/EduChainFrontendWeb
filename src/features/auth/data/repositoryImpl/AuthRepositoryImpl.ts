@@ -22,6 +22,7 @@ import User from '../../../../common/entities/User';
 import { LogOutReq } from '../../domain/usecases/LogOut';
 import { getUserWithToken } from '../dataSources/userProfileDataSource';
 import { ReSendVerifyCodeReq } from '../../domain/usecases/ResendVerifyCode';
+import { VerifyRequest } from '../../domain/usecases/VerifyCode';
 
 class AuthRepositoryImpl implements AuthRepository {
   async onLogin(loginRequest: LoginReq): Promise<{
@@ -204,7 +205,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  async onVerifyCode(data: number): Promise<{
+  async onVerifyCode(data: VerifyRequest): Promise<{
     data?: any;
     error?: {
       message: string;

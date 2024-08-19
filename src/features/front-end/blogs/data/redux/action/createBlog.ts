@@ -1,4 +1,8 @@
-import { createAsyncThunk, ActionReducerMapBuilder } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  ActionReducerMapBuilder,
+  createAction,
+} from '@reduxjs/toolkit';
 import axiosService from '../../../../../../common/services/axiosService';
 import Failure from '../../../../../../common/entities/Failure';
 import { BlogState } from '../blogUISlice';
@@ -66,6 +70,7 @@ export const createBlog = createAsyncThunk(
   },
 );
 
+export const resetCreateBlog = createAction('auth/resetSendEmailResetPassword');
 export const createBlogExtraReducers = (
   builder: ActionReducerMapBuilder<BlogState>,
 ) => {
@@ -82,5 +87,11 @@ export const createBlogExtraReducers = (
         state.blogCreateState.status = 'succeeded';
         console.log(state.blogCreateState.status);
       }
+    })
+    .addCase(resetCreateBlog, (state) => {
+      state.blogCreateState.status = 'idle';
+      state.blogCreateState.error = undefined;
+      state.blogCreateState.data = undefined;
+      state.blogCreateState.errors = undefined;
     });
 };

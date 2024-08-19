@@ -55,16 +55,16 @@ export const fetchBlogsExtraReducers = (
 ) => {
   builder
     .addCase(fetchBlogs.pending, (state) => {
-      state.status = 'loading';
+      state.blogs.status = 'loading';
     })
     .addCase(fetchBlogs.fulfilled, (state, action) => {
-      state.status = 'succeeded';
+      state.blogs.status = 'succeeded';
       state.blogs.data = action.payload.content;
       state.pagination.totalPages = action.payload.totalPages;
       state.pagination.totalElements = action.payload.totalElements;
     })
     .addCase(fetchBlogs.rejected, (state, action) => {
-      state.status = 'failed';
+      state.blogs.status = 'failed';
       state.blogs.error = action.error.message;
     });
 };

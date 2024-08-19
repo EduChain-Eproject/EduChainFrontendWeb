@@ -17,30 +17,40 @@ export interface BlogState {
   blogs: CommonState<Blog[]>;
   blogDetail: CommonState<Blog>;
   blogCategories: CommonState<BlogCategory[]>;
-  status: string | null;
-  error: string | undefined;
   blogCreateState: CommonState<Blog>;
-  createCommentState: CommonState<BlogComment>;
+
   pagination: {
     totalPages: number;
     totalElements: number;
     currentPage: number;
   };
+  blogUpdate: CommonState<Blog>;
+  deleteBlog: CommonState<null>;
+  filterState: CommonState<Blog[]>;
+  //comment
+  createCommentState: CommonState<BlogComment>;
+  updateCommentState: CommonState<BlogComment>;
+  delteteCommentState: CommonState<boolean>;
+  voteBlogState: CommonState<Blog>;
 }
 
 const initialState: BlogState = {
   blogs: { ...initCommonState },
   blogDetail: { ...initCommonState },
   blogCategories: { ...initCommonState },
-  status: null,
-  error: undefined,
   blogCreateState: { ...initCommonState },
-  createCommentState: { ...initCommonState },
   pagination: {
     totalPages: 0,
     totalElements: 0,
     currentPage: 0,
   },
+  blogUpdate: { ...initCommonState },
+  deleteBlog: initCommonState,
+  filterState: initCommonState,
+  updateCommentState: initCommonState,
+  createCommentState: { ...initCommonState },
+  delteteCommentState: initCommonState,
+  voteBlogState: initCommonState,
 };
 
 const blogUISlice = createSlice({
@@ -61,6 +71,8 @@ const blogUISlice = createSlice({
     voteExtraReducers(builder);
     createBlogExtraReducers(builder);
     createBlogCommentExtraReducers(builder);
+
+    //blogcomment
   },
 });
 export const { setPage } = blogUISlice.actions;

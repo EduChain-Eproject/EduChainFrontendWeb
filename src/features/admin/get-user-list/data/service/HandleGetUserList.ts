@@ -33,11 +33,19 @@ export const apiGetUserList = async (
       const message = data.errors.message || 'Validation error';
       const errors = data.errors;
 
-      throw new Failure(message, errors, data.timestamp);
+      return {
+        totalPages: 0,
+        totalElements: 0,
+        content: [],
+        error: new Failure(message, errors, data.timestamp),
+      };
     }
-    throw new Failure('An unknown error occurred', {
-      message: 'An unknown error occurred',
-    });
+    return {
+      totalPages: 0,
+      totalElements: 0,
+      content: [],
+      error: new Failure('message', {}, ''),
+    };
   }
 };
 

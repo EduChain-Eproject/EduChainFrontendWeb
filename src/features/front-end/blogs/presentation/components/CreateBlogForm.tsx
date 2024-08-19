@@ -123,7 +123,7 @@ const CreateBlogForm: React.FC<CreateBlogFormProps> = ({ onSubmit }) => {
             onChange={(e) => setBlogCategoryId(Number(e.target.value))}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option value={0}>Select a category</option>
+            <option value="">chose category</option>
             {status === 'loading' && <option value="">Loading...</option>}
             {status === 'succeeded' &&
               blogCategories!.map((category) => (

@@ -1,32 +1,24 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
-import ApiResponse from "../../../../../../common/entities/ApiResponse";
-import { BlogComment } from "../../../../../../common/entities/BlogComment";
-import Failure from "../../../../../../common/entities/Failure";
-import axiosService from "../../../../../../common/services/axiosService";
-import { BlogState } from "../blogUISlice";
+import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import ApiResponse from '../../../../../../common/entities/ApiResponse';
+import { BlogComment } from '../../../../../../common/entities/BlogComment';
+import Failure from '../../../../../../common/entities/Failure';
+import axiosService from '../../../../../../common/services/axiosService';
+import { BlogState } from '../blogUISlice';
 
-
-export type CreateCommentReq = {
-  
-          text:string;
-
-          userId:string;
-          commentId:number;
-   
-          blogId:number;
+export type CreateBlogCommentReq = {
+  text: string;
+  parentCommentId: string;
+  blogId: number;
 };
-
 
 const baseUrl = 'http://localhost:8080/';
 export const apiCreateBlog = async (
-  req: CreateCommentReq,
+  req: CreateBlogCommentReq,
 ): ApiResponse<BlogComment> => {
-  
   try {
     const response = await axiosService.post(
-      `${baseUrl}api/blog/create`,
+      `${baseUrl}api/blog_comment/create`,
       req,
-    
     );
     console.log(response.data);
     return response.data;
@@ -48,7 +40,7 @@ export const apiCreateBlog = async (
 
 export const createComment = createAsyncThunk(
   'ui/blog/createBlog',
-  async (req: CreateCommentReq) => {
+  async (req: CreateBlogCommentReq) => {
     const response = await apiCreateBlog(req);
     console.log(response);
     return response;

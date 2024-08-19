@@ -12,7 +12,7 @@ import { deleteBlog } from '../../data/redux/action/deleteBlog';
 import { Blog } from '../../data/model/Blog';
 import { ChatIcon, TrashIcon, PencilIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
-import { filterBlog } from '../../data/redux/action/filterBlog';
+import { filterBlog, FilterBlogReq } from '../../data/redux/action/filterBlog';
 import { fetchBlogCategories } from '../../data/redux/action/fetchCategories';
 import { BlogCategory } from '../../data/model/BlogCategory';
 import VoteButton from './VoteButton';
@@ -24,9 +24,9 @@ interface BlogUIListProps {
 
 const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const { data: blogCategories } = useAppSelector(
-    (state) => state.blogUiSlice.blogCategories,
-  );
+  // const { data: blogCategories } = useAppSelector(
+  //   (state) => state.blogUiSlice.blogCategories,
+  // );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState<number | null>(null);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -34,6 +34,9 @@ const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
   const userId = useAppSelector((s) => s.auth?.user?.id);
 
+  useEffect(() => {
+    dispatch(fetchBlogCategories());
+  }, [dispatch]);
   const openModal = (id: number) => {
     setBlogToDelete(id);
     setIsModalOpen(true);
@@ -47,124 +50,54 @@ const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const handleDelete = async () => {
-    console.log('delete');
+    if (blogToDelete !== null) {
+      try {
+        await dispatch(deleteBlog(blogToDelete)).unwrap(); // Dispatch delete action
+        setIsModalOpen(false);
+        setBlogToDelete(null);
+      } catch (error) {
+        console.error('Failed to delete blog:', error);
+        // Optionally, show an error message to the user
+      }
+    }
   };
+  useEffect(() => {
+    console.log('BlogUIList props changed:', data);
+  }, [data]);
 
-  const handleFilterChange = () => {
-    dispatch(
-      filterBlog({
-        sortStrategy,
-        keyword: searchKeyword,
-        categoryIdArray: selectedCategoryIds ?? [],
-      }),
-    );
-  };
+  function handleFilterChange(): void {
+    console.log('filter');
+  }
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold text-center mt-10 mb-8">
-        Blog Classic
-      </h1>
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="w-full md:w-1/4">
-          <div className="bg-white rounded-lg p-4 mb-4 shadow-md">
-            <Link to="/community/blog_ui/create">
-              <button
-                type="button"
-                className="mb-4 bg-green-500 hover:bg-green-700 text-white w-full font-bold py-2 px-4 rounded"
-              >
-                Add your new post
-              </button>
-            </Link>
-            <div>
-              <h2 className="text-lg font-bold mb-2">Search</h2>
-              <input
-                type="text"
-                placeholder="Name, content or author"
-                className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
-              />
-            </div>
-            <div className="mt-4">
-              <h2 className="text-lg font-bold mb-2">Sort By</h2>
-              <select
-                className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={sortStrategy}
-                onChange={(e) => setSortStrategy(e.target.value)}
-              >
-                <option value="descTime">Latest</option>
-                <option value="ascTime">Oldest</option>
-                <option value="mostLike">Most like</option>
-                <option value="mostComment">Most comment</option>
-              </select>
-            </div>
-            <div className="mt-4">
-              <h2 className="text-lg font-bold mb-2">Category</h2>
-              {blogCategories?.map((category: BlogCategory) => (
-                <div key={category.id} className="flex items-center mb-2">
-                  <input
-                    type="checkbox" // Step 3: Change to checkbox
-                    name="category"
-                    value={category.id}
-                    checked={selectedCategoryIds.includes(category.id)} // Step 5: Check if ID is in the array
-                    onChange={(e) => {
-                      const categoryId = Number(e.target.value);
-                      if (e.target.checked) {
-                        setSelectedCategoryIds((prevIds) => [
-                          ...prevIds,
-                          categoryId,
-                        ]);
-                      } else {
-                        setSelectedCategoryIds((prevIds) =>
-                          prevIds.filter((id) => id !== categoryId),
-                        );
-                      }
-                    }}
-                    className="mr-2"
-                  />
-                  <label
-                    htmlFor={`category-${category.id}`}
-                    className="text-lg"
-                  >
-                    {category.categoryName}
-                  </label>
-                </div>
-              ))}
-              <div className="mt-4">
-                <button
-                  type="button"
-                  className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={handleFilterChange}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
         {/* Blog List Section */}
         <div className="w-full md:w-3/4">
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {data &&
-              data?.map((blog: Blog) => (
+              data.map((blog: Blog) => (
                 <li
                   key={blog.id}
                   className="bg-white p-6 rounded-lg shadow-md relative"
                 >
-                  <div className="absolute top-0 right-0 flex space-x-2">
-                    <button
-                      className="bg-red-500 text-black hover:text-red-800 w-8 h-8 flex items-center justify-center"
-                      onClick={() => openModal(blog.id)}
-                    >
-                      <TrashIcon className="h-5 w-5" />
-                    </button>
-                    <Link to={`/community/blog_ui/edit/${blog.id}`}>
-                      <button className="bg-blue-500 text-black hover:text-blue-800 w-8 h-8 flex items-center justify-center">
-                        <PencilIcon className="h-5 w-5" />
+                  {/* Conditionally Render Edit/Delete Buttons */}
+                  {blog.user.id === userId && (
+                    <div className="absolute top-0 right-0 flex space-x-2">
+                      <button
+                        className="bg-red-500 text-black hover:text-red-800 w-8 h-8 flex items-center justify-center"
+                        onClick={() => openModal(blog.id)}
+                      >
+                        <TrashIcon className="h-5 w-5" />
                       </button>
-                    </Link>
-                  </div>
+                      <Link to={`/community/blog_ui/edit/${blog.id}`}>
+                        <button className="bg-blue-500 text-black hover:text-blue-800 w-8 h-8 flex items-center justify-center">
+                          <PencilIcon className="h-5 w-5" />
+                        </button>
+                      </Link>
+                    </div>
+                  )}
+
                   <div className="flex justify-between items-center mb-4 mt-4">
                     {/* Left-aligned: User's name */}
                     <div className="flex items-center">
@@ -179,18 +112,26 @@ const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
                         at {new Date(blog.createdAt).toLocaleDateString()}
                       </p>
                       <p className="text-sm">
-                        Category: {blog.blogCategory.categoryName}
+                        {/* Category: {blog.blogCategory.categoryName} */}
                       </p>
                     </div>
                   </div>
                   <Link to={`/community/blog_ui/${blog.id}`}>
-                    <img src={`${import.meta.env.VITE_API_BASE_URL}/uploads/${blog.photo}`} alt={blog.title} className="w-full h-75 object-cover mb-4" />
+                    <img
+                      src={
+                        blog.photo
+                          ? `${import.meta.env.VITE_API_BASE_URL}/uploads/${
+                              blog.photo
+                            }`
+                          : '/public/defaultimage/1000_F_484887682_Mx57wpHG4lKrPAG0y7Q8Q7bJ952J3TTO.jpg' 
+                      }
+                      alt={blog.title || 'Default Image'} 
+                      className="w-full h-75 object-cover mb-4"
+                    />
                   </Link>
                   <h2 className="text-2xl font-bold mb-4">{blog.title}</h2>
                   <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center w-full mr-2">
-                      <VoteButton blogId={blog.id} userId={userId} initialLikes={blog.voteUp}/>
-                    </div>
+                    <div className="flex items-center w-full mr-2"></div>
                     <div className="flex items-center w-full ml-2">
                       <Link
                         to={`/community/blog_ui/${blog.id}`}

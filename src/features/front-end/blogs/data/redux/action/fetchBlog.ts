@@ -14,6 +14,7 @@ export const fetchBlog = createAsyncThunk(
   'ui/blog/fetchBlog',
   async (blogId: number) => {
     const response = apiFetchBlog(blogId);
+    console.log(response);
     return response;
   },
 );
@@ -26,11 +27,12 @@ export const fetchBlogExtraReducers = (
       state.blogDetail.status = 'loading';
     })
     .addCase(fetchBlog.fulfilled, (state, action) => {
-      state.status = 'succeeded';
+      state.blogDetail.status = 'succeeded';
       state.blogDetail.data = action.payload;
+      console.log(state.blogDetail.data);
     })
     .addCase(fetchBlog.rejected, (state, action) => {
-      state.status = 'failed';
+      state.blogDetail.status = 'failed';
       state.blogs.error = action.error.message;
     });
 };

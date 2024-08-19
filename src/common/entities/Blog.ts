@@ -1,3 +1,4 @@
+import { UserBlogVote } from './../../features/front-end/blogs/data/model/UserBlogVote';
 import { BlogCategory } from './BlogCategory';
 import { BlogComment } from './BlogComment';
 import User from './User';
@@ -12,4 +13,5 @@ export class Blog {
   user: User;
   blogCategory: BlogCategory;
   blogComments: BlogComment[];
+  userBlogVotes: UserBlogVote[];
 }

@@ -30,25 +30,25 @@ const UpdateBlogPage: React.FC = () => {
     const { status, error } = useAppSelector(state => state.blogUiSlice.blogDetail);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
+    const blogUpdate = useAppSelector((s)=>s.blogUiSlice.blogUpdate);
     const handleSubmit = async (data: UpdateBlogReq): Promise<void> => {
         const submitData = {
             ...data,
         };
     
         await dispatch(updateBlog(submitData));
-    
-        if (status === 'succeeded') {
-            navigate('/teacher/blogs');
-        }
     };
-
+    useEffect(() => {
+        if(blogUpdate.status === 'succeeded'){
+        console.log('ok');
+          navigate('/community/blog_ui')
+        }
+      },[blogUpdate.status])
     return (
         <div>
             <AppBreadcrumb items={breadCrumbItems} />
             <UpdateBlogForm {...{onSubmit: handleSubmit}} />
             {status === 'loading' && <p>Loading...</p>}
-            {status === 'succeeded' && <p>Blog created successfully!</p>}
             {status === 'failed' && <p>Error: {error}</p>}
         </div>
     );

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '../../../../../common/context/store';
 import { useAppSelector } from '../../../../../common/context/store';
-import { CreateBlogReq, createBlog } from '../../data/redux/action/createBlog';
+import { CreateBlogReq, createBlog, resetCreateBlog } from '../../data/redux/action/createBlog';
 import { RouteObject, useNavigate } from 'react-router-dom';
 import CreateBlogForm from '../components/CreateBlogForm';
 import AppBreadcrumb from '../../../../../common/components/Breadcrumbs/AppBreadcrumb';
@@ -42,6 +42,7 @@ const CreateNewBlogPage: React.FC = () => {
   useEffect(() => {
     if(createBlogData.status === 'succeeded'){
       navigate('/community/blog_ui');
+      dispatch(resetCreateBlog());
     }
   },[createBlogData.status ,navigate]);
     return (

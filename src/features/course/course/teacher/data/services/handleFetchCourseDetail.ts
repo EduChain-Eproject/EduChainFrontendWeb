@@ -10,7 +10,7 @@ export const apiFetchCourseDetail: (
 ) => ApiResponse<Course> = async (courseId: number) => {
   try {
     const response = await axiosService.get(
-      `/TEACHER/api/course/detail/${courseId}`,
+      `http://localhost:8080/TEACHER/api/course/detail/${courseId}`,
     );
     return { data: response.data };
   } catch (error) {

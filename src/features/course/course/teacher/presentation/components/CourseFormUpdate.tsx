@@ -49,10 +49,10 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     formData.append('title', data.title);
     formData.append('description', data.description);
     formData.append('price', data.price.toString());
-    if (data.avatarCourse) {
+    if (data.avatarCourse && data.avatarCourse.length > 0) {
       formData.append('avatarCourse', data.avatarCourse[0]);
     }
-
+  
     const categoryIds = Object.keys(data.categoryIds)
       .filter((key) => data.categoryIds[key])
       .map((key) => parseInt(key, 10));

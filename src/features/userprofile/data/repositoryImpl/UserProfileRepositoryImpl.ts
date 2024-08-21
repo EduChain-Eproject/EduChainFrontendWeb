@@ -1,4 +1,3 @@
-import { UserProfileDto } from '../dto/UserProfileDto';
 import Failure from '../../../../common/entities/Failure';
 import { UserProfileRepository } from '../../domain/repository/UserRepository';
 import {
@@ -18,9 +17,8 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   }> {
     try {
       const response = await getUserProfile(email);
-      const userProfile = this.mapDtoToModel(response);
 
-      return { data: userProfile };
+      return { data: response };
     } catch (error) {
       if (error instanceof Failure) {
         return {
@@ -39,6 +37,7 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
       };
     }
   }
+
   async onUpdateUserProfile(formData: FormData): Promise<{
     data?: UserProfileModel;
     error?: {
@@ -49,8 +48,8 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   }> {
     try {
       const response = await updateUserProfile(formData);
-      const userProfile = this.mapDtoToModel(response.data);
-      return { data: userProfile };
+
+      return response;
     } catch (error) {
       if (error instanceof Failure) {
         return {
@@ -68,19 +67,6 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
         },
       };
     }
-  }
-
-  private mapDtoToModel(dto: UserProfileDto): UserProfileModel {
-    return new UserProfileModel(
-      dto.id,
-      dto.email,
-      dto.firstName,
-      dto.lastName,
-      dto.phone,
-      dto.address,
-      dto.avatarPath,
-      dto.role,
-    );
   }
 }
 

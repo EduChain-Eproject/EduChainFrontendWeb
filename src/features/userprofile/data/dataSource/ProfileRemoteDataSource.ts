@@ -1,11 +1,12 @@
-import { UserProfileDto } from './../dto/UserProfileDto';
+import { UserProfileModel } from './../../domain/entities/UserProfileModel';
+
 import axiosService from '../../../../common/services/axiosService';
 import Failure from '../../../../common/entities/Failure';
 
 const baseUrl: String = 'http://localhost:8080/COMMON/';
 export const getUserProfile = async (
   email: string,
-): Promise<UserProfileDto> => {
+): Promise<UserProfileModel> => {
   try {
     const respose = await axiosService.get(
       `${baseUrl}get-user-profile/${email}`,
@@ -34,10 +35,14 @@ export const getUserProfile = async (
 export const updateUserProfile = async (
   req: FormData,
 ): Promise<{
-  data: UserProfileDto;
+  data: UserProfileModel;
 }> => {
   try {
-    const response = await axiosService.post(`${baseUrl}updateProfile`, req);
+    const response = await axiosService.put(`${baseUrl}updateProfile`, req, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return { data: response.data };
   } catch (error) {
     if (error.response) {
@@ -52,5 +57,3 @@ export const updateUserProfile = async (
     });
   }
 };
-
-

@@ -5,7 +5,6 @@ import {
   getUserProfile,
   updateUserProfile,
 } from '../dataSource/ProfileRemoteDataSource';
-import { UpdateUserProfileReq } from '../../domain/usecases/UpdateUserProfileUseCase';
 import { UserProfileModel } from '../../domain/entities/UserProfileModel';
 
 class UserProfileRepositoryImpl implements UserProfileRepository {

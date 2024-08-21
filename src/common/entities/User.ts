@@ -1,6 +1,8 @@
 import { Award } from './Award';
 import Course from './Course';
+import UserCourse from './UserCourse';
 import { UserHomework } from './UserHomework';
+import UserInterest from './UserInterest';
 
 export default class User {
   id: number;
@@ -19,6 +21,8 @@ export default class User {
     this.email = email;
   }
 
+  courseDtosParticipated: UserCourse[] | undefined;
+  userInterestDtos: UserInterest[] | undefined;
   numberOfStudents?: number;
   mostPopularCourse?: Course;
 }

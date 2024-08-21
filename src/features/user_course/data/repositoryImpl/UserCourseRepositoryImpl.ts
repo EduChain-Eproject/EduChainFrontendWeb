@@ -1,5 +1,5 @@
 import Failure from '../../../../common/entities/Failure';
-import { UserCourse } from '../../domain/entities/UserCourse';
+import UserCourse from '../../../../common/entities/UserCourse';
 import { UserCourseRepository } from '../../domain/repository/UserCourseRepository';
 import { AddUserCourseReq } from '../../domain/usecase/AddUserCourseUseCase';
 import { GetUserCourseRequest } from '../../domain/usecase/GetUserCourseUseCase';
@@ -7,7 +7,6 @@ import {
   apiAddUserCouse,
   apiGetUserCourse,
 } from '../dataSrouce/UserCourseDataSrouce';
-import { UserCourseDTO } from '../dto/UserCourseDTO';
 
 export class UserCourseRepositoryImpl implements UserCourseRepository {
   async getUserCourse(req: GetUserCourseRequest): Promise<{
@@ -22,14 +21,10 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
   }> {
     try {
       const response = await apiGetUserCourse(req);
-      console.log(response.content);
-      const userCourse = response.content.map((dto: UserCourseDTO) =>
-        this.mapDtoToEntity(dto),
-      );
       return {
         totalPages: response.totalPages,
         totalElements: response.totalElements,
-        data: userCourse,
+        data: response.content,
       };
     } catch (error) {
       if (error instanceof Failure) {
@@ -56,32 +51,14 @@ export class UserCourseRepositoryImpl implements UserCourseRepository {
 
   async addUserCourse(
     req: AddUserCourseReq,
-  ): Promise<{ data?: UserCourseDTO; error?: string }> {
+  ): Promise<{ data?: UserCourse; error?: string }> {
     try {
       const response = await apiAddUserCouse(req);
-      const userCourse = this.mapDtoToEntity(response);
-      return { data: userCourse };
+      return { data: response };
     } catch (error) {
       return {
         error: 'Fail to fetch usercourse',
       };
     }
-  }
-
-  private mapDtoToEntity(dto: UserCourseDTO): UserCourse {
-    return {
-      teacherName: dto.teacherName,
-      teacherEmail: dto.teacherEmail,
-      title: dto.title,
-      enrollmentDate: new Date(dto.enrollmentDate), // Convert timestamp to Date object
-      price: dto.price,
-      completionStatus: dto.completionStatus,
-      categoryList: dto.categoryList.map((category) => ({
-        id: category.id,
-        categoryDescription: category.categoryDescription,
-        categoryName: category.categoryName,
-        courseDtos: category.courseDtos,
-      })),
-    };
   }
 }

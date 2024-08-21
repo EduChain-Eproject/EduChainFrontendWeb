@@ -1,9 +1,8 @@
+import Course from './Course';
+import User from './User';
+
 export default class UserInterest {
-  course_id: number;
-  student_id: number;
-  description: string;
-  title: string;
-  price: string;
-  teacherName: string;
-  categoryList: any;
+  id: number;
+  userDto: User | undefined;
+  courseDto: Course | undefined;
 }

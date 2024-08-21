@@ -6,7 +6,7 @@ import GetUserInterestsUseCase, {
   GetUserInterestReq,
 } from '../../domain/usecase/GetUserInterests UserCase';
 import DeleteUserInterestUseCase, {
-  DeleteUserInterestRes,
+  DeleteUserInterestReq,
 } from '../../domain/usecase/DeleteUserInterestUseCase';
 import AddUserInterestUseCase, {
   AddUserInterestReq,
@@ -17,7 +17,7 @@ const userInterestRepository: UserInterestRepository =
 
 export const fetchDeleteUserInterest = createAsyncThunk(
   'userInterests/deleteUserInterest',
-  async (deleteUserInterest: DeleteUserInterestRes) => {
+  async (deleteUserInterest: DeleteUserInterestReq) => {
     const deleteInterestUseCase = new DeleteUserInterestUseCase(
       userInterestRepository,
     );

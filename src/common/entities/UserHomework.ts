@@ -1,6 +1,6 @@
 export class UserHomework {
   id: number;
-  submissionDate: string;
+  submissionDate: Date;
   progress: number;
   grade: number;
   isSubmitted: boolean;

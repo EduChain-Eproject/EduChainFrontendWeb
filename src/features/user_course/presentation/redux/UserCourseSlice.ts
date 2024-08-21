@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CommonState } from '../../../../common/state';
+import { CommonState, initCommonState } from '../../../../common/state';
 import { handleGetUserCourse } from './action-handling/HandleGetUserCourse';
-import { UserCourse } from '../../domain/entities/UserCourse';
 import { handleAddUserCourse } from './action-handling/HandleAddUserCourse';
+import UserCourse from '../../../../common/entities/UserCourse';
 
 export interface UserCourseState {
   listUserCourse: CommonState<UserCourse[]>;
@@ -14,23 +14,13 @@ export interface UserCourseState {
   userCourse: CommonState<UserCourse>;
 }
 const initialState: UserCourseState = {
-  listUserCourse: {
-    data: undefined,
-    status: null,
-    error: undefined,
-    errors: undefined,
-  },
+  listUserCourse: initCommonState,
   pagination: {
     totalPages: 0,
     totalElements: 0,
     currentPage: 0,
   },
-  userCourse: {
-    data: undefined,
-    status: null,
-    error: undefined,
-    errors: undefined,
-  },
+  userCourse: initCommonState,
 };
 
 const useCourseSlice = createSlice({

@@ -73,7 +73,6 @@ const CreateBlogForm: React.FC<CreateBlogFormProps> = ({ onSubmit }) => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required
                     />
                 </div>
                 <div className="mb-4">
@@ -86,7 +85,6 @@ const CreateBlogForm: React.FC<CreateBlogFormProps> = ({ onSubmit }) => {
                         value={userId}
                         onChange={(e) => setUserId(Number(e.target.value))}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required
                     />
                 </div>
                 <div className="mb-4">
@@ -98,7 +96,6 @@ const CreateBlogForm: React.FC<CreateBlogFormProps> = ({ onSubmit }) => {
                         value={blogCategoryId}
                         onChange={(e) => setBlogCategoryId(Number(e.target.value))}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required
                     >
                         <option value={0}>Select a category</option>
                         {blogCategories && blogCategories.map((category: BlogCategory) => (
@@ -115,7 +112,6 @@ const CreateBlogForm: React.FC<CreateBlogFormProps> = ({ onSubmit }) => {
                         value={blogText}
                         onChange={(e) => setBlogText(e.target.value)}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required
                     ></textarea>
                 </div>
                 <div className="mb-4">

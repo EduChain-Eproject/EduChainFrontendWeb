@@ -155,7 +155,7 @@ const BlogUIList: React.FC = () => {
                                         <p className="text-xl font-semibold">{blog.user.firstName} {blog.user.lastName}</p>
                                         <p className='ml-2'>at {new Date(blog.createdAt).toLocaleDateString()}</p>
                                     </div>
-                                    <p className="text-m">Category: {blog.blogCategory.categoryName}</p>
+                                    {/* <p className="text-m">Category: {blog.blogCategory.categoryName}</p> */}
                                 </div>
                                 <Link to={`/community/blog_ui/${blog.id}`}>
                                     <img src={`${import.meta.env.VITE_API_BASE_URL}/uploads/${blog.photo}`} alt={blog.title} className="w-full h-75 object-cover mb-4" />

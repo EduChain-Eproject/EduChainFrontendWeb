@@ -1,4 +1,8 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import Failure from '../../../../../../common/entities/Failure';
 import Lesson from '../../../../../../common/entities/Lesson';
@@ -62,6 +66,8 @@ export const createLesson = createAsyncThunk(
   },
 );
 
+export const resetCreateLesson = createAction('lesson/resetCreateLesson');
+
 const handleCreateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
   builder
     .addCase(createLesson.pending, (state) => {
@@ -80,6 +86,14 @@ const handleCreateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
     .addCase(createLesson.rejected, (state, action) => {
       state.createLessonPage.status = 'failed';
       state.createLessonPage.error = action.error.message;
+    })
+    .addCase(resetCreateLesson, (state) => {
+      state.createLessonPage = {
+        status: 'idle',
+        data: undefined,
+        error: undefined,
+        errors: undefined,
+      };
     });
 };
 export default handleCreateLesson;

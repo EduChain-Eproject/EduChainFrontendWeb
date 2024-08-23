@@ -99,10 +99,18 @@ const CourseDetailPage: React.FC = () => {
             chapters={data.chapterDtos}
             courseId={Number(courseId)}
           />
+   
         </div>
-      
+     
       </div>
-      <img src={data.avatarPath} alt="" />
+      <div className="text-center mt-4">
+        <img
+          src={data.avatarPath}
+          alt="Course Avatar"
+          className="inline-block rounded-lg shadow-md max-w-xs" // Set the maximum width to xs (20rem / 320px)
+        />
+      </div>
+  
     </div>
   );
 };

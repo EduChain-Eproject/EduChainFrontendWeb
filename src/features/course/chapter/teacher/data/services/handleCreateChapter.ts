@@ -71,15 +71,15 @@ const handleCreateChapter = (
     .addCase(createChapter.rejected, (state, action) => {
       state.createChapterPage.status = 'failed';
       state.createChapterPage.error = action.error.message;
+    })
+    .addCase(resetcreateChapterStatus, (state) => {
+      state.createChapterPage = {
+        status: 'idle',
+        data: undefined,
+        error: undefined,
+        errors: undefined,
+      };
     });
-  // .addCase(resetUpdateProfileStatus, (state) => {
-  //   state.createChapterPage = {
-  //     status: 'idle',
-  //     data: undefined,
-  //     error: undefined,
-  //     errors: undefined,
-  //   };
-  // });
 };
 
 export default handleCreateChapter;

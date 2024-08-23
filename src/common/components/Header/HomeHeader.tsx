@@ -61,7 +61,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
           {user ? (
             <HomeDropdownUser
               username={`${user?.firstName}  ${user?.lastName}`}
-              avatarUrl="https://example.com/avatar.jpg"
+              avatarUrl={user.avatarPath}
               onClick={handleUserClick}
               isOpen={isUserDropdownOpen}
               onLogout={handleLogout} // Pass the logout handler

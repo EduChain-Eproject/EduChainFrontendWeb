@@ -49,7 +49,7 @@ const HomeDropdownUser: React.FC<HomeDropdownUserProps> = ({
         </svg>
       </button>
       {isOpen && (
-        <div className=" absolute top-full right-0 w-48 bg-white shadow-md py-2">
+        <div className=" absolute top-full right-0 w-48 bg-white shadow-md py-2 z-20">
           <Link to={`/profile`} className="block px-4 py-2 hover:bg-gray-100">
             Profile
           </Link>

@@ -98,20 +98,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="address" className="block text-gray-700 text-sm font-semibold mb-2">
-            Address
-          </label>
-          <input
-            id="address"
-            {...register('address')}
-            type="text"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          {errors?.address && (
-            <p className="text-red-500 text-xs italic">{errors?.address}</p>
-          )}
-        </div>
-        <div className="mb-4">
           <label htmlFor="accountType" className="block text-gray-700 text-sm font-semibold mb-2">
             Account Type
           </label>

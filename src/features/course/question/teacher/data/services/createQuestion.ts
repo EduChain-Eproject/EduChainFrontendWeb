@@ -66,6 +66,11 @@ const handleCreateQuestion = (
     .addCase(createQuestion.rejected, (state, action) => {
       state.createQuestionPage.status = 'failed';
       state.createQuestionPage.error = action.error.message;
+    }).addCase(resetcreateQuestionStatus, (state) => {
+      state.createQuestionPage.status = 'idle';
+      state.createQuestionPage.error = undefined;
+      state.createQuestionPage.data = undefined;
+      state.createQuestionPage.errors = undefined;
     });
 };
 

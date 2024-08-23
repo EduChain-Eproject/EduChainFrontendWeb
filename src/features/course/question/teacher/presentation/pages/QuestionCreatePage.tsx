@@ -39,10 +39,6 @@ const QuestionCreatePage: React.FC = () => {
         correctAnswerIndex,
       }),
     )
-      // .unwrap()
-      // .then(() => {
-      //   navigate(`/dashboard/teacher/homeworks/${homeworkId}`);
-      // });
   };
 
   useEffect(()=>{

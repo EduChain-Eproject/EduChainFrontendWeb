@@ -19,7 +19,7 @@ const CourseList: React.FC<CourseListProps> = ({ onViewCourseDetail }) => {
         {data?.courses?.content.map((course) => (
           <div key={course.id} className="bg-white shadow rounded-lg p-4">
             <h2 className="text-lg font-semibold">{course.title}</h2>
-            <p>{course.description}</p>
+            <p className="mt-2 line-clamp-3">{course.description}</p>
             <div className="mt-2 flex justify-end">
               <button
                 onClick={() => onViewCourseDetail(course.id)}

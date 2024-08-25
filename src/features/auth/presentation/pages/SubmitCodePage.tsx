@@ -98,39 +98,52 @@ const SubmitCodePage: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <h1 className="text-2xl font-bold mb-6">Submit Code</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4 p-4 border border-gray-300 rounded-lg bg-white">
-                <div className="flex space-x-2">
-                    {code.map((digit, index) => (
-                        <input
-                            key={index}
-                            id={`input-${index}`}
-                            type="text"
-                            value={digit}
-                            onChange={(e) => handleChange(index, e.target.value)}
-                            className="w-12 h-12 text-center text-xl border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            maxLength={1}
-                            inputMode="numeric"
-                            pattern="[0-9]*"
-                        />
-                    ))}
-                    
-                </div>
-                {codeError && (
-                        <p className="text-red-500 text-xs italic mt-1">{codeError}</p>
-                    )}
+      <h1 className="text-3xl font-bold mb-8">Submit Code</h1>
+<form
+  onSubmit={handleSubmit}
+  className="flex flex-col items-center space-y-6 p-8 border border-gray-300 rounded-2xl bg-white shadow-lg max-w-md w-full"
+>
+  <div className="flex space-x-4">
+    {code.map((digit, index) => (
+      <input
+        key={index}
+        id={`input-${index}`}
+        type="text"
+        value={digit}
+        onChange={(e) => handleChange(index, e.target.value)}
+        className="w-16 h-16 text-center text-2xl border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500"
+        maxLength={1}
+        inputMode="numeric"
+        pattern="[0-9]*"
+      />
+    ))}
+  </div>
 
-{result.errors?.message && (
-                        <p className="text-red-500 text-xs italic mt-1">{result.errors?.message}</p>
-                    )}
-                <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                    Submit
-                </button>
-                <button type="button" onClick={handleResendClick} className="mt-4 text-blue-500 hover:underline">
-                    Resend Verification Code
-                </button>
-            </form>
+  {codeError && (
+    <p className="text-red-500 text-sm italic mt-2">{codeError}</p>
+  )}
 
+  {result.errors?.message && (
+    <p className="text-red-500 text-sm italic mt-2">{result.errors?.message}</p>
+  )}
+
+  <button
+    type="submit"
+    className="px-6 py-3 bg-blue-600 text-white text-lg font-semibold rounded-xl hover:bg-blue-700"
+  >
+    Submit
+  </button>
+
+  <button
+    type="button"
+    onClick={handleResendClick}
+    className="mt-6 text-blue-600 hover:underline text-lg"
+  >
+    Resend Verification Code
+  </button>
+</form>
+
+       
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">

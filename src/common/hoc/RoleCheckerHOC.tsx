@@ -28,7 +28,7 @@ const RoleCheckerHOC = <P extends object>(
             navigate('/dashboard');
             break;
           case 'TEACHER':
-            navigate('/dashboard/teacher');
+            navigate('/dashboard/teacher/courses');
             break;
           case 'CENSOR':
             navigate('/dashboard/censor');

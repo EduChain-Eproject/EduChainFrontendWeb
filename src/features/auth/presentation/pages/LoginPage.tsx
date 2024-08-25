@@ -27,10 +27,17 @@ const LoginPage: React.FC = () => {
 
 
     return (
-        <div>
-            <div>
+        <div className="min-h-screen bg-cover"
+            style={{
+                backgroundImage:
+                    "url('https://res.cloudinary.com/dcxzqj0ta/image/upload/v1724576548/ijet9ronlxu9vb4stjfl.jpg')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}>
+            <div className="pt-16">
                 <LoginForm onSubmit={handleSubmit} onSubmitReset={handleSubmitReset} />
             </div>
+
         </div>
     )
 }

@@ -32,6 +32,7 @@ const CoursesListPage: React.FC = () => {
     <div className="mx-auto max-w-4xl px-4">
       <AppBreadcrumb items={breadCrumbItems} />
       <FilterBar />
+      <br/>
       <CourseList
         onViewCourseDetail={(courseId) => {
           navigate(`/courses/${courseId}`);

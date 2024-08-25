@@ -44,46 +44,42 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
       alert(`Logout failed: ${logoutError}`); // Display the logout error
     }
   }, [logoutError]);
-
+  const blogLink = user?.role.toLocaleLowerCase() === 'teacher' ? '/dashboard/teacher/blog_ui' : '/community/blog_ui';
   return (
     <header className="bg-gray-100 py-4 shadow-md px-5">
       <div className="container mx-auto flex items-center justify-between">
-        <Link to={'/'}>
-          <h1 className="text-2xl font-bold">{title}</h1>
+        <Link to={'/'} className="flex items-center space-x-2">
+          <img src="/public/defaultimage/education635.logowik.com.png" alt="EduChain Logo" className="w-12 h-12" />
+          <h1 className="text-3xl font-extrabold text-gray-800">EduChain</h1>
         </Link>
-        <nav className="flex space-x-4">
+        <nav className="flex space-x-6">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/courses">Courses</NavLink>
-          <NavLink to="/community/blog_ui">Blog</NavLink>
+          <NavLink to={blogLink}>Blog</NavLink>
           <NavLink to="#">Contact Us</NavLink>
         </nav>
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex items-center">
           {user ? (
             <HomeDropdownUser
-              username={`${user?.firstName}  ${user?.lastName}`}
+              username={`${user?.firstName} ${user?.lastName}`}
               avatarUrl={user.avatarPath}
               onClick={handleUserClick}
               isOpen={isUserDropdownOpen}
-              onLogout={handleLogout} // Pass the logout handler
+              onLogout={handleLogout}
             />
           ) : (
             <button
-              className="px-3 py-1 bg-meta-5 rounded-xl text-white"
+              className="px-4 py-2 bg-blue-600 rounded-lg text-white hover:bg-blue-700 transition"
               onClick={() => navigate('/Auth/login')}
             >
               Login
             </button>
           )}
-          <HomeSearch
-            placeholder="Search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onSubmit={handleSearchSubmit}
-          />
         </div>
       </div>
     </header>
   );
+  
 };
 
 const NavLink: React.FC<{ to: string; children: string }> = ({
@@ -92,51 +88,36 @@ const NavLink: React.FC<{ to: string; children: string }> = ({
 }) => {
   return (
     <div className="relative group">
-      <a href={to} className="hover:underline">
+      <a href={to} className="hover:underline text-lg font-medium">
         {children}
       </a>
       {children === 'Pages' && (
-        <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+        <div className="hidden group-hover:block absolute top-full left-0 w-56 bg-white shadow-lg py-2 rounded-lg z-20">
+          <a href="#" className="block px-6 py-3 text-sm hover:bg-gray-100 transition-all">
             About me
           </a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+          <a href="#" className="block px-6 py-3 text-sm hover:bg-gray-100 transition-all">
             About us 01
           </a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+          <a href="#" className="block px-6 py-3 text-sm hover:bg-gray-100 transition-all">
             View all posts →
           </a>
         </div>
       )}
-      {children === 'Courses' && (
-        <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <Link to={'/courses'} className="block px-4 py-2 hover:bg-gray-100">
-            Courses
-          </Link>
-        </div>
-      )}
+
       {children === 'Event' && (
-        <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+        <div className="hidden group-hover:block absolute top-full left-0 w-56 bg-white shadow-lg py-2 rounded-lg z-20">
+          <a href="#" className="block px-6 py-3 text-sm hover:bg-gray-100 transition-all">
             Event 1
           </a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+          <a href="#" className="block px-6 py-3 text-sm hover:bg-gray-100 transition-all">
             Event 2
-          </a>
-        </div>
-      )}
-      {children === 'Blog' && (
-        <div className="hidden group-hover:block absolute top-full left-0 w-48 bg-white shadow-md py-2">
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-            Blog post 1
-          </a>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-            Blog post 2
           </a>
         </div>
       )}
     </div>
   );
+  
 };
 
 export { HomeHeader };

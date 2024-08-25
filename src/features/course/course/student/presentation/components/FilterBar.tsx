@@ -4,7 +4,6 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../common/context/store';
-import Category from '../../../../../../common/entities/Category';
 import { fetchListCategories } from '../../data/services/handleGetListCategories';
 import {
   CourseSearchParams,
@@ -21,6 +20,7 @@ const FilterBar = () => {
   const [page, setPage] = useState(0);
   const [sortBy, setSortBy] = useState('title');
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
 
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +68,8 @@ const FilterBar = () => {
 
   useEffect(() => {
     dispatch(fetchListCategories());
-  }, []);
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col justify-start">
       <div className="flex items-center justify-between mb-4">
@@ -89,20 +90,38 @@ const FilterBar = () => {
             <option value="price">Sort by Price</option>
           </select>
         </div>
-        <div className="flex space-x-2">
-          {data?.categories?.map((category) => (
-            <label key={category.id} className="flex items-center">
-              <input
-                type="checkbox"
-                checked={selectedCategoryIds.includes(category.id)}
-                onChange={(e) => handleCategoryChange(e, category.id)}
-                className="mr-1"
-              />
-              {category.categoryName}
-            </label>
-          ))}
+
+        {/* Category Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md w-64"
+          >
+            Select Categories
+          </button>
+          {isCategoryDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg z-10">
+              <div className="p-4 max-h-60 overflow-auto">
+                {data?.categories?.map((category) => (
+                  <label
+                    key={category.id}
+                    className="flex items-center space-x-2 p-2 hover:bg-blue-100 rounded-md cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedCategoryIds.includes(category.id)}
+                      onChange={(e) => handleCategoryChange(e, category.id)}
+                      className="mr-2"
+                    />
+                    <span className="text-sm">{category.categoryName}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
       <AppPagination
         totalPages={data?.courses?.totalPages || 0}
         currentPage={page}

@@ -39,8 +39,18 @@ export interface HomeState {
 }
 
 const initialState: HomeState = {
-  bestCategories: { data: [], status: null, error: undefined },
-  bestTeacher: { data: undefined, status: null, error: undefined },
+  bestCategories: {
+    data: [],
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
+  bestTeacher: {
+    data: undefined,
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
   statistics: {
     data: {
       numberOfEnrollments: 0,
@@ -50,9 +60,20 @@ const initialState: HomeState = {
     },
     status: null,
     error: undefined,
+    errors: undefined,
   },
-  signatureCourses: { data: [], status: null, error: undefined },
-  blogs: { data: [], status: null, error: undefined },
+  signatureCourses: {
+    data: [],
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
+  blogs: {
+    data: [],
+    status: null,
+    error: undefined,
+    errors: undefined,
+  },
 };
 
 const homeSlice = createSlice({

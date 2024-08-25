@@ -7,7 +7,10 @@ import { HomeState } from '../homeSlice';
 
 export const apiFetchMostPopularTeacher = async (): ApiResponse<User> => {
   try {
-    const response = await axiosService.get('/HOME/api/most-popular-teacher');
+    //const response = await axiosService.get('/HOME/api/most-popular-teacher');
+    const response = await axiosService.get(
+      'http://localhost:8080/HOME/api/most-popular-teacher',
+    );
     return {
       data: response.data,
     };

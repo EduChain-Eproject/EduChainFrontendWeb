@@ -7,7 +7,9 @@ import { HomeState, Statistics } from '../homeSlice';
 
 export const apiFetchStatistics = async (): ApiResponse<Statistics> => {
   try {
-    const response = await axiosService.get('/HOME/api/statistics');
+    const response = await axiosService.get(
+      'http://localhost:8080/HOME/api/statistics',
+    );
     return {
       data: response.data,
     };
@@ -35,5 +37,6 @@ export const fetchStatisticsExtraReducers = (
     .addCase(fetchStatistics.fulfilled, (state, action) => {
       state.statistics.status = 'succeeded';
       state.statistics.data = action.payload;
+      console.log(action.payload);
     });
 };

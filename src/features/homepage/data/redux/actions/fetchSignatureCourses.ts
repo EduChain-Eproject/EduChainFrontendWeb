@@ -7,7 +7,9 @@ import { HomeState } from '../homeSlice';
 
 export const apiFetchSignatureCourses = async (): ApiResponse<Course[]> => {
   try {
-    const response = await axiosService.get('/HOME/api/signature-courses');
+    const response = await axiosService.get(
+      'http://localhost:8080/HOME/api/list-popular-courses',
+    );
     return {
       data: response.data,
     };
@@ -36,5 +38,6 @@ export const fetchSignatureCoursesExtraReducers = (
     .addCase(fetchSignatureCourses.fulfilled, (state, action) => {
       state.signatureCourses.status = 'succeeded';
       state.signatureCourses.data = action.payload;
+      console.log(action.payload);
     });
 };

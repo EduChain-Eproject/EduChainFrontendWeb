@@ -23,18 +23,18 @@ const HomeDropdownUser: React.FC<HomeDropdownUserProps> = ({
 
   return (
     <div className="relative">
-      <button className="flex items-center space-x-2 hover:bg-gray-100 py-2 px-4 rounded">
-        <Link to={`/profile`} className="flex flex-row items-center">
+      <button className="flex items-center space-x-3 hover:bg-gray-100 py-3 px-5 rounded-lg transition-all">
+        <Link to={`/profile`} className="flex items-center space-x-3">
           <img
             src={avatarUrl}
             alt={username}
-            className="w-8 h-8 rounded-full"
+            className="w-12 h-12 rounded-full"
           />
-          <span className="text-sm">{username}</span>
+          <span className="text-base font-semibold text-gray-800">{username}</span>
         </Link>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
+          className="h-5 w-5 text-gray-600"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -49,13 +49,13 @@ const HomeDropdownUser: React.FC<HomeDropdownUserProps> = ({
         </svg>
       </button>
       {isOpen && (
-        <div className=" absolute top-full right-0 w-48 bg-white shadow-md py-2 z-20">
-          <Link to={`/profile`} className="block px-4 py-2 hover:bg-gray-100">
+        <div className="absolute top-full right-0 w-56 bg-white shadow-lg py-2 rounded-lg z-20">
+          <Link to={`/profile`} className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100">
             Profile
           </Link>
           <button
             onClick={onLogout}
-            className="block px-4 py-2 hover:bg-gray-100"
+            className="block w-full text-left px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100"
           >
             Logout
           </button>
@@ -63,6 +63,7 @@ const HomeDropdownUser: React.FC<HomeDropdownUserProps> = ({
       )}
     </div>
   );
+  
 };
 
 export default HomeDropdownUser;

@@ -17,6 +17,7 @@ import { fetchMostPopularTeacher } from '../../data/redux/actions/fetchMostPopul
 import { fetchStatistics } from '../../data/redux/actions/fetchStatistics';
 import { fetchSignatureCourses } from '../../data/redux/actions/fetchSignatureCourses';
 import { RouteObject } from 'react-router-dom';
+import { fetchBlogs } from '../../data/redux/actions/fetchBlogs';
 
 export const route: () => RouteObject = () => {
   return {
@@ -35,25 +36,32 @@ const HomePage: React.FC = () => {
     dispatch(fetchBestCategories());
     dispatch(fetchMostPopularTeacher());
     dispatch(fetchStatistics());
-    // dispatch(fetchBlogs());
+    dispatch(fetchBlogs());
   }, [dispatch]);
 
   return (
     <div className="home-page">
-      <BackgroundImage>
-        {signatureCourses.data && signatureCourses.data.length !== 0 ? (
-          <div className="intro-content text-center py-20 flex md:flex-row md:items-start justify-center flex-col items-center w-full">
-            <div className="flex-1 mb-10 flex items-center justify-center ">
-              <h1 className="text-4xl font-bold bg-white bg-opacity-75 w-fit">
-                Welcome to Our Learning Platform
-              </h1>
-            </div>
-            <FloatingPopularCourse course={signatureCourses.data[0]} />
-          </div>
-        ) : (
-          <div>Loading popular course...</div>
-        )}
-      </BackgroundImage>
+<BackgroundImage>
+  {signatureCourses.data && signatureCourses.data.length !== 0 ? (
+    <div className="flex flex-col items-center justify-center space-y-6 w-full text-center">
+<div className="flex flex-col items-center space-y-4">
+  <h1 className="text-6xl font-bold text-white bg-opacity-50 p-4 rounded-lg shadow-lg">
+    Welcome To Our Learning Platform
+  </h1>
+  <p className="text-2xl text-white md:text-gray-300  italic text-center">
+    _ Explore our signature courses and enhance your skills <br />
+    with the best educational resources _
+  </p>
+</div>
+
+      <FloatingPopularCourse course={signatureCourses.data[0]} />
+    </div>
+  ) : (
+    <div className="text-center text-white text-lg">Loading popular course...</div>
+  )}
+</BackgroundImage>
+
+
       <h2 className="text-center my-16 text-4xl font-bold">
         Education for Everyone
       </h2>
@@ -67,16 +75,16 @@ const HomePage: React.FC = () => {
       ) : (
         <div>Loading best teacher...</div>
       )}
-      {statistics.data ? (
+      {statistics.data?.numberOfEnrollments ? (
         <Statistics stats={statistics.data} />
       ) : (
         <div>Loading statistics...</div>
       )}
-      {statistics?.data?.bestFeedbacks ? (
+      {/* {statistics?.data?.bestFeedbacks ? (
         <BestFeedbacks feedbacks={statistics.data.bestFeedbacks} />
       ) : (
         <div>Loading best feedbacks...</div>
-      )}
+      )} */}
       {signatureCourses.data ? (
         <SignatureCourses courses={signatureCourses.data} />
       ) : (

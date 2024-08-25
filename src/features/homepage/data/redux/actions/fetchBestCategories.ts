@@ -7,7 +7,9 @@ import { HomeState } from '../homeSlice';
 
 export const apiFetchBestCategories = async (): ApiResponse<Category[]> => {
   try {
-    const response = await axiosService.get('/HOME/api/best-categories');
+    const response = await axiosService.get(
+      'http://localhost:8080/HOME/api/best-categories',
+    );
     return {
       data: response.data,
     };

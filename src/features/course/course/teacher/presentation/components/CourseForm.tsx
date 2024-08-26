@@ -19,7 +19,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
   const { error, errors } = useAppSelector(
     (state) => state.courses.teacher.createCoursePage,
   );
-
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
   const { register, handleSubmit, reset, control } = useForm<CreateCourseReq>({
     defaultValues: initialData || {},
   });
@@ -132,42 +135,84 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit }) => {
           <p className="text-red-500 text-xs italic mt-1">{errors?.avatarCourse}</p>
         )}
       </div>
-      <div>
-        <label className="block font-medium text-meta-4 text-2xl">
-          Categories
-        </label>
-        <div className="mt-2 space-y-2">
-          {categories?.map((cate) => (
-            <div key={cate.categoryName} className="flex items-center">
-              <Controller
-                name={`categoryIds.${cate.id}`}
-                control={control}
-                render={({ field }) => (
-                  <input
-                    type="checkbox"
-                    {...field}
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+      <div className="relative inline-block text-left w-full">
+        
+      <button
+        onClick={toggleDropdown}
+        type="button"
+        className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
+        id="options-menu"
+        aria-expanded="true"
+        aria-haspopup="true"
+      >
+        Select Categories
+        <svg
+          className="-mr-1 ml-2 h-5 w-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.292 7.292a1 1 0 011.414 0L10 10.586l3.293-3.294a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div
+          className="origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10 w-full"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="options-menu"
+        >
+          <div className="py-1" role="none">
+            {/* Chia thành grid với 5 cột */}
+            <div className="grid grid-cols-5 gap-4 px-4 py-2">
+              {categories?.map((cate) => (
+                <div key={cate.id} className="flex items-center">
+                  <Controller
+                    name={`categoryIds.${cate.id}`}
+                    control={control}
+                    render={({ field }) => (
+                      <input
+                        type="checkbox"
+                        {...field}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                    )}
                   />
-                )}
-              />
-              <label className="ml-3 block text-sm font-medium text-gray-700">
-                {cate.categoryName} - {cate.id}
-              </label>
+                  <label className="ml-2 block text-sm font-medium text-gray-700">
+                    {cate.categoryName}
+                  </label>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
           {errors?.categoryIds && (
-            <p className="text-red-500 text-xs italic mt-1">
+            <p className="text-red-500 text-xs italic mt-1 px-4">
               {errors?.categoryIds}
             </p>
           )}
         </div>
-      </div>
-      <button
-        type="submit"
-        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        Submit
-      </button>
+      )}
+    </div>
+
+      <br />
+      <div className="flex justify-center">
+  <button
+    type="submit"
+    className="justify-center items-center rounded-lg border border-transparent bg-indigo-600 px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-300 ease-in-out transform w-80 hover:scale-105"
+  >
+    Submit
+  </button>
+</div>
+
+
+
+
     </form>
   );
 };

@@ -61,7 +61,7 @@ export const adminRoutes: RouteObject = {
     element: <DashboardAdminLayout />,
     errorElement: <ErrorPage />,
     children: [
-        dashboardRoute(),
+        // dashboardRoute(),
         ...tempRoutes,
         getBlogsRoute(),
         getBlogCateRoute(),

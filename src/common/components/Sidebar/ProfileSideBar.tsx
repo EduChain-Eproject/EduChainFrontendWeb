@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../context/store';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -17,7 +18,7 @@ const ProfileSideBar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
-
+const role = useAppSelector((s) => s.auth.user?.role)
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -44,14 +45,14 @@ const ProfileSideBar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
-  useEffect(() => {
-    localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
-    if (sidebarExpanded) {
-      document.querySelector('body')?.classList.add('sidebar-expanded');
-    } else {
-      document.querySelector('body')?.classList.remove('sidebar-expanded');
-    }
-  }, [sidebarExpanded]);
+  // useEffect(() => {
+  //   localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
+  //   if (sidebarExpanded) {
+  //     document.querySelector('body')?.classList.add('sidebar-expanded');
+  //   } else {
+  //     document.querySelector('body')?.classList.remove('sidebar-expanded');
+  //   }
+  // }, [sidebarExpanded]);
 
   return (
     <aside

@@ -19,6 +19,8 @@ const CreateRegisterPage: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleSubmit = (data: RegisterReq) => {
+    console.log(data)
+    
     localStorage.setItem('email',data.email);
     dispatch(registerAction({ registerReq: data }));
   };

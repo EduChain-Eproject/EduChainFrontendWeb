@@ -103,7 +103,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 <input
                   id="lastName"
                   {...register('lastName')}
-                  name="name"
+                  name="lastName"
                   type="text"
                   className="w-full bg-transparent text-sm text-white border-b border-gray-300 focus:border-yellow-400 px-2 py-3 outline-none"
                   placeholder="Enter name"
@@ -137,7 +137,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 <input
                   id="phone"
                   {...register('phone')}
-                  name="name"
+                  name="phone"
                   type="text"
                   className="w-full bg-transparent text-sm text-white border-b border-gray-300 focus:border-yellow-400 px-2 py-3 outline-none"
                   placeholder="Enter phone"
@@ -252,7 +252,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                       id="student"
                         {...register('accountType')}
                     type="radio"
-                    name="role"
+                    name="accountType"
                     value="STUDENT"
                     className="h-4 w-4 shrink-0 rounded"
                   />
@@ -263,7 +263,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                      id="TEACHER"
                               {...register('accountType')}
                     type="radio"
-                    name="role"
+                    name="accountType"
                     value="TEACHER"
                     className="h-4 w-4 shrink-0 rounded"
                   />

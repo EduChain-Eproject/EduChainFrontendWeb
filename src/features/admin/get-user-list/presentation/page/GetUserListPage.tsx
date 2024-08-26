@@ -11,7 +11,7 @@ import { BlockOrUnBlockAction, BlockOrUnBlockReq } from "../../data/service/Hand
 
 export const route: () => RouteObject = () => {
     return {
-      path: 'user-list',
+      path: '',
       element: <GetUserListPage />,
     };
   };
@@ -24,7 +24,7 @@ export const route: () => RouteObject = () => {
       dispatch(setPage(pageNumber));
     };
     const blockOrUnblock = useAppSelector((state) => state.getUserList.blockResultState);
-    const [size, setSize] = useState(3);
+    const [size, setSize] = useState(10);
     const [emailSearch, setSearch] = useState('');
     console.log(data);
     useEffect(() => {
@@ -65,7 +65,7 @@ export const route: () => RouteObject = () => {
   }
 
     return (<div>
-      <SearchComponent onSearch={handleSearch} placeholder="Search by name..." value={emailSearch} />
+      <SearchComponent onSearch={handleSearch} placeholder="Search by EMAIL..." value={emailSearch} />
        <GetUserListComp data={data!} onBlock={handleBlock} />
        <Pagination 
         totalPages={totalPages}
@@ -74,3 +74,5 @@ export const route: () => RouteObject = () => {
       />  
     </div>)
   }
+
+  export default GetUserListPage;

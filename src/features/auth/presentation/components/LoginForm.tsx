@@ -26,7 +26,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const { status: sendMailStatus, errors: resetErrors } = useAppSelector(
     (state) => state.auth.sendMailPage,
   );
-
+  console.log(error);
   const { register, handleSubmit, reset } = useForm<LoginReq>({
     defaultValues: initialData || {},
   });
@@ -124,8 +124,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     {errors?.password}
                   </p>
                 )}
+                {error && (
+                  <p className="absolute text-red-500 text-xs italic mt-1 -bottom-4 left-0">
+                    {error}
+                  </p>
+                )}
               </div>
-
               <div className="mt-8">
                 <button
                   type="submit"
@@ -133,9 +137,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 >
                   Login
                 </button>
+                <br />
               </div>
             </form>
-
             <div className="mt-4 flex items-center justify-between">
               <span className="border-b w-1/5 md:w-1/4"></span>
               <Link

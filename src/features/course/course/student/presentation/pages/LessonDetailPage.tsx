@@ -20,25 +20,14 @@ export const route: () => RouteObject = () => {
 
 const LessonDetailPage: React.FC = () => {
   const navigate = useNavigate();
-  const { lessonId, courseId } = useParams<{
-    lessonId: string;
-    courseId: string;
-  }>();
+  const { lessonId, courseId } = useParams<{ lessonId: string; courseId: string }>();
   const dispatch = useAppDispatch();
-  const {
-    data: lesson, // lesson is Lesson | undefined type
-    status,
-    error,
-  } = useAppSelector((state) => state.courses.student.lessonDetailPage);
-  const { data } = useAppSelector(
-    (state) => state.courses.student.courseDetailPage,
-  );
+  const { data: lesson, status, error } = useAppSelector(state => state.courses.student.lessonDetailPage);
+  const { data } = useAppSelector(state => state.courses.student.courseDetailPage);
 
   const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
-  const [showHomeworks, setShowHomeworks] = useState(false);
-  const [selectedHomeworkId, setSelectedHomeworkId] = useState<number | null>(
-    null,
-  );
+  const [activeTab, setActiveTab] = useState<'lesson' | 'homeworks'>('lesson');
+  const [selectedHomeworkId, setSelectedHomeworkId] = useState<number | null>(null);
 
   useEffect(() => {
     dispatch(fetchLessonDetail(Number(lessonId)));
@@ -49,86 +38,90 @@ const LessonDetailPage: React.FC = () => {
   }, [courseId, dispatch]);
 
   const breadCrumbItems = [
-    { label: 'Home', href: '' },
+    { label: 'Home', href: '/' },
     { label: 'Courses', href: '/courses' },
     { label: `Course ${data?.title}`, href: `/courses/${courseId}` },
-    {
-      label: `Lesson ${lesson?.lessonTitle}`,
-      href: `/courses/${courseId}/lessons/${lessonId}`,
-    },
+    { label: `Lesson ${lesson?.lessonTitle}`, href: `/courses/${courseId}/lessons/${lessonId}` },
   ];
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <div className="text-center py-4">Loading...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return <div className="text-center py-4 text-red-500">Error: {error}</div>;
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4">
-      <AppBreadcrumb items={breadCrumbItems} />
-      <div className="flex justify-between">
+    <div className=" px-4 py-6">
+      <div className='mx-auto max-w-5xl p-2 mb-5'>
+        <AppBreadcrumb items={breadCrumbItems} />
+
+      </div>
+      <div className="flex flex-col lg:flex-row lg:space-x-6">
+        {/* Curriculum Section */}
         {data?.chapterDtos && (
-          <Curriculum
-            chapters={data?.chapterDtos}
-            onLessonClick={(id) => {
-              if (data && !data.currentUserCourse) {
-                setShowEnrollmentModal(true);
-              } else {
-                navigate(`/courses/${courseId}/lessons/${id}`);
-              }
-            }}
-          />
+          <div className="lg:w-1/3 mb-6 lg:mb-0">
+            <h2 className="text-xl font-bold mb-4">Curriculum</h2>
+            <Curriculum
+              chapters={data.chapterDtos}
+              onLessonClick={(id) => {
+                if (data && !data.currentUserCourse) {
+                  setShowEnrollmentModal(true);
+                } else {
+                  navigate(`/courses/${courseId}/lessons/${id}`);
+                }
+              }}
+            />
+          </div>
         )}
-        <div className="flex flex-1 flex-col bg-white shadow rounded-lg p-6">
-          <h1 className="text-2xl font-bold mb-4">Lesson Detail</h1>
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">{lesson?.lessonTitle}</h2>
-            <p>{lesson?.description}</p>
-            <h3 className="text-lg font-medium mt-2">Video</h3>
-            <p>{lesson?.videoTitle}</p>
-            <a
-              href={lesson?.videoURL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline"
-            >
-              {lesson?.videoURL}
-            </a>
+        {/* Lesson Detail and Homeworks Toggle Section */}
+        <div className={`flex-1 bg-white shadow rounded-lg p-6 ${data?.chapterDtos ? 'lg:w-2/3' : 'w-full'}`}>
+          <h1 className="text-3xl font-bold mb-4">{lesson?.lessonTitle}</h1>
+          <div className="mb-4">
             <button
-              onClick={() => setShowHomeworks((prev) => !prev)}
-              className="text-blue-500 underline"
+              onClick={() => setActiveTab('lesson')}
+              className={`px-4 py-2 mr-2 rounded-md ${activeTab === 'lesson' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
             >
-              {!showHomeworks && 'Take Homeworks'}
+              Lesson Detail
+            </button>
+            <button
+              onClick={() => setActiveTab('homeworks')}
+              className={`px-4 py-2 rounded-md ${activeTab === 'homeworks' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+            >
+              Homeworks
             </button>
           </div>
-          {showHomeworks && (
-            <div className="mt-4">
-              <div className="flex flex-row justify-between">
-                <h2 className="text-xl font-bold">Homeworks</h2>
-                <button
-                  onClick={() => setShowHomeworks((prev) => !prev)}
-                  className="text-blue-500 underline"
-                >
-                  {showHomeworks && 'Close'}
-                </button>
-              </div>
-              {lesson?.homeworkDtos?.map((homework) => (
-                <div key={homework.id} className="mb-2">
+          {activeTab === 'lesson' && (
+            <div>
+              <p className="text-lg mb-4">{lesson?.description}</p>
+              <h2 className="text-xl font-semibold mb-2">Video</h2>
+              {lesson?.videoURL && (
+                <div className="mb-4">
+                  <video
+                    controls
+                    className="w-full"
+                    src={`http://localhost:8080/uploadsVideo/${lesson.videoURL}`}
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              )}
+            </div>
+          )}
+          {activeTab === 'homeworks' && (
+            <div className="mt-6">
+              <h2 className="text-xl font-bold mb-4">Homeworks</h2>
+              {lesson?.homeworkDtos?.map(homework => (
+                <div key={homework.id} className="border-b pb-4 mb-4">
                   <button
                     onClick={() => setSelectedHomeworkId(homework.id)}
                     className="text-blue-500 underline"
                   >
                     {homework.title}
                   </button>
-                  <div>
-                    {homework.questionDtos && (
-                      <p>{homework.questionDtos.length} questions</p>
-                    )}
-                    <p>{homework.description}</p>
-                  </div>
+                  <p className="text-gray-700">{homework.description}</p>
+                  <p className="text-sm text-gray-500">{homework.questionDtos?.length} questions</p>
                 </div>
               ))}
               {selectedHomeworkId && (
@@ -137,24 +130,24 @@ const LessonDetailPage: React.FC = () => {
             </div>
           )}
         </div>
-        {showEnrollmentModal && !data?.currentUserCourse && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div className="bg-white p-4 rounded-md shadow-md">
-              <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
-              <p className="mb-4">
-                You need to enroll in this course to access the lesson.
-              </p>
-              {data && <Enrollment course={data} />}
-              <button
-                onClick={() => setShowEnrollmentModal(false)}
-                className="px-4 py-2 bg-red-500 text-white rounded-md"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
       </div>
+      {showEnrollmentModal && !data?.currentUserCourse && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
+            <p className="mb-4">You need to enroll in this course to access the lesson.</p>
+            {data && <Enrollment course={data} />}
+            <button
+              onClick={() => setShowEnrollmentModal(false)}
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+
+

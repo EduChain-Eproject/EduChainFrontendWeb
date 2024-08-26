@@ -45,9 +45,7 @@ export const apiDeleteUserInterest = async (
   deleteReq: DeleteUserInterestReq,
 ): Promise<void> => {
   try {
-    const response = await axiosService.delete(`${baseUrl}delete-wishlist`, {
-      data: deleteReq,
-    });
+    const response = await axiosService.delete(`${baseUrl}delete-wishlist/${deleteReq.course_id}`);
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -69,7 +67,7 @@ export const apiAddUserInterest = async (
   try {
     const response = await axiosService.post(`${baseUrl}add-to-wishlist`, req);
     return response.data;
-  }  catch (error) {
+  } catch (error) {
     if (error.response) {
       const data = error.response.data;
       const message = data.errors.message || 'Validation error';

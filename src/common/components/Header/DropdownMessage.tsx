@@ -5,6 +5,7 @@ import UserOne from '../../public/images/user/user-01.png';
 import UserTwo from '../../public/images/user/user-02.png';
 import UserThree from '../../public/images/user/user-03.png';
 import UserFour from '../../public/images/user/user-04.png';
+import React from 'react';
 
 const DropdownMessage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -41,7 +42,7 @@ const DropdownMessage = () => {
 
   return (
     <li className="relative">
-      <Link
+      {/* <Link
         ref={trigger}
         onClick={() => {
           setNotifying(false);
@@ -82,7 +83,7 @@ const DropdownMessage = () => {
             fill=""
           />
         </svg>
-      </Link>
+      </Link> */}
 
       {/* <!-- Dropdown Start --> */}
       <div

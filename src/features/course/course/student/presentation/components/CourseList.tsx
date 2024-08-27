@@ -18,7 +18,12 @@ const CourseList: React.FC<CourseListProps> = ({ onViewCourseDetail }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.courses?.content.map((course) => (
           <div key={course.id} className="bg-white shadow rounded-lg p-4">
-            <h2 className="text-lg font-semibold">{course.title}</h2>
+            <img
+              src={course.avatarPath}
+              alt=""
+              className="w-full h-48 object-cover rounded-lg"
+            />
+            <h2 className="text-lg font-semibold mt-4">{course.title}</h2>
             <p className="mt-2 line-clamp-3">{course.description}</p>
             <div className="mt-2 flex justify-end">
               <button
@@ -33,6 +38,7 @@ const CourseList: React.FC<CourseListProps> = ({ onViewCourseDetail }) => {
       </div>
     </div>
   );
+  
 };
 
 export default CourseList;

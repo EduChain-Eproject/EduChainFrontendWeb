@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../../common/context/store';
-import { createCate } from '../redux/cateAction';
+import { createCate, resetCreateCateAction } from '../redux/cateAction';
 import { CreateCateReq } from '../../domain/usecases/CreateCate';
 import { BlogCategory } from '../../domain/entities/BlogCategory';
 
@@ -31,9 +31,15 @@ const BlogCateCreate: React.FC<BlogCateCreateProps> = ({ initialData, onSubmit }
 
     } catch (err) {
         console.error('Error while creating category:', err);
- 
+        
     }
 };
+    useEffect(() => {
+        if(createCateResult.status === 'succeeded'){
+            navigate('/dashboard/blog_category')
+            dispatch(resetCreateCateAction());
+        }
+    },[createCateResult.status])
 
     return (
         <div>

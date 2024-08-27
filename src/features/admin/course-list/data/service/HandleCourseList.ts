@@ -74,7 +74,7 @@ const HandleGetCourseList = (
         state.GetcourseListState.status = 'succeeded';
         if (state.GetcourseListState.data !== null) {
           state.GetcourseListState.data = action.payload.content;
-          console.log(state.pagination.totalElements);
+
           state.pagination.totalPages = action.payload.totalPages;
           state.pagination.totalElements = action.payload.totalElements;
         }

@@ -17,7 +17,7 @@ export const route: () => RouteObject = () => {
   const GetCorseListPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const { data, status, error } = useAppSelector((state) => state.adminCourseList.GetcourseListState);
-    const { totalPages, currentPage } = useAppSelector((state) => state.getUserList.pagination);
+    const { totalPages, currentPage } = useAppSelector((state) => state.adminCourseList.pagination);
     const handlePageChange = (pageNumber: number) => {
       dispatch(setPage(pageNumber));
     };

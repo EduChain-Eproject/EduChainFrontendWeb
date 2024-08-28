@@ -24,33 +24,29 @@ const CourseDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const { courseId } = useParams<{ courseId: string }>();
   const dispatch = useAppDispatch();
-  const {
-    data: courseData,
-    status,
-    error,
-  } = useAppSelector((state) => state.courses.student.courseDetailPage);
+  const { data: courseData, status, error } = useAppSelector(
+    (state) => state.courses.student.courseDetailPage
+  );
 
   useEffect(() => {
     dispatch(fetchCourseDetail(Number(courseId)));
   }, [courseId, dispatch]);
 
-  const [activeTab, setActiveTab] = useState<
-    'detail' | 'curriculum' | 'teacher' | 'feedback'
-  >('detail');
+  const [activeTab, setActiveTab] = useState<'detail' | 'curriculum'>('detail');
   const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
 
   const breadCrumbItems = [
-    { label: 'Home', href: '' },
+    { label: 'Home', href: '/' },
     { label: 'Courses', href: '/courses' },
-    { label: `Courses ${courseData?.title}`, href: `/courses/${courseId}` },
+    { label: courseData?.title || 'Course Detail', href: `/courses/${courseId}` },
   ];
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <div className="text-center py-4">Loading...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return <div className="text-center py-4 text-red-500">Error: {error}</div>;
   }
 
   const handleLessonClick = (lessonId: number) => {
@@ -62,65 +58,47 @@ const CourseDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4">
+    <div className="mx-auto max-w-4xl px-4 py-6">
       <AppBreadcrumb items={breadCrumbItems} />
-      <h1 className="text-2xl font-bold mb-4">{courseData?.title}</h1>
-      <div className="mb-4">
-        <button
-          onClick={() => setActiveTab('detail')}
-          className={`px-4 py-2 rounded-md ${
-            activeTab === 'detail' ? 'bg-blue-500 text-white' : 'bg-gray-200'
-          }`}
-        >
-          Detail
-        </button>
-        <button
-          onClick={() => setActiveTab('curriculum')}
-          className={`px-4 py-2 rounded-md ${
-            activeTab === 'curriculum'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-200'
-          }`}
-        >
-          Curriculum
-        </button>
-        <button
-          onClick={() => setActiveTab('teacher')}
-          className={`px-4 py-2 rounded-md ${
-            activeTab === 'teacher' ? 'bg-blue-500 text-white' : 'bg-gray-200'
-          }`}
-        >
-          Teacher
-        </button>
-        <button
-          onClick={() => setActiveTab('feedback')}
-          className={`px-4 py-2 rounded-md ${
-            activeTab === 'feedback' ? 'bg-blue-500 text-white' : 'bg-gray-200'
-          }`}
-        >
-          Feedback
-        </button>
+      <div className="flex flex-col lg:flex-row lg:space-x-6">
+        <div className="lg:w-2/3">
+          <h1 className="text-3xl font-bold mb-4">{courseData?.title}</h1>
+          <div className="mb-4 flex flex-wrap gap-2">
+            <button
+              onClick={() => setActiveTab('detail')}
+              className={`px-6 py-3 rounded-md ${activeTab === 'detail' ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                }`}
+            >
+              Detail
+            </button>
+            <button
+              onClick={() => setActiveTab('curriculum')}
+              className={`px-6 py-3 rounded-md ${activeTab === 'curriculum' ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                }`}
+            >
+              Curriculum
+            </button>
+          </div>
+          {activeTab === 'detail' && courseData && (
+            <CourseDetail course={courseData} />
+          )}
+          {activeTab === 'curriculum' && courseData && (
+            <Curriculum
+              chapters={courseData.chapterDtos ?? []}
+              onLessonClick={handleLessonClick}
+            />
+          )}
+        </div>
+        {courseData?.relatedCourseDtos && courseData.relatedCourseDtos.length > 0 && (
+          <div className="lg:w-1/3 mt-6 lg:mt-0">
+            <RelatedCourses relatedCourses={courseData.relatedCourseDtos} />
+          </div>
+        )}
       </div>
-      {activeTab === 'detail' && courseData && (
-        <CourseDetail course={courseData} />
-      )}
-      {activeTab === 'curriculum' && courseData && (
-        <Curriculum
-          chapters={courseData.chapterDtos}
-          onLessonClick={handleLessonClick}
-        />
-      )}
-      {activeTab === 'teacher' && courseData?.teacherDto && (
-        <Teacher
-          teacher={courseData.teacherDto} //  teacher={courseData.teacher}
-        />
-      )}{' '}
-      {activeTab === 'feedback' && courseData && (
-        <Feedback feedbacks={courseData.courseFeedbackDtos} />
-      )}
+
       {showEnrollmentModal && !courseData?.currentUserCourse && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-4 rounded-md shadow-md">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
             <p className="mb-4">
               You need to enroll in this course to access the lesson.
@@ -128,20 +106,13 @@ const CourseDetailPage: React.FC = () => {
             {courseData && <Enrollment course={courseData} />}
             <button
               onClick={() => setShowEnrollmentModal(false)}
-              className="px-4 py-2 bg-red-500 text-white rounded-md"
+              className="w-full px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
             >
               Close
             </button>
           </div>
         </div>
       )}
-      {courseData && !courseData?.currentUserCourse && (
-        <Enrollment course={courseData} />
-      )}
-      {courseData?.relatedCourseDtos &&
-        courseData.relatedCourseDtos.length > 0 && (
-          <RelatedCourses relatedCourses={courseData.relatedCourseDtos} />
-        )}
     </div>
   );
 };

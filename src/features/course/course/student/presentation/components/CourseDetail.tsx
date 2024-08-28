@@ -5,23 +5,23 @@ interface CourseDetailProps {
   course: Course;
 }
 
-const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
+const CourseDetail: React.FC<{ course: Course }> = ({ course }) => {
   return (
     <div>
-      <h2 className="text-xl font-bold">Course Details</h2>
-      <p>
-        <strong>Description:</strong> {course.description}
+      <h2 className="text-2xl font-bold mb-4">Course Details</h2>
+      <p className="mb-2">
+        <strong className="font-semibold">Description:</strong> {course.description}
       </p>
-      <p>
-        <strong>Price:</strong> ${course.price}
+      <p className="mb-2">
+        <strong className="font-semibold">Price:</strong> ${course.price.toFixed(2)}
       </p>
-      <p>
-        <strong>Status:</strong> {course.status}
+      <p className="mb-4">
+        <strong className="font-semibold">Status:</strong> {course.status}
       </p>
       {course.categoryDtos && (
         <div>
-          <h3 className="text-lg font-bold">Categories</h3>
-          <ul>
+          <h3 className="text-xl font-semibold mb-2">Categories</h3>
+          <ul className="list-disc ml-5">
             {course.categoryDtos.map((category) => (
               <li key={category.id}>{category.categoryName}</li>
             ))}

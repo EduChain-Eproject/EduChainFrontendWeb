@@ -5,7 +5,11 @@ import { OrderState } from '../orderAdminSlice';
 
 export const apiFetchOrderByUser: (userId: number) => Promise<Order[]> 
     = async (userId: number) => {
-        return (await axiosService.get(`/api/order/user/${userId}`)).data;
+        return (
+          await axiosService.get(
+            `http://localhost:8080/api/order/user/${userId}`,
+          )
+        ).data;
 };
 
 export const fetchOrderByUser = createAsyncThunk('ui/blog/fetchOrderByUser', async (userId: number) => {

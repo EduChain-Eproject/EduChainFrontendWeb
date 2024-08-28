@@ -3,17 +3,33 @@ import { RootState, useAppDispatch, useAppSelector } from '../../../../../common
 import { fetchAllOrder } from '../../data/redux/action/fetchAllOrder';
 import { Link, useParams } from 'react-router-dom';
 import { fetchOrderByUser } from '../../data/redux/action/fetchOrderByUser';
+import { getUserAction } from '../../../../auth/presentation/redux/AuthAction';
 
 const OrderListByUser: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { orders, status } = useAppSelector((state: RootState) => state.orderAdminSlice);
-    const { userId = '' } = useParams<{ userId: string }>();
+    const { orders, status } = useAppSelector((state: RootState) => state.orderSlice);
+    const role = useAppSelector((s)=>s.auth.user?.role)
     
-    var uId = Number.parseInt(userId);
+    const user = useAppSelector((s) => s.auth.user)
 
     useEffect(() => {
-        dispatch(fetchOrderByUser(uId));
-    }, [dispatch, uId]);
+        const fetchData = async () => {
+          try {
+            await dispatch(getUserAction());
+          } catch (error) {
+            console.error('Failed to fetch user data:', error);
+          }
+        };
+    
+        fetchData();
+      }, [dispatch]);
+
+      useEffect(() => {
+        if (user && user.id) {
+            dispatch(fetchOrderByUser(user.id));
+        }
+    }, [dispatch, user]);
+    
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -49,7 +65,9 @@ const OrderListByUser: React.FC = () => {
                                 <td className="px-4 py-2">{orderItem.course?.title}</td>
                                 <td className="px-4 py-2">${orderItem.amount}</td>
                                 <td className="px-4 py-2">
-                                    <Link to={`/dashboard/order/${orderItem.id}`}>
+                                <Link to={role === 'STUDENT' || role === 'TEACHER' 
+                                        ? `/profile/order/${orderItem.id}` 
+                                        : `/dashboard/order/${orderItem.id}`}>
                                         <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                                             View Detail
                                         </button>

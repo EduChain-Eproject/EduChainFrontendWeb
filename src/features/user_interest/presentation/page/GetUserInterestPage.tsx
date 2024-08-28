@@ -36,7 +36,7 @@ const UserInterestsPage: React.FC = () => {
   const id = useAppSelector((s) => s.auth.user?.id);
 
   const [titleSearch, setSearch] = useState('');
-  const [size, setSize] = useState(3);
+  const [size, setSize] = useState(5);
   const deleteStatus = useAppSelector(
     (state) => state.userInterest.deleteStatus,
   );

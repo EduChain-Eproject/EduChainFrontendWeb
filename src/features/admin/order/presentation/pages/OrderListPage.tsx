@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { RouteObject, useNavigate } from 'react-router-dom';
-import OrderList from '../components/orderList';
 import AppBreadcrumb from '../../../../../common/components/Breadcrumbs/AppBreadcrumb';
 import {
   useAppDispatch,
@@ -9,6 +8,8 @@ import {
 import Pagination from '../../../../../common/components/Pagination/Pagination';
 import { setPage } from '../../data/redux/orderAdminSlice';
 import { fetchAllOrder, FetchAllOrderReq } from '../../data/redux/action/fetchAllOrder';
+import SearchComponent from '../../../../../common/components/Pagination/Search';
+import OrderList from '../components/OrderList';
 
 export const route: () => RouteObject = () => {
   return {
@@ -44,18 +45,24 @@ const OrderListPage: React.FC = () => {
   const { totalPages, currentPage } = useAppSelector(
     (state) => state.orderSlice.pagination,
   );
-  
+  const [titleSearch, setSearch] = useState('');
   useEffect(() => {
     const request: FetchAllOrderReq = {
       page: currentPage,
-      size
+      size,
+      titleSearch
     };
     dispatch(fetchAllOrder(request));
-  }, [dispatch,currentPage ,size]);
+  }, [dispatch,currentPage ,size,titleSearch]);
+  
+  const handleSearch = (query: string) => {
+    setSearch(query); 
+  };
 
   return (
     <div>
       <AppBreadcrumb items={breadCrumbItems} />
+      <SearchComponent onSearch={handleSearch} placeholder="Search by Title..." value={titleSearch} />
       <OrderList data ={data!}
       />
          <Pagination

@@ -4,6 +4,7 @@ import { fetchAllOrder, FetchAllOrderReq } from '../../data/redux/action/fetchAl
 import { Link } from 'react-router-dom';
 import AppPagination from '../../../../../common/components/Pagination/AppPagination';
 import { Order } from '../../data/model/Order';
+import SearchComponent from '../../../../../common/components/Pagination/Search';
 
 interface OrderListCompProps {
     data: Order[];
@@ -12,7 +13,7 @@ interface OrderListCompProps {
 
 const OrderList: React.FC<OrderListCompProps> = ({data
 }) => {
-    console.log(data);
+   
     return (
         <div className="max-w-4xl mx-auto py-8 px-4">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">Order List</h2>

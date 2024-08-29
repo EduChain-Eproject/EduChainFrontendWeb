@@ -6,6 +6,7 @@ import { OrderState } from '../orderAdminSlice';
 export type FetchAllOrderReq = {
   page: number;
   size: number;
+  titleSearch: string;
 };
 
 export const apiFetchOrders = async (

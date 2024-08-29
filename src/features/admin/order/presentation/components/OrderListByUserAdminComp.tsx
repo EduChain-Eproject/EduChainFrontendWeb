@@ -50,7 +50,7 @@ const OrderListByUserAdminComp: React.FC<OrderListByUserAdminCompProps> = ({user
             }
             dispatch(fetchOrderByUser(req));
         }
-    }, [dispatch, user]);
+    }, [dispatch, user,titleSearch]);
     
 
     if (status === 'loading') {

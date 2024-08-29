@@ -44,8 +44,9 @@ const OrderListByUser: React.FC = () => {
                 userId:user.id
             }
             dispatch(fetchOrderByUser(req));
+            console.log(req)
         }
-    }, [dispatch, user]);
+    }, [dispatch, user,titleSearch]);
     
 
     if (status === 'loading') {

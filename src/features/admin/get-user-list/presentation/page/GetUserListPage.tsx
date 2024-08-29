@@ -26,7 +26,6 @@ export const route: () => RouteObject = () => {
     const blockOrUnblock = useAppSelector((state) => state.getUserList.blockResultState);
     const [size, setSize] = useState(10);
     const [emailSearch, setSearch] = useState('');
-    console.log(data);
     useEffect(() => {
       const request: GetListUserReq = {
         emailSearch,

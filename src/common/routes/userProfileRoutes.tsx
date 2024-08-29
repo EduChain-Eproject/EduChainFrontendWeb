@@ -15,7 +15,7 @@ export const userProfileRoutes: RouteObject = {
   children: [getUserProfileRoute(), updateUserRoute(), getUserIterestRoute(),getUserHomeworkRoute(),
 
     
-    OrderListRoute(), OrderDetailRoute(), OrderListByCourseRoute(), OrderListByUserRoute()
+    OrderListRoute(), OrderDetailRoute(), OrderListByUserRoute()
 
   ],
 };

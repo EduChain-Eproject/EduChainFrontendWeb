@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { RootState, useAppDispatch, useAppSelector } from '../../../../../common/context/store';
-import { fetchAllOrder } from '../../data/redux/action/fetchAllOrder';
-import { Link, useParams } from 'react-router-dom';
-import { fetchOrderByUser, GetOrderUserReq } from '../../data/redux/action/fetchOrderByUser';
-import { getUserAction } from '../../../../auth/presentation/redux/AuthAction';
-import SearchComponent from '../../../../../common/components/Pagination/Search';
-import Pagination from '../../../../../common/components/Pagination/Pagination';
-import { setPage } from '../../data/redux/orderAdminSlice';
+import { useEffect, useState } from "react";
+import { RootState, useAppDispatch, useAppSelector } from "../../../../../common/context/store";
+import { setPage } from "../../data/redux/orderAdminSlice";
+import { fetchOrderByUser, GetOrderUserReq } from "../../data/redux/action/fetchOrderByUser";
+import React from "react";
+import SearchComponent from "../../../../../common/components/Pagination/Search";
 
-const OrderListByUser: React.FC = () => {
+import { Link } from "react-router-dom";
+import { getUserAction } from "../../../../auth/presentation/redux/AuthAction";
+import Pagination from "../../../../../common/components/Pagination/Pagination";
+
+export type OrderListByUserAdminCompProps = {
+    userId:string
+}
+
+const OrderListByUserAdminComp: React.FC<OrderListByUserAdminCompProps> = ({userId}) => {
     const dispatch = useAppDispatch();
     const { orders, status } = useAppSelector((state: RootState) => state.orderSlice);
     const role = useAppSelector((s)=>s.auth.user?.role)
@@ -41,7 +46,7 @@ const OrderListByUser: React.FC = () => {
                 page:currentPage,
                 size,
                 titleSearch,
-                userId:user.id
+                userId:Number(userId)
             }
             dispatch(fetchOrderByUser(req));
         }
@@ -61,7 +66,7 @@ const OrderListByUser: React.FC = () => {
     return (
         
         <div className="max-w-4xl mx-auto py-8 px-4">
-                  <SearchComponent onSearch={handleSearch} placeholder="Search by TitleL..." value={titleSearch} />
+                  <SearchComponent onSearch={handleSearch} placeholder="Search by Title..." value={titleSearch} />
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">Order By {userName}</h2>
             <div className="overflow-x-auto">
                 <table className="min-w-full table-auto">
@@ -106,4 +111,4 @@ const OrderListByUser: React.FC = () => {
     );
 };
 
-export default OrderListByUser;
+export default OrderListByUserAdminComp;

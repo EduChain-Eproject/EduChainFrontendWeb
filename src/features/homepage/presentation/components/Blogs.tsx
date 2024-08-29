@@ -27,7 +27,7 @@ const Blogs: React.FC<Props> = ({ blogs }) => (
           </div>
           <h3 className="text-xl font-semibold mb-3 text-purple-700">{blog.title}</h3>
           <p className="text-gray-700 line-clamp-3">{blog.blogText}</p>
-          <a href={`/blogs/${blog.id}`} className="mt-4 text-blue-500 hover:underline">Read more</a>
+          <a href={`/community/blog_ui/${blog.id}`} className="mt-4 text-blue-500 hover:underline">Read more</a>
         </div>
       ))}
     </div>

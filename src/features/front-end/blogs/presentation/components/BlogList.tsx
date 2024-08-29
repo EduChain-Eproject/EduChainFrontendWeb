@@ -85,13 +85,13 @@ const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
                   {blog.user.id === userId && (
                     <div className="absolute top-0 right-0 flex space-x-2">
                       <button
-                        className="bg-red-500 text-black hover:text-red-800 w-8 h-8 flex items-center justify-center"
+                        className="bg-slate-500 text-black hover:bg-red-800 w-8 h-8 flex items-center justify-center"
                         onClick={() => openModal(blog.id)}
                       >
                         <TrashIcon className="h-5 w-5" />
                       </button>
                       <Link to={`/community/blog_ui/edit/${blog.id}`}>
-                        <button className="bg-blue-500 text-black hover:text-blue-800 w-8 h-8 flex items-center justify-center">
+                        <button className="bg-slate-500 text-black hover:bg-blue-800 w-8 h-8 flex items-center justify-center">
                           <PencilIcon className="h-5 w-5" />
                         </button>
                       </Link>

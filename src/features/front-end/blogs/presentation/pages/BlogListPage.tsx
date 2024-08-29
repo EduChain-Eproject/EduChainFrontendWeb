@@ -65,84 +65,84 @@ const BlogUIPage: React.FC = () => {
     };
     return (
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mt-10 mb-8">Blog Classic</h1>
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="w-full md:w-1/4">
-            <div className="bg-white rounded-lg p-4 mb-4 shadow-md">
-                      {/* Navigate to Create New Blog Button */}
-        <div className="mt-4">
-          <button
-            type="button"
-            className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleNavigateToCreateBlog} // Navigate to the new blog creation page
-          >
-            Create New Blog
-          </button>
-        </div>
-        <br />
-              <div>
-                <h2 className="text-lg font-bold mb-2">Search</h2>
-                <input
-                  type="text"
-                  placeholder="Title"
-                  className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)}
-                />
-              </div>
-              <div className="mt-4">
-                <h2 className="text-lg font-bold mb-2">Sort By</h2>
-                <select
-                  className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={sortStrategy}
-                  onChange={(e) => setSortStrategy(e.target.value)}
-                >
-                  <option value="descTime">Latest</option>
-                  <option value="ascTime">Oldest</option>
-                </select>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-lg font-bold mb-2">Category</h2>
-                {blogCategories?.map((category) => (
-                  <div key={category.id} className="flex items-center mb-2">
-                    <input
-                      type="checkbox"
-                      name="category"
-                      value={category.id}
-                      checked={selectedCategoryIds.includes(category.id)}
-                      onChange={(e) => {
-                        const categoryId = Number(e.target.value);
-                        setSelectedCategoryIds((prevIds) =>
-                          e.target.checked
-                            ? [...prevIds, categoryId]
-                            : prevIds.filter((id) => id !== categoryId)
-                        );
-                      }}
-                      className="mr-2"
-                    />
-                    <label htmlFor={`category-${category.id}`} className="text-lg">
-                      {category.categoryName}
-                    </label>
-                  </div>
-                ))}
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={handleFilterChange}
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
+      <h1 className="text-4xl font-bold text-center mt-12 mb-8">Post Classic</h1>
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="w-full md:w-1/4">
+          <div className="bg-white rounded-lg p-6 mb-6 shadow-lg">
+            {/* Navigate to Create New Post Button */}
+            <div className="mb-6">
+              <button
+                type="button"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300"
+                onClick={handleNavigateToCreateBlog} // Navigate to the new post creation page
+              >
+                Create New Post
+              </button>
             </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-3">Search</h2>
+              <input
+                type="text"
+                placeholder="Title"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+              />
+            </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-3">Sort By</h2>
+              <select
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={sortStrategy}
+                onChange={(e) => setSortStrategy(e.target.value)}
+              >
+                <option value="descTime">Latest</option>
+                <option value="ascTime">Oldest</option>
+              </select>
+            </div>
+            <div className="mb-6">
+  <h2 className="text-xl font-semibold mb-3">Category</h2>
+  <div className="relative">
+    <select
+      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      value={selectedCategoryIds[0] || ""} // Assuming single selection for dropdown
+      onChange={(e) => {
+        const categoryId = Number(e.target.value);
+        setSelectedCategoryIds([categoryId]); // Replace with the selected category ID
+      }}
+    >
+      <option value="" disabled>
+        Select a Category
+      </option>
+      {blogCategories?.map((category) => (
+        <option key={category.id} value={category.id}>
+          {category.categoryName}
+        </option>
+      ))}
+    </select>
+  </div>
+  <div className="mt-4">
+    <button
+      type="button"
+      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300"
+      onClick={handleFilterChange}
+    >
+      Submit
+    </button>
+  </div>
+</div>
+
           </div>
-          <div className="w-full md:w-3/4">
-            <BlogUIList key={JSON.stringify(displayedData)}  data={displayedData!} />
+        </div>
+        <div className="w-full md:w-3/4">
+          <BlogUIList key={JSON.stringify(displayedData)} data={displayedData!} />
+          <div className="mt-8 pr-94">
             <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>
         </div>
       </div>
+    </div>
+    
     );
   };
   

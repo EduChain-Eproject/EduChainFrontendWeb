@@ -8,6 +8,7 @@ import {
 import {
   createLesson,
   CreateLessonReq,
+  resetCreateLesson,
 } from '../../data/services/handleCreateLesson';
 
 const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
@@ -32,6 +33,7 @@ const LessonCreateForm: React.FC<{ chapterId: number }> = ({ chapterId }) => {
 useEffect(() => {
   if(status === 'succeeded'){
     navigate(`/dashboard/teacher/chapters/${chapterId}`)
+    dispatch(resetCreateLesson());
   }
 })
 

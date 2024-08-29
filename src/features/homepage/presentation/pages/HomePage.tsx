@@ -4,7 +4,7 @@ import {
   useAppDispatch,
 } from '../../../../common/context/store';
 
-import BackgroundImage from '../components/BackgroundImage';
+import CarouselBackground from '../components/CarouselBackground';
 import FloatingPopularCourse from '../components/FloatingPopularCourse';
 import BestCategories from '../components/BestCategories';
 import BestTeacher from '../components/BestTeacher';
@@ -18,6 +18,7 @@ import { fetchStatistics } from '../../data/redux/actions/fetchStatistics';
 import { fetchSignatureCourses } from '../../data/redux/actions/fetchSignatureCourses';
 import { RouteObject } from 'react-router-dom';
 import { fetchBlogs } from '../../data/redux/actions/fetchBlogs';
+import ImageCard from '../components/ImageCard';
 
 export const route: () => RouteObject = () => {
   return {
@@ -41,12 +42,12 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="home-page">
-<BackgroundImage>
+<CarouselBackground>
   {signatureCourses.data && signatureCourses.data.length !== 0 ? (
     <div className="flex flex-col items-center justify-center space-y-6 w-full text-center">
 <div className="flex flex-col items-center space-y-4">
   <h1 className="text-6xl font-bold text-white bg-opacity-50 p-4 rounded-lg shadow-lg">
-    Welcome To Our Learning Platform
+    WELCOME TO EDUCHAIN
   </h1>
   <p className="text-2xl text-white md:text-gray-300  italic text-center">
     _ Explore our signature courses and enhance your skills <br />
@@ -59,12 +60,10 @@ const HomePage: React.FC = () => {
   ) : (
     <div className="text-center text-white text-lg">Loading popular course...</div>
   )}
-</BackgroundImage>
+</CarouselBackground>
 
 
-      <h2 className="text-center my-16 text-4xl font-bold">
-        Education for Everyone
-      </h2>
+      
       {bestCategories.data ? (
         <BestCategories categories={bestCategories.data} />
       ) : (
@@ -75,6 +74,8 @@ const HomePage: React.FC = () => {
       ) : (
         <div>Loading best teacher...</div>
       )}
+      <ImageCard imageUrl={'https://img.freepik.com/free-photo/virtual-classroom-study-space_23-2149178676.jpg?t=st=1724929820~exp=1724933420~hmac=229b845ae735fb0e72f9ecde94a53ae104a4f5332a6bd725962341a8daacd590&w=1800'}></ImageCard>
+
       {statistics.data?.numberOfEnrollments ? (
         <Statistics stats={statistics.data} />
       ) : (

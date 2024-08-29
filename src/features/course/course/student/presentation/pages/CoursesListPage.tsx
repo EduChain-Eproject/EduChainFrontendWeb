@@ -33,6 +33,7 @@ const CoursesListPage: React.FC = () => {
       <AppBreadcrumb items={breadCrumbItems} />
       <FilterBar />
       <br/>
+      
       <CourseList
         onViewCourseDetail={(courseId) => {
           navigate(`/courses/${courseId}`);

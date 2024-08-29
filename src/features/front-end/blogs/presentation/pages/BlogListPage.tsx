@@ -22,7 +22,8 @@ const BlogUIPage: React.FC = () => {
     const { data: blogList } = useAppSelector((state) => state.blogUiSlice.blogs);
     const { data: blogCategories } = useAppSelector((state) => state.blogUiSlice.blogCategories);
     const  filterState  = useAppSelector((state) => state.blogUiSlice.filterState);
-  
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
     const [searchKeyword, setSearchKeyword] = useState('');
     const [sortStrategy, setSortStrategy] = useState('descTime');
     const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
@@ -103,23 +104,43 @@ const BlogUIPage: React.FC = () => {
             <div className="mb-6">
   <h2 className="text-xl font-semibold mb-3">Category</h2>
   <div className="relative">
-    <select
-      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      value={selectedCategoryIds[0] || ""} // Assuming single selection for dropdown
-      onChange={(e) => {
-        const categoryId = Number(e.target.value);
-        setSelectedCategoryIds([categoryId]); // Replace with the selected category ID
-      }}
+    <button
+      type="button"
+      className="w-full bg-slate-500 text-white font-semibold py-3 px-4 rounded-lg transition duration-300"
+      onClick={() => setDropdownOpen(!dropdownOpen)}
     >
-      <option value="" disabled>
-        Select a Category
-      </option>
-      {blogCategories?.map((category) => (
-        <option key={category.id} value={category.id}>
+      Select Categories
+    </button>
+    {dropdownOpen && (
+  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-2 p-4 shadow-lg">
+    {blogCategories?.map((category) => (
+      <div 
+        key={category.id} 
+        className="flex items-center mb-3 px-2 py-2 rounded transition duration-300  hover:bg-slate-300"
+      >
+        <input
+          type="checkbox"
+          name="category"
+          value={category.id}
+          checked={selectedCategoryIds.includes(category.id)}
+          onChange={(e) => {
+            const categoryId = Number(e.target.value);
+            setSelectedCategoryIds((prevIds) =>
+              e.target.checked
+                ? [...prevIds, categoryId]
+                : prevIds.filter((id) => id !== categoryId)
+            );
+          }}
+          className="mr-3 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+        />
+        <label htmlFor={`category-${category.id}`} className="text-lg">
           {category.categoryName}
-        </option>
-      ))}
-    </select>
+        </label>
+      </div>
+    ))}
+  </div>
+)}
+
   </div>
   <div className="mt-4">
     <button
@@ -131,6 +152,7 @@ const BlogUIPage: React.FC = () => {
     </button>
   </div>
 </div>
+
 
           </div>
         </div>

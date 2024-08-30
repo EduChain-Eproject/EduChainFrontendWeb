@@ -44,7 +44,8 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
       alert(`Logout failed: ${logoutError}`); // Display the logout error
     }
   }, [logoutError]);
-  const blogLink = user?.role.toLocaleLowerCase() === 'teacher' ? '/dashboard/teacher/blog_ui' : '/community/blog_ui';
+  const blogLink = user?.role.toLowerCase() === 'teacher' ? 'http://localhost:5173/dashboard/teacher/blog_ui' : '/community/blog_ui';
+  console.log("role",user?.role.toLowerCase());
   return (
     <header className="bg-gray-100 py-4 shadow-md px-5">
       <div className="container mx-auto flex items-center justify-between">
@@ -55,7 +56,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ title }) => {
         <nav className="flex space-x-6">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/courses">Courses</NavLink>
-          <NavLink to={blogLink}>Blog</NavLink>
+          <NavLink to={blogLink}>Post</NavLink>
           <NavLink to="#">Contact Us</NavLink>
         </nav>
         <div className="flex items-center">

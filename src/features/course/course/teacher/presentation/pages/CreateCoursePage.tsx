@@ -24,7 +24,7 @@ const breadCrumbItems = [
   },
   {
     label: 'Create Course',
-    href: '/dashboard/teacher/course/create',
+    href: '/dashboard/teacher/courses/create',
   },
 ];
 

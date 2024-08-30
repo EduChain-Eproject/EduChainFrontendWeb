@@ -33,7 +33,7 @@ const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
   const [sortStrategy, setSortStrategy] = useState('descTime');
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
   const userId = useAppSelector((s) => s.auth?.user?.id);
-
+  const role = useAppSelector((s) => s.auth.user?.role);
   useEffect(() => {
     dispatch(fetchBlogCategories());
   }, [dispatch]);
@@ -123,9 +123,9 @@ const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
                           ? `${import.meta.env.VITE_API_BASE_URL}/uploads/${
                               blog.photo
                             }`
-                          : '/public/defaultimage/1000_F_484887682_Mx57wpHG4lKrPAG0y7Q8Q7bJ952J3TTO.jpg' 
+                          : '/public/defaultimage/1000_F_484887682_Mx57wpHG4lKrPAG0y7Q8Q7bJ952J3TTO.jpg'
                       }
-                      alt={blog.title || 'Default Image'} 
+                      alt={blog.title || 'Default Image'}
                       className="w-full h-75 object-cover mb-4"
                     />
                   </Link>
@@ -134,7 +134,13 @@ const BlogUIList: React.FC<BlogUIListProps> = ({ data }) => {
                     <div className="flex items-center w-full mr-2"></div>
                     <div className="flex items-center w-full ml-2">
                       <Link
-                        to={`/community/blog_ui/${blog.id}`}
+                        to={
+                          role === 'STUDENT'
+                            ? `/community/blog_ui/${blog.id}`
+                            : role === 'TEACHER'
+                            ? `/dashboard/teacher/blog_ui/${blog.id}`
+                            : '#'
+                        }
                         className="flex w-full"
                       >
                         <button className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center w-full justify-center">

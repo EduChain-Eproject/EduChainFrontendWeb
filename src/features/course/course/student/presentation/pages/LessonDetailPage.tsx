@@ -53,41 +53,42 @@ const LessonDetailPage: React.FC = () => {
   }
 
   return (
-    <div className=" px-4 py-6">
+    <div className="bg-gray-100 min-h-screen px-4 py-6">
       <div className='mx-auto max-w-5xl p-2 mb-5'>
         <AppBreadcrumb items={breadCrumbItems} />
-
       </div>
       <div className="flex flex-col lg:flex-row lg:space-x-6">
         {/* Curriculum Section */}
         {data?.chapterDtos && (
           <div className="lg:w-1/3 mb-6 lg:mb-0">
-            <h2 className="text-xl font-bold mb-4">Curriculum</h2>
-            <Curriculum
-              chapters={data.chapterDtos}
-              onLessonClick={(id) => {
-                if (data && !data.currentUserCourse) {
-                  setShowEnrollmentModal(true);
-                } else {
-                  navigate(`/courses/${courseId}/lessons/${id}`);
-                }
-              }}
-            />
+            <div className="bg-white shadow-lg rounded-lg p-6">
+              <h2 className="text-xl font-bold mb-4">Curriculum</h2>
+              <Curriculum
+                chapters={data.chapterDtos}
+                onLessonClick={(id) => {
+                  if (data && !data.currentUserCourse) {
+                    setShowEnrollmentModal(true);
+                  } else {
+                    navigate(`/courses/${courseId}/lessons/${id}`);
+                  }
+                }}
+              />
+            </div>
           </div>
         )}
         {/* Lesson Detail and Homeworks Toggle Section */}
-        <div className={`flex-1 bg-white shadow rounded-lg p-6 ${data?.chapterDtos ? 'lg:w-2/3' : 'w-full'}`}>
+        <div className={`flex-1 bg-white shadow-lg rounded-lg p-6 ${data?.chapterDtos ? 'lg:w-2/3' : 'w-full'}`}>
           <h1 className="text-3xl font-bold mb-4">{lesson?.lessonTitle}</h1>
           <div className="mb-4">
             <button
               onClick={() => setActiveTab('lesson')}
-              className={`px-4 py-2 mr-2 rounded-md ${activeTab === 'lesson' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+              className={`px-4 py-2 mr-2 rounded-md ${activeTab === 'lesson' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-600`}
             >
               Lesson Detail
             </button>
             <button
               onClick={() => setActiveTab('homeworks')}
-              className={`px-4 py-2 rounded-md ${activeTab === 'homeworks' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+              className={`px-4 py-2 rounded-md ${activeTab === 'homeworks' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-600`}
             >
               Homeworks
             </button>
@@ -100,7 +101,7 @@ const LessonDetailPage: React.FC = () => {
                 <div className="mb-4">
                   <video
                     controls
-                    className="w-full"
+                    className="w-full rounded-lg shadow"
                     src={`http://localhost:8080/uploadsVideo/${lesson.videoURL}`}
                   >
                     Your browser does not support the video tag.
@@ -116,7 +117,7 @@ const LessonDetailPage: React.FC = () => {
                 <div key={homework.id} className="border-b pb-4 mb-4">
                   <button
                     onClick={() => setSelectedHomeworkId(homework.id)}
-                    className="text-blue-500 underline"
+                    className="text-blue-500 underline hover:text-blue-700"
                   >
                     {homework.title}
                   </button>
@@ -150,4 +151,4 @@ const LessonDetailPage: React.FC = () => {
   );
 };
 
-
+export default LessonDetailPage;

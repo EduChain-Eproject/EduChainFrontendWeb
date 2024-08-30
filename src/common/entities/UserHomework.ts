@@ -1,3 +1,5 @@
+import User from "./User";
+
 export class UserHomework {
   id: number;
   submissionDate: Date;

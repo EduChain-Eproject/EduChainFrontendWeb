@@ -40,13 +40,6 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     }
   }, [status, dispatch]);
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     setValue('avatarCourse', file);
-  //   }
-  // };
-
   const handleFormSubmit = (data: UpdateCourseReq) => {
     const formData = new FormData();
     formData.append('title', data.title);
@@ -55,7 +48,7 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     if (data.avatarCourse && data.avatarCourse.length > 0) {
       formData.append('avatarCourse', data.avatarCourse[0]);
     }
-  
+
     const categoryIds = Object.keys(data.categoryIds)
       .filter((key) => data.categoryIds[key])
       .map((key) => parseInt(key, 10));
@@ -65,11 +58,10 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     onSubmit(formData);
   };
 
-
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6 p-6 bg-white shadow-md rounded-lg max-w-4xl mx-auto">
       {error && (
-        <div className="text-red-500 mb-4">
+        <div className="text-red-600 mb-4">
           {error}
           <button
             type="button"
@@ -97,6 +89,7 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
           <p className="text-red-500 text-xs italic mt-1">{errors?.title}</p>
         )}
       </div>
+
       <div>
         <label
           htmlFor="description"
@@ -107,12 +100,10 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
         <textarea
           id="description"
           {...register('description')}
-          className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 p-3 border border-gray-300 rounded-md block w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-300"
         />
         {errors?.description && (
-          <p className="text-red-500 text-xs italic mt-1">
-            {errors?.description}
-          </p>
+          <p className="text-red-600 text-sm mt-1">{errors?.description}</p>
         )}
       </div>
       <div>
@@ -139,6 +130,15 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
         >
           Image
         </label>
+        {courseData?.avatarPath && (
+          <div className="mb-4">
+            <img
+              src={courseData.avatarPath}
+              alt="Current course image"
+              className="h-32 w-32 object-cover rounded-md shadow-md"
+            />
+          </div>
+        )}
         <input
           id="avatarCourse"
           type="file"
@@ -146,7 +146,7 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
           className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-white "
         />
         {errors?.avatarCourse && (
-          <p className="text-red-500 text-xs italic mt-1">{errors?.avatarCourse}</p>
+          <p className="text-red-600 text-sm mt-1">{errors?.avatarCourse}</p>
         )}
       </div>
       <div className="relative inline-block text-left w-full">

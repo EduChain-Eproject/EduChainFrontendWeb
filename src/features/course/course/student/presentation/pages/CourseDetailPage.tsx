@@ -58,10 +58,10 @@ const CourseDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-6">
+    <div className="mx-auto max-w-7xl px-4 py-6">
       <AppBreadcrumb items={breadCrumbItems} />
-      <div className="flex flex-col lg:flex-row lg:space-x-6">
-        <div className="lg:w-2/3">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-9">
           <h1 className="text-3xl font-bold mb-4">{courseData?.title}</h1>
           <div className="mb-4 flex flex-wrap gap-2">
             <button
@@ -90,7 +90,7 @@ const CourseDetailPage: React.FC = () => {
           )}
         </div>
         {courseData?.relatedCourseDtos && courseData.relatedCourseDtos.length > 0 && (
-          <div className="lg:w-1/3 mt-6 lg:mt-0">
+          <div className="lg:col-span-3 mt-6 lg:mt-0">
             <RelatedCourses relatedCourses={courseData.relatedCourseDtos} />
           </div>
         )}

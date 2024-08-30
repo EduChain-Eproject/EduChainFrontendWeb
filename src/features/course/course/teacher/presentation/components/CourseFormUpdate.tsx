@@ -37,13 +37,6 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     }
   }, [status, dispatch]);
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     setValue('avatarCourse', file);
-  //   }
-  // };
-
   const handleFormSubmit = (data: UpdateCourseReq) => {
     const formData = new FormData();
     formData.append('title', data.title);
@@ -52,7 +45,7 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     if (data.avatarCourse && data.avatarCourse.length > 0) {
       formData.append('avatarCourse', data.avatarCourse[0]);
     }
-  
+
     const categoryIds = Object.keys(data.categoryIds)
       .filter((key) => data.categoryIds[key])
       .map((key) => parseInt(key, 10));
@@ -62,11 +55,10 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
     onSubmit(formData);
   };
 
-
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6 p-6 bg-white shadow-md rounded-lg max-w-4xl mx-auto">
       {error && (
-        <div className="text-red-500 mb-4">
+        <div className="text-red-600 mb-4">
           {error}
           <button
             type="button"
@@ -78,76 +70,89 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
         </div>
       )}
 
-<div>
-        <label
-          htmlFor="title"
-          className="block font-medium text-meta-4 text-2xl"
-        >
-          Title
-        </label>
-        <input
-          id="title"
-          {...register('title')}
-          className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-        {errors?.title && (
-          <p className="text-red-500 text-xs italic mt-1">{errors?.title}</p>
-        )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label
+            htmlFor="title"
+            className="block font-semibold text-gray-800 text-lg"
+          >
+            Title
+          </label>
+          <input
+            id="title"
+            {...register('title')}
+            className="mt-1 p-3 border border-gray-300 rounded-md block w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-300"
+          />
+          {errors?.title && (
+            <p className="text-red-600 text-sm mt-1">{errors?.title}</p>
+          )}
+        </div>
+        
+        <div>
+          <label
+            htmlFor="price"
+            className="block font-semibold text-gray-800 text-lg"
+          >
+            Price
+          </label>
+          <input
+            id="price"
+            type="number"
+            {...register('price')}
+            className="mt-1 p-3 border border-gray-300 rounded-md block w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-300"
+          />
+          {errors?.price && (
+            <p className="text-red-600 text-sm mt-1">{errors?.price}</p>
+          )}
+        </div>
       </div>
+
       <div>
         <label
           htmlFor="description"
-          className="block font-medium text-meta-4 text-2xl"
+          className="block font-semibold text-gray-800 text-lg"
         >
           Description
         </label>
         <textarea
           id="description"
           {...register('description')}
-          className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 p-3 border border-gray-300 rounded-md block w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-300"
         />
         {errors?.description && (
-          <p className="text-red-500 text-xs italic mt-1">
-            {errors?.description}
-          </p>
+          <p className="text-red-600 text-sm mt-1">{errors?.description}</p>
         )}
       </div>
-      <div>
-        <label
-          htmlFor="price"
-          className="block font-medium text-meta-4 text-2xl"
-        >
-          Price
-        </label>
-        <input
-          id="price"
-          type="number"
-          {...register('price')}
-          className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-        {errors?.price && (
-          <p className="text-red-500 text-xs italic mt-1">{errors?.price}</p>
-        )}
-      </div>
+
       <div>
         <label
           htmlFor="avatarCourse"
-          className="block font-medium text-meta-4 text-2xl"
+          className="block font-semibold text-gray-800 text-lg"
         >
           Image
         </label>
+        {courseData?.avatarPath && (
+          <div className="mb-4">
+            <img
+              src={courseData.avatarPath}
+              alt="Current course image"
+              className="h-32 w-32 object-cover rounded-md shadow-md"
+            />
+          </div>
+        )}
         <input
           id="avatarCourse"
           type="file"
           {...register('avatarCourse')}
-          className="mt-1 p-4 dark:bg-slate-100 dark:text-meta-4 bg-slate-500 text-meta-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 p-3 border border-gray-300 rounded-md block w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-300"
         />
         {errors?.avatarCourse && (
-          <p className="text-red-500 text-xs italic mt-1">{errors?.avatarCourse}</p>
+          <p className="text-red-600 text-sm mt-1">{errors?.avatarCourse}</p>
         )}
       </div>
+
       <div>
-        <label className="block font-medium text-meta-4 text-2xl">
+        <label className="block font-semibold text-gray-800 text-lg">
           Categories
         </label>
         <div className="mt-2 space-y-2">
@@ -160,7 +165,7 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
                   <input
                     type="checkbox"
                     {...field}
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-5 w-5 rounded border-gray-300 text-blue-500 focus:ring-2 focus:ring-blue-300"
                   />
                 )}
               />
@@ -170,15 +175,14 @@ const CourseFormUpdate: React.FC<CourseFormUpdateProps> = ({ onSubmit }) => {
             </div>
           ))}
           {errors?.categoryIds && (
-            <p className="text-red-500 text-xs italic mt-1">
-              {errors?.categoryIds}
-            </p>
+            <p className="text-red-600 text-sm mt-1">{errors?.categoryIds}</p>
           )}
         </div>
       </div>
+
       <button
         type="submit"
-        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="inline-flex items-center rounded-md bg-blue-500 px-6 py-3 text-lg font-medium text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2"
       >
         Submit
       </button>

@@ -34,8 +34,6 @@ const ChapterCreatePage: React.FC = () => {
       <AppBreadcrumb items={breadCrumbItems} />
       <div className="bg-white shadow rounded-lg p-6">
         <h1 className="text-2xl font-bold mb-4">Create Chapter</h1>
-        {status === 'loading' && <div>Loading...</div>}
-        {status === 'failed' && <div>Error: {error}</div>}
         <ChapterForm courseId={Number(courseId)} />
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import CourseDetail from '../components/CourseDetail';
-import { RouteObject, useNavigate, useParams } from 'react-router-dom';
+import { Link, RouteObject, useNavigate, useParams } from 'react-router-dom';
 import {
   useAppDispatch,
   useAppSelector,
@@ -22,7 +22,7 @@ export const route: () => RouteObject = () => {
 const CourseDetailPage: React.FC = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const dispatch = useAppDispatch();
-  const nagivate = useNavigate();
+  const navigate = useNavigate();
   const { data, status, error } = useAppSelector(
     (state) => state.courses.teacher.courseDetailPage,
   );
@@ -63,7 +63,7 @@ const CourseDetailPage: React.FC = () => {
   };
 
   const handleCreateChapter = () => {
-    nagivate(`/dashboard/teacher/chapters/course/${courseId}/create/`);
+    navigate(`/dashboard/teacher/chapters/course/${courseId}/create/`);
   };
 
   return (
@@ -71,7 +71,7 @@ const CourseDetailPage: React.FC = () => {
       <AppBreadcrumb items={breadCrumbItems} />
 
       <div className="max-w-5xl mx-auto p-4 bg-white shadow-lg rounded-lg mt-4 flex flex-col lg:flex-row">
-        <div className="w-full lg:w-2/3 p-4">
+        <div className="w-full lg:w-2/3 p-4" style={{ marginLeft: '20px' }}>
           <CourseInfo course={data} />
           <button
             onClick={handleDeactivate}
@@ -83,9 +83,15 @@ const CourseDetailPage: React.FC = () => {
               ? 'Activate Course'
               : 'Deactivate Course'}
           </button>
-          <CategoryList categories={data.categoryDtos} />
+          <Link
+  to={`/dashboard/teacher/courses/${data.id}/update`}
+  className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md mt-4 inline-block ml-12"
+>
+  Update
+</Link>
         </div>
-        <div className="w-full lg:w-1/3 p-4">
+        
+        <div className="w-full lg:w-1/3 p-4 shadow-lg">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-bold">Chapters</h3>
             <button
@@ -99,18 +105,8 @@ const CourseDetailPage: React.FC = () => {
             chapters={data.chapterDtos}
             courseId={Number(courseId)}
           />
-   
         </div>
-     
       </div>
-      <div className="text-center mt-4">
-        <img
-          src={data.avatarPath}
-          alt="Course Avatar"
-          className="inline-block rounded-lg shadow-md max-w-xs" // Set the maximum width to xs (20rem / 320px)
-        />
-      </div>
-  
     </div>
   );
 };

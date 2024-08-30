@@ -7,6 +7,7 @@ import { fetchBlogs, FindAllBlogRequest } from '../../data/redux/action/fetchBlo
 import { setPage } from '../../data/redux/blogUISlice';
 import { fetchBlogCategories } from '../../data/redux/action/fetchCategories';
 import { filterBlog } from '../../data/redux/action/filterBlog';
+import { getUserAction } from '../../../../auth/presentation/redux/AuthAction';
 
 export const route: () => RouteObject = () => {
     return {
@@ -23,6 +24,7 @@ const BlogUIPage: React.FC = () => {
     const { data: blogCategories } = useAppSelector((state) => state.blogUiSlice.blogCategories);
     const  filterState  = useAppSelector((state) => state.blogUiSlice.filterState);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const user = useAppSelector((s) => s.auth.user);
 
     const [searchKeyword, setSearchKeyword] = useState('');
     const [sortStrategy, setSortStrategy] = useState('descTime');
@@ -30,6 +32,9 @@ const BlogUIPage: React.FC = () => {
     const [isFilterApplied, setIsFilterApplied] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+      dispatch(getUserAction());
+    })
     useEffect(() => {
       // Fetch blogs and categories on initial load
       dispatch(fetchBlogs({ page: currentPage, size: 5, sortBy: 'createdAt' }));
@@ -62,7 +67,12 @@ const BlogUIPage: React.FC = () => {
     }, [filterState.data, blogList, isFilterApplied]);
 
     const handleNavigateToCreateBlog = () => {
-      navigate("/community/blog_ui/create"); // Programmatically navigate to the create blog page
+      if(user?.role.toLowerCase() === "student"){
+        navigate("/community/blog_ui/create"); // Programmatically navigate to the create blog page
+      }
+      else if(user?.role.toLowerCase() === "teacher"){
+        navigate("/dashboard/teacher/blog_ui/create")
+      }
     };
     return (
       <div className="container mx-auto px-4">

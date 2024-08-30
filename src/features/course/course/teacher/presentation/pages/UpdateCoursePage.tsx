@@ -29,7 +29,7 @@ const UpdateCoursePage: React.FC = () => {
   const breadCrumbItems = [
     {
       label: 'Home',
-      href: '/dashboard/teacher',
+      href: '/dashboard/teacher/courses',
     },
     {
       label: 'Course by you',

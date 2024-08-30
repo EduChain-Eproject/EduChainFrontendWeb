@@ -63,9 +63,10 @@ const TeacherSidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/dashboard/teacher/courses">
-          <img src={Logo} alt="Logo" />
-        </NavLink>
+      <Link to={'/'} className="flex items-center space-x-2">
+          <img src="/public/defaultimage/education635.logowik.com.png" alt="EduChain Logo" className="w-12 h-12" />
+          <h1 className="text-3xl font-extrabold text-white">EduChain</h1>
+        </Link>
 
         <button
           ref={trigger}

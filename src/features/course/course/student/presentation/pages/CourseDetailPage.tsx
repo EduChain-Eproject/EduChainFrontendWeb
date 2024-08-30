@@ -62,7 +62,18 @@ const CourseDetailPage: React.FC = () => {
       <AppBreadcrumb items={breadCrumbItems} />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-9">
-          <h1 className="text-3xl font-bold mb-4">{courseData?.title}</h1>
+          <div className="flex items-center mb-4">
+            <h1 className="text-3xl font-bold">{courseData?.title}</h1>
+            {courseData?.currentUserCourse ? (
+              <span className="ml-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg">
+                Enrolled
+              </span>
+            ) : (
+              <span className="ml-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg">
+                Not Enrolled
+              </span>
+            )}
+          </div>
           <div className="mb-4 flex flex-wrap gap-2">
             <button
               onClick={() => setActiveTab('detail')}

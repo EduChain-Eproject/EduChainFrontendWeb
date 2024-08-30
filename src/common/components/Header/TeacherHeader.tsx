@@ -3,7 +3,6 @@ import React from 'react';
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../public/images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 
 
@@ -63,9 +62,10 @@ const AdminHeader = (props: {
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
-          </Link>
+          <Link to={'/'} className="flex items-center space-x-2">
+          <img src="/public/defaultimage/education635.logowik.com.png" alt="EduChain Logo" className="w-12 h-12" />
+          <h1 className="text-3xl font-extrabold text-white">EduChain</h1>
+        </Link>
         </div>
 
         <div className="hidden sm:block">

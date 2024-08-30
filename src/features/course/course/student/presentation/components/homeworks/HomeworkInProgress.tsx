@@ -37,13 +37,17 @@ const HomeworkInProgress = () => {
   };
 
   const handleSubmitHomework = () => {
-    if (
-      homework?.questionDtos?.every((question) => question.currentUserAnswerDto)
-    ) {
-      dispatch(submitHomework(homework?.id));
-    } else {
-      alert('Please answer all questions before submitting.');
-    }
+    dispatch(submitHomework(homework?.id ?? 0));
+
+    // console.log(homework?.questionDtos);
+
+    // if (
+    //   homework?.questionDtos?.every((question) => question.currentUserAnswerDto)
+    // ) {
+    //   dispatch(submitHomework(homework?.id));
+    // } else {
+    //   alert('Please answer all questions before submitting.');
+    // }
   };
 
   return (

@@ -29,7 +29,7 @@ const CoursesListPage: React.FC = () => {
   ];
 
   return (
-    <div className="mx-auto max-w-4xl px-4">
+    <div className="w-full px-50">
       <AppBreadcrumb items={breadCrumbItems} />
       <FilterBar />
       <br/>

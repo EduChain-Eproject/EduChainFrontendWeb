@@ -4,9 +4,10 @@ import { StudentLayout } from '../../layouts';
 import { courseRoutes } from './courseRoutes';
 import { communityRoutes } from './communityRoutes';
 import { homepageRoute } from '../../../features/homepage/presentation/pages';
+import { contactRoutes } from './contactUs';
 
 export const studentRoutes: RouteObject = {
   path: '',
   element: <StudentLayout />,
-  children: [courseRoutes, communityRoutes],
+  children: [courseRoutes, communityRoutes, contactRoutes],
 };

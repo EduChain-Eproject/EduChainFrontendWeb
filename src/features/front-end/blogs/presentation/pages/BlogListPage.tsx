@@ -10,75 +10,75 @@ import { filterBlog } from '../../data/redux/action/filterBlog';
 import { getUserAction } from '../../../../auth/presentation/redux/AuthAction';
 
 export const route: () => RouteObject = () => {
-    return {
-        path: "blog_ui",
-        element: <BlogUIPage />
-    }
+  return {
+    path: "blog_ui",
+    element: <BlogUIPage />
+  }
 }
 
-
 const BlogUIPage: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const { totalPages, currentPage } = useAppSelector((state) => state.blogUiSlice.pagination);
-    const { data: blogList } = useAppSelector((state) => state.blogUiSlice.blogs);
-    const { data: blogCategories } = useAppSelector((state) => state.blogUiSlice.blogCategories);
-    const  filterState  = useAppSelector((state) => state.blogUiSlice.filterState);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const user = useAppSelector((s) => s.auth.user);
+  const dispatch = useAppDispatch();
+  const { totalPages, currentPage } = useAppSelector((state) => state.blogUiSlice.pagination);
+  const { data: blogList } = useAppSelector((state) => state.blogUiSlice.blogs);
+  const { data: blogCategories } = useAppSelector((state) => state.blogUiSlice.blogCategories);
+  const filterState = useAppSelector((state) => state.blogUiSlice.filterState);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const user = useAppSelector((s) => s.auth.user);
 
-    const [searchKeyword, setSearchKeyword] = useState('');
-    const [sortStrategy, setSortStrategy] = useState('descTime');
-    const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
-    const navigate = useNavigate();
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [sortStrategy, setSortStrategy] = useState('descTime');
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      dispatch(getUserAction());
-    })
-    useEffect(() => {
-      // Fetch blogs and categories on initial load
-      dispatch(fetchBlogs({ page: currentPage, size: 5, sortBy: 'createdAt' }));
-      dispatch(fetchBlogCategories());
-    }, [dispatch, currentPage]);
-  
-    const handleFilterChange = async () => {
-      const filterReq = {
-        page: 0, // Reset to the first page when applying filters
-        size: 5,
-        keyword: searchKeyword || "",
-        sortStrategy: sortStrategy,
-        categoryIds: selectedCategoryIds.length ? selectedCategoryIds : [],
-      };
-      await dispatch(filterBlog(filterReq));
-      setIsFilterApplied(true); // Mark filter as applied
-    };
-  
-    const handlePageChange = (pageNumber: number) => {
-      dispatch(setPage(pageNumber));
-    };
-  
-    const displayedData = isFilterApplied ? filterState.data : blogList;
-    useEffect(() => {
-      if (isFilterApplied) {
-        console.log("Filtered Data: ", filterState.data);
-      } else {
-        console.log("Blog List Data: ", blogList);
-      }
-    }, [filterState.data, blogList, isFilterApplied]);
+  useEffect(() => {
+    dispatch(getUserAction());
+  })
+  useEffect(() => {
+    // Fetch blogs and categories on initial load
+    dispatch(fetchBlogs({ page: currentPage, size: 5, sortBy: 'createdAt' }));
+    dispatch(fetchBlogCategories());
+  }, [dispatch, currentPage]);
 
-    const handleNavigateToCreateBlog = () => {
-      if(user?.role.toLowerCase() === "student"){
-        navigate("/community/blog_ui/create"); // Programmatically navigate to the create blog page
-      }
-      else if(user?.role.toLowerCase() === "teacher"){
-        navigate("/dashboard/teacher/blog_ui/create")
-      }
+  const handleFilterChange = async () => {
+    const filterReq = {
+      page: 0, // Reset to the first page when applying filters
+      size: 5,
+      keyword: searchKeyword || "",
+      sortStrategy: sortStrategy,
+      categoryIds: selectedCategoryIds.length ? selectedCategoryIds : [],
     };
-    return (
-      <div className="container mx-auto px-4">
-      <h1 className="text-4xl font-bold text-center mt-12 mb-8">Post Classic</h1>
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="w-full md:w-1/4">
+    await dispatch(filterBlog(filterReq));
+    setIsFilterApplied(true); // Mark filter as applied
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    dispatch(setPage(pageNumber));
+  };
+
+  const displayedData = isFilterApplied ? filterState.data : blogList;
+  useEffect(() => {
+    if (isFilterApplied) {
+      console.log("Filtered Data: ", filterState.data);
+    } else {
+      console.log("Blog List Data: ", blogList);
+    }
+  }, [filterState.data, blogList, isFilterApplied]);
+
+  const handleNavigateToCreateBlog = () => {
+    if (user?.role.toLowerCase() === "student") {
+      navigate("/community/blog_ui/create"); // Programmatically navigate to the create blog page
+    }
+    else if (user?.role.toLowerCase() === "teacher") {
+      navigate("/dashboard/teacher/blog_ui/create")
+    }
+  };
+
+  return (
+    <div className="container mx-auto px-4">
+      <h1 className="text-4xl font-bold text-center mt-12 mb-8">Place to share interesting and useful knowledge</h1>
+      <div className="grid grid-cols-12 gap-8">
+        <div className="col-span-12 md:col-span-3">
           <div className="bg-white rounded-lg p-6 mb-6 shadow-lg">
             {/* Navigate to Create New Post Button */}
             <div className="mb-6">
@@ -112,61 +112,58 @@ const BlogUIPage: React.FC = () => {
               </select>
             </div>
             <div className="mb-6">
-  <h2 className="text-xl font-semibold mb-3">Category</h2>
-  <div className="relative">
-    <button
-      type="button"
-      className="w-full bg-slate-500 text-white font-semibold py-3 px-4 rounded-lg transition duration-300"
-      onClick={() => setDropdownOpen(!dropdownOpen)}
-    >
-      Select Categories
-    </button>
-    {dropdownOpen && (
-  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-2 p-4 shadow-lg">
-    {blogCategories?.map((category) => (
-      <div 
-        key={category.id} 
-        className="flex items-center mb-3 px-2 py-2 rounded transition duration-300  hover:bg-slate-300"
-      >
-        <input
-          type="checkbox"
-          name="category"
-          value={category.id}
-          checked={selectedCategoryIds.includes(category.id)}
-          onChange={(e) => {
-            const categoryId = Number(e.target.value);
-            setSelectedCategoryIds((prevIds) =>
-              e.target.checked
-                ? [...prevIds, categoryId]
-                : prevIds.filter((id) => id !== categoryId)
-            );
-          }}
-          className="mr-3 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-        />
-        <label htmlFor={`category-${category.id}`} className="text-lg">
-          {category.categoryName}
-        </label>
-      </div>
-    ))}
-  </div>
-)}
-
-  </div>
-  <div className="mt-4">
-    <button
-      type="button"
-      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300"
-      onClick={handleFilterChange}
-    >
-      Submit
-    </button>
-  </div>
-</div>
-
-
+              <h2 className="text-xl font-semibold mb-3">Category</h2>
+              <div className="relative">
+                <button
+                  type="button"
+                  className="w-full bg-slate-500 text-white font-semibold py-3 px-4 rounded-lg transition duration-300"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  Select Categories
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-2 p-4 shadow-lg">
+                    {blogCategories?.map((category) => (
+                      <div
+                        key={category.id}
+                        className="flex items-center mb-3 px-2 py-2 rounded transition duration-300  hover:bg-slate-300"
+                      >
+                        <input
+                          type="checkbox"
+                          name="category"
+                          value={category.id}
+                          checked={selectedCategoryIds.includes(category.id)}
+                          onChange={(e) => {
+                            const categoryId = Number(e.target.value);
+                            setSelectedCategoryIds((prevIds) =>
+                              e.target.checked
+                                ? [...prevIds, categoryId]
+                                : prevIds.filter((id) => id !== categoryId)
+                            );
+                          }}
+                          className="mr-3 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label htmlFor={`category-${category.id}`} className="text-lg">
+                          {category.categoryName}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="mt-4">
+                <button
+                  type="button"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300"
+                  onClick={handleFilterChange}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="w-full md:w-3/4">
+        <div className="col-span-12 md:col-span-9">
           <BlogUIList key={JSON.stringify(displayedData)} data={displayedData!} />
           <div className="mt-8 pr-94">
             <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
@@ -174,9 +171,7 @@ const BlogUIPage: React.FC = () => {
         </div>
       </div>
     </div>
-    
-    );
-  };
-  
-  export default BlogUIPage;
-  
+  );
+};
+
+export default BlogUIPage;

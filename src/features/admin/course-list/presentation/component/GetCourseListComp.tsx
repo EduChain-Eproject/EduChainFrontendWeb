@@ -18,7 +18,6 @@ interface GetCourseListCompProps {
                 <th className="py-3 px-6 text-left">Title</th>
                 <th className="py-3 px-6 text-left">Email</th>
                 <th className="py-3 px-6 text-center">Participated Members</th>
-                <th className="py-3 px-6 text-left">Description</th>
               </tr>
             </thead>
             <tbody>
@@ -31,7 +30,6 @@ interface GetCourseListCompProps {
                   <td className="py-3 px-6 border-b text-gray-700">{item.title}</td>
                   <td className="py-3 px-6 border-b text-gray-700">{item.teacherDto?.email}</td>
                   <td className="py-3 px-6 border-b text-center text-gray-700">{item.participatedUserDtos?.length}</td>
-                  <td className="py-3 px-6 border-b text-gray-700">{item.description}</td>
                 </tr>
               ))}
             </tbody>

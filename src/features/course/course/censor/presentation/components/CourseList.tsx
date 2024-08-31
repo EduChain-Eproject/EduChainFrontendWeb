@@ -21,20 +21,25 @@ const CourseList: React.FC<CourseListProps> = ({
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {courses.map((course) => (
-          <div key={course.id} className="bg-white shadow rounded-lg p-4">
-            <h2 className="text-lg font-semibold">{course.title}</h2>
-            <p>{course.description}</p>
-            <div className="mt-2 flex justify-end">
-              <button
-                onClick={() => onViewCourseDetail(course.id)}
-                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 ml-2"
-              >
-                View Detail
-              </button>
+        {courses.map((course) => {
+          console.log(course.avatarPath); // Debugging line
+          return (
+            <div
+              key={course.id}
+              className="relative bg-white shadow rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => onViewCourseDetail(course.id)}
+            >
+              <img src={course.avatarPath} alt={course.title} className="w-full h-48 object-cover" />
+              <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                {course.status}
+              </div>
+              <div className="p-4">
+                <h2 className="text-lg font-semibold">{course.title}</h2>
+                <p className="text-gray-600">{course.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <AppPagination
         totalPages={totalPages}

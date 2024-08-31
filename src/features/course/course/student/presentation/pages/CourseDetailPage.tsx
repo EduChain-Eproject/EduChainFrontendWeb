@@ -61,7 +61,7 @@ const CourseDetailPage: React.FC = () => {
     <div className="mx-auto max-w-7xl px-4 py-6">
       <AppBreadcrumb items={breadCrumbItems} />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-9">
+        <div className="lg:col-span-8">
           <div className="flex items-center mb-4">
             <h1 className="text-3xl font-bold">{courseData?.title}</h1>
             {courseData?.currentUserCourse ? (
@@ -101,29 +101,29 @@ const CourseDetailPage: React.FC = () => {
           )}
         </div>
         {courseData?.relatedCourseDtos && courseData.relatedCourseDtos.length > 0 && (
-          <div className="lg:col-span-3 mt-6 lg:mt-0">
+          <div className="lg:col-span-4 mt-6 lg:mt-0">
             <RelatedCourses relatedCourses={courseData.relatedCourseDtos} />
           </div>
         )}
       </div>
 
       {showEnrollmentModal && !courseData?.currentUserCourse && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-lg font-bold mb-4">Enroll in Course</h2>
-            <p className="mb-4">
-              You need to enroll in this course to access the lesson.
-            </p>
-            {courseData && <Enrollment course={courseData} />}
-            <button
-              onClick={() => setShowEnrollmentModal(false)}
-              className="w-full px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+    <div className="bg-white p-8 rounded-lg shadow-2xl max-w-lg w-full">
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Enroll in Course</h2>
+      <p className="mb-6 text-center text-gray-600">
+        You need to enroll in this course to access the lesson.
+      </p>
+      {courseData && <Enrollment course={courseData} />}
+      <button
+        onClick={() => setShowEnrollmentModal(false)}
+        className="w-full px-4 py-2 mt-4 bg-blue-600 text-white rounded-md hover:bg-red-700 transition duration-300 ease-in-out"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 };

@@ -74,7 +74,7 @@ const HomePage: React.FC = () => {
       ) : (
         <div>Loading best teacher...</div>
       )}
-      <ImageCard imageUrl={'https://img.freepik.com/free-photo/virtual-classroom-study-space_23-2149178676.jpg?t=st=1724929820~exp=1724933420~hmac=229b845ae735fb0e72f9ecde94a53ae104a4f5332a6bd725962341a8daacd590&w=1800'}></ImageCard>
+      <ImageCard imageUrl={'https://img.freepik.com/free-photo/close-up-woman-class_23-2148888812.jpg?t=st=1725048075~exp=1725051675~hmac=a7657ab363e532032ab8f1ba84cc8e794a78f6e5f0718fa3a913658338e4dca5&w=1800'}></ImageCard>
 
       {statistics.data?.numberOfEnrollments ? (
         <Statistics stats={statistics.data} />

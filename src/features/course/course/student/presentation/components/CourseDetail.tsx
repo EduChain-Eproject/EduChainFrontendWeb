@@ -15,9 +15,6 @@ const CourseDetail: React.FC<{ course: Course }> = ({ course }) => {
       <p className="mb-2">
         <strong className="font-semibold">Price:</strong> ${course.price.toFixed(2)}
       </p>
-      <p className="mb-4">
-        <strong className="font-semibold">Status:</strong> {course.status}
-      </p>
       {course.categoryDtos && (
         <div>
           <h3 className="text-xl font-semibold mb-2">Categories</h3>

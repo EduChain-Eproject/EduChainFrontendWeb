@@ -38,10 +38,10 @@ const handleSubmitHomework = (
 ) => {
   builder
     .addCase(submitHomework.pending, (state) => {
-      state.userAwardComponent.status = 'loading';
+      state.userHomeworkComponent.status = 'loading';
     })
     .addCase(submitHomework.fulfilled, (state, action) => {
-      state.userAwardComponent.status = 'succeeded';
+      state.userHomeworkComponent.status = 'succeeded';
 
       if (!action.payload.error) {
         state.userAwardComponent.data = action.payload?.data?.award;

@@ -18,4 +18,17 @@ export interface UserProfileRepository {
       timestamp?: string;
     };
   }>;
+
+  onSetUserWallet: (req: {
+    walletAddress: string;
+  }) => Promise<{
+    data?: {
+      walletAddress: string;
+    };
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }>;
 }

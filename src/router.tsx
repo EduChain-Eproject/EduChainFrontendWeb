@@ -10,6 +10,7 @@ import {
   studentRoutes,
   userProfileRoutes,
   userCourseRoute,
+  certificationRoutes,
 } from './common/routes';
 const unauthorizedRoute: RouteObject = {
   path: 'unauthorized',
@@ -26,4 +27,5 @@ export const router = createBrowserRouter([
   userProfileRoutes,
   unauthorizedRoute,
   userCourseRoute,
+  certificationRoutes
 ]);

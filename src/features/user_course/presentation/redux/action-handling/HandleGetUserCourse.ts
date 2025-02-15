@@ -20,6 +20,7 @@ export const handleGetUserCourse = (
         state.listUserCourse.data = action.payload.data;
         state.pagination.totalPages = action.payload.totalPages;
         state.pagination.totalElements = action.payload.totalElements;
+        console.log(action.payload.data);
       }
     })
     .addCase(fetchUserCourse.rejected, (state, action) => {

@@ -9,6 +9,7 @@ import handleGetCourseByTeacher from '../services/handleGetCourseByTeacher';
 import handleGetListCategories from '../services/handleGetListCategories';
 import handleUpdateCourse from '../services/handleUpdateCourse';
 import handleDeactivateCourse from '../services/handleDeactivateCourse';
+import handleApproveRejectCertification from '../services/handleApproveRejectCertification';
 
 export interface CourseState {
   createCoursePage: CommonState<Category[]>;
@@ -56,6 +57,7 @@ const teacherCourseSlice = createSlice({
     handleDeactivateCourse(builder);
     handleGetListCategories(builder);
     handleGetCourseByTeacher(builder);
+    handleApproveRejectCertification(builder);
   },
 });
 

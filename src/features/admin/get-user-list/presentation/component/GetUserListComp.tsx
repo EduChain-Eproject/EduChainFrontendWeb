@@ -19,12 +19,9 @@ const GetUserListComp: React.FC<GetUserInterestCompProps> = ({ data,onBlock}) =>
             <table className="min-w-full bg-white">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border-b">Avatar</th>
-                  <th className="py-2 px-4 border-b">Email</th>
-                  <th className="py-2 px-4 border-b">First Name</th>
-                  <th className="py-2 px-4 border-b">Last Name</th>
-                  <th className="py-2 px-4 border-b">Phone</th>
-                  <th className="py-2 px-4 border-b">Address</th>
+                  <th className=" border-b">Avatar</th>
+                  <th className="    border-b">Email</th>
+                  <th className="py-2 px-4 border-b">Name</th>
                   <th className="py-2 px-4 border-b">Role</th>
                   <th className="py-2 px-4 border-b">Active</th>
                   <th className="py-2 px-4 border-b">Actions</th>
@@ -37,10 +34,7 @@ const GetUserListComp: React.FC<GetUserInterestCompProps> = ({ data,onBlock}) =>
                       <img src={user.avatarPath} alt="Avatar" className="w-10 h-10 rounded-full" />
                     </td>
                     <td className="py-2 px-4 border-b">{user.email}</td>
-                    <td className="py-2 px-4 border-b">{user.firstName}</td>
-                    <td className="py-2 px-4 border-b">{user.lastName}</td>
-                    <td className="py-2 px-4 border-b">{user.phone}</td>
-                    <td className="py-2 px-4 border-b">{user.address}</td>
+                    <td className="py-2 px-4 border-b">{user.firstName} {user.lastName}</td>
                     <td className="py-2 px-4 border-b">{user.role}</td>
                     <td className="py-2 px-4 border-b">{user.isActive ? "ACTIVE" : "UN_ACTIVE"}</td>
                     <td className="py-2 px-4 border-b">

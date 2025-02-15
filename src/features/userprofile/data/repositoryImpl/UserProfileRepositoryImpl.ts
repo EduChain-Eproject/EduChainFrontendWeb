@@ -2,6 +2,7 @@ import Failure from '../../../../common/entities/Failure';
 import { UserProfileRepository } from '../../domain/repository/UserRepository';
 import {
   getUserProfile,
+  setUserWallet,
   updateUserProfile,
 } from '../dataSource/ProfileRemoteDataSource';
 import { UserProfileModel } from '../../domain/entities/UserProfileModel';
@@ -48,6 +49,41 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   }> {
     try {
       const response = await updateUserProfile(formData);
+
+      return response;
+    } catch (error) {
+      if (error instanceof Failure) {
+        return {
+          error: {
+            message: error.message,
+            errors: error.errors,
+            timestamp: error.timestamp,
+          },
+        };
+      }
+      return {
+        error: {
+          message: 'Unexpected error occurred on update',
+          errors: { message: 'Unexpected error occurred' },
+        },
+      };
+    }
+  }
+
+  async onSetUserWallet(formData: {
+    walletAddress: string;
+  }): Promise<{
+    data?: {
+      walletAddress: string;
+    };
+    error?: {
+      message: string;
+      errors: { [key: string]: string };
+      timestamp?: string;
+    };
+  }> {
+    try {
+      const response = await setUserWallet(formData);
 
       return response;
     } catch (error) {

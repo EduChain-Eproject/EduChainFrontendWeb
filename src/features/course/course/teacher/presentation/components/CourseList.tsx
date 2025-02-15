@@ -13,24 +13,23 @@ const CourseList: React.FC<CourseListProps> = ({
   onUpdateCourse,
   onViewCourseDetail,
 }) => {
-
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex flex-row items-center justify-between">
-        <h2 className="text-2xl font-bold">Courses</h2>
+        <h2 className="text-3xl font-bold text-gray-800">Courses</h2>
       </div>
-      <ul className="divide-y divide-gray-200">
+      <ul className="space-y-4">
         {courses.map((course) => (
-          <li key={course.id} className="py-4 flex items-start space-x-4">
+          <li key={course.id} className="bg-white shadow-lg rounded-lg overflow-hidden flex">
             <img
               src={course.avatarPath}
               alt={course.title}
-              className="w-24 h-24 object-cover rounded-lg border border-gray-300"
+              className="w-48 h-48 object-cover rounded-l-lg"
             />
-            <div className="flex-1">
-              <h3 className="text-xl font-bold text-gray-800">{course.title}</h3>
-              <p className="text-gray-600">{course.description}</p>
-              <div className="flex items-center space-x-4 mt-2">
+            <div className="p-6 flex-1">
+              <h3 className="text-2xl font-bold text-gray-800">{course.title}</h3>
+              <p className="text-gray-600 mt-2">{course.description}</p>
+              <div className="flex items-center space-x-4 mt-4">
                 <Link
                   to={`/dashboard/teacher/courses/${course.id}`}
                   className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md"

@@ -17,6 +17,8 @@ import { blogDetailAdminRoute, createBlogRoute, getBlogsRoute } from "../../feat
 import { getBlogCateCreateRoute, getBlogCateDetailRoute, getBlogCateRoute, getBlogCateUpdateRoute } from "../../features/community/blogCategory/presentation/pages";
 import { OrderDetailRoute, OrderListByCourseRoute, OrderListByUserRoute, OrderListRoute } from "../../features/admin/order/presentation/pages";
 import { GetListUserRoute } from "../../features/admin/get-user-list/presentation/page";
+import { GetCourseListRoute } from "../../features/admin/course-list/presentation/page/Index";
+import { OrderListByUserAdminRoute } from "../../features/admin/order/presentation/pages/index";
 const tempRoutes: RouteObject[] = [
     {
         path: 'calendar',
@@ -78,6 +80,9 @@ export const adminRoutes: RouteObject = {
         OrderListByUserRoute(),
     
         //User list dashboard
-        GetListUserRoute()
+        GetListUserRoute(),
+        GetCourseListRoute(),
+        OrderListByUserRoute(),
+        OrderListByUserAdminRoute(),
     ],
 }

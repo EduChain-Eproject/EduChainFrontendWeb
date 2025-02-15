@@ -57,3 +57,30 @@ export const updateUserProfile = async (
     });
   }
 };
+
+
+export const setUserWallet = async (
+  req: {
+    walletAddress: string;
+  },
+): Promise<{
+  data: {
+    walletAddress: string;
+  };
+}> => {
+  try {
+    const response = await axiosService.put(`${baseUrl}updateWalletAddress`, req);
+    return { data: response.data };
+  } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
+  }
+};

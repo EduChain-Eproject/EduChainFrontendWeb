@@ -24,7 +24,7 @@ export const route: () => RouteObject = () => {
 const CourseDetailPage: React.FC = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const dispatch = useAppDispatch();
-  const nagivate = useNavigate();
+  const navigate = useNavigate();
   const { data, status, error } = useAppSelector(
     (state) => state.courses.censor.courseDetailPage,
   );
@@ -72,7 +72,7 @@ const CourseDetailPage: React.FC = () => {
         <div className="w-full lg:w-2/3 p-4">
           <CourseInfo course={data} />
           {data.status == CourseStatusForCensor.UNDER_REVIEW && (
-            <div>
+            <div className="mt-4 flex space-x-4">
               <button
                 onClick={() => {
                   handleApproveOrDelete({
@@ -80,7 +80,7 @@ const CourseDetailPage: React.FC = () => {
                     status: CourseStatusForCensor.APPROVED,
                   });
                 }}
-                className={`mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-red-500`}
+                className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 Approve
               </button>
@@ -91,12 +91,15 @@ const CourseDetailPage: React.FC = () => {
                     status: CourseStatusForCensor.DELETED,
                   });
                 }}
-                className={`mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500`}
+                className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                Delete
+                Reject
               </button>
             </div>
           )}
+        </div>
+        <div className="w-full lg:w-1/3 p-4">
+          <img src={data.avatarPath} alt={data.title} className="w-full h-auto object-cover rounded-lg shadow-md" />
         </div>
       </div>
     </div>

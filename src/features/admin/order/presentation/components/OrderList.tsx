@@ -1,27 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../../common/context/store';
-import { fetchAllOrder } from '../../data/redux/action/fetchAllOrder';
+import { fetchAllOrder, FetchAllOrderReq } from '../../data/redux/action/fetchAllOrder';
 import { Link } from 'react-router-dom';
 import AppPagination from '../../../../../common/components/Pagination/AppPagination';
+import { Order } from '../../data/model/Order';
+import SearchComponent from '../../../../../common/components/Pagination/Search';
 
-interface OrderistProps {
-    totalPages: number;
-    currentPage: number;
-    onPageChange: (page: number) => void;
-}
+interface OrderListCompProps {
+    data: Order[];
+    
+  }
 
-const OrderList: React.FC<OrderistProps> = ({
-    totalPages,
-    currentPage,
-    onPageChange,
+const OrderList: React.FC<OrderListCompProps> = ({data
 }) => {
-    const dispatch = useAppDispatch();
-    const { orders } = useAppSelector((state: RootState) => state.orderAdminSlice);
-
-    useEffect(() => {
-        dispatch(fetchAllOrder());
-    }, [dispatch]);
-
+   
     return (
         <div className="max-w-4xl mx-auto py-8 px-4">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">Order List</h2>
@@ -38,7 +30,7 @@ const OrderList: React.FC<OrderistProps> = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.data?.map((orderItem) => (
+                        {data && data?.map((orderItem) => (
                             <tr key={orderItem.id} className="border-b">
                                 <td className="px-4 py-2">{orderItem.id}</td>
                                 <td className="px-4 py-2">{new Date(orderItem.createdAt).toLocaleDateString()}</td>
@@ -65,11 +57,6 @@ const OrderList: React.FC<OrderistProps> = ({
                     </tbody>
                 </table>
             </div>
-            <AppPagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onPageChange={onPageChange}
-            />
         </div>
     );
 };

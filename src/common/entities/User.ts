@@ -13,6 +13,8 @@ export default class User {
   address: string;
   role: Role;
   email: string;
+  walletAddress: string;
+
   userAwardDtos: Award[] | undefined;
   userHomeworkDtos: UserHomework[] | undefined;
   isActive: boolean;

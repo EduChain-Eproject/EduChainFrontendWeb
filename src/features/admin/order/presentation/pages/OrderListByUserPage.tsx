@@ -5,7 +5,8 @@ import AppBreadcrumb from '../../../../../common/components/Breadcrumbs/AppBread
 
 export const route: () => RouteObject = () => {
     return {
-        path: "order/user/:userId",
+        //path: "order/user/:userId",
+        path: "order/user",
         element: <OrderListByUserPage />
     }
 }

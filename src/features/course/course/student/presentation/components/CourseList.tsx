@@ -23,7 +23,7 @@ const CourseList: React.FC<CourseListProps> = ({ onViewCourseDetail }) => {
 
   return (
     <div className="p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {data?.courses?.content.map((course) => (
           <div key={course.id} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <img

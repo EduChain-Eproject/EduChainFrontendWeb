@@ -29,6 +29,9 @@ import UserHomeworkForProfileSlice from '../../features/user_homework/presentati
 import orderAdminSlice from '../../features/admin/order/data/redux/orderAdminSlice'
 import GetUserListSlice from '../../features/admin/get-user-list/data/redux/GetUserListSlice';
 import commentSlice from '../../features/community/blogComment/presentation/redux/BlogCommentSlice';
+import GetCourseListSlice from '../../features/admin/course-list/data/redux/GetCourseListSlice';
+import OrderAdminSlice from '../../features/admin/order/data/redux/orderAdminSlice';
+import certificationSlice from '../../features/course/certification/data/certificationSlice';
 
 const courses = combineReducers({
   teacher: teacherCourseSlice,
@@ -60,6 +63,7 @@ const rootReducer = combineReducers({
   cates: cateSlice,
   chapters,
   lessons,
+  certificationSlice,
   blogUiSlice,
   userProfile: UserProfileSlice,
   userInterest: UserInterestSlice,
@@ -67,9 +71,10 @@ const rootReducer = combineReducers({
   userhomeworkForPrile: UserHomeworkForProfileSlice,
   homeworks,
   questions,
-  orderAdminSlice,
   getUserList: GetUserListSlice,
   commnent: commentSlice,
+  adminCourseList: GetCourseListSlice,
+  orderSlice: OrderAdminSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

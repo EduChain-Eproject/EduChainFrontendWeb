@@ -3,8 +3,10 @@ import React from 'react';
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../public/images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
+
+
+import { FaArrowLeft } from 'react-icons/fa'; // Importing an arrow icon from react-icons
 
 const AdminHeader = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -14,6 +16,14 @@ const AdminHeader = (props: {
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
+          {/* <!-- Arrow Back Button --> */}
+          <Link
+            to="/"
+            className="flex items-center justify-center p-2 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            HEELO
+            <FaArrowLeft className="text-xl text-black dark:text-white" />
+          </Link>
           {/* <!-- Hamburger Toggle BTN --> */}
           <button
             aria-controls="sidebar"
@@ -52,9 +62,10 @@ const AdminHeader = (props: {
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
-          </Link>
+          <Link to={'/'} className="flex items-center space-x-2">
+          <img src="/public/defaultimage/education635.logowik.com.png" alt="EduChain Logo" className="w-12 h-12" />
+          <h1 className="text-3xl font-extrabold text-white">EduChain</h1>
+        </Link>
         </div>
 
         <div className="hidden sm:block">
@@ -118,3 +129,5 @@ const AdminHeader = (props: {
 };
 
 export default AdminHeader;
+
+

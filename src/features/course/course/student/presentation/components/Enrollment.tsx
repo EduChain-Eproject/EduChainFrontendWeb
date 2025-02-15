@@ -6,6 +6,7 @@ import {
 } from '../../../../../../common/context/store';
 import Course from '../../../../../../common/entities/Course';
 import { enrollACourse } from '../../data/services/handleEnrollACourse';
+
 interface EnrollmentProps {
   course: Course;
 }
@@ -33,21 +34,29 @@ const Enrollment: React.FC<EnrollmentProps> = ({ course }) => {
   }, [data]);
 
   return (
-    <div className="p-3 border-blue-400 rounded-lg bg-blue-300">
-      <h2 className="text-xl font-bold">Enrollment</h2>
-      <p>
-        <strong>Price:</strong> ${course.price}
-      </p>
-      <p>
-        <strong>Number of Enrolled Students:</strong>{' '}
-        {course.numberOfEnrolledStudents}
-      </p>
-      <button
-        className="px-3 py-1 rounded-lg bg-green-400 hover:bg-green-700"
-        onClick={() => handleEnrollCourse(course.id)}
-      >
-        Enroll
-      </button>
+    <div className="flex p-6 border border-gray-300 rounded-lg bg-white shadow-md">
+      {course.avatarPath && (
+        <img
+          src={course.avatarPath}
+          alt={course.title}
+          className="w-32 h-32 object-cover rounded-lg mr-6"
+        />
+      )}
+      <div className="flex-1">
+        <h2 className="text-2xl font-bold mb-4">Enrollment</h2>
+        <p className="mb-2">
+          <strong>Price:</strong> ${course.price}
+        </p>
+        <p className="mb-4">
+          <strong>Number of Enrolled Students:</strong> {course.numberOfEnrolledStudents}
+        </p>
+        <button
+          className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition duration-300 ease-in-out"
+          onClick={() => handleEnrollCourse(course.id)}
+        >
+          Enroll
+        </button>
+      </div>
     </div>
   );
 };

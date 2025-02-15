@@ -10,6 +10,8 @@ export const apiFetchSignatureCourses = async (): ApiResponse<Course[]> => {
     const response = await axiosService.get(
       'http://localhost:8080/HOME/api/list-popular-courses',
     );
+    console.log(response);
+  
     return {
       data: response.data,
     };
@@ -24,7 +26,9 @@ export const fetchSignatureCourses = createAsyncThunk(
   'home/fetchSignatureCourses',
   async () => {
     const response = await apiFetchSignatureCourses();
+    
     return response.data;
+
   },
 );
 

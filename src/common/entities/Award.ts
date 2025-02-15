@@ -14,6 +14,8 @@ export class Award {
   submissionDate: Date;
   reviewDate: Date;
   comments: string;
+  transactionHash: string;
+  tokenAmount: string;
 
   homeworkDtoId?: number;
 

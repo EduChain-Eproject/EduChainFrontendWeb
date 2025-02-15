@@ -19,10 +19,10 @@ const breadCrumbItems = [
         label: "Home", href: "/dashboard/teacher",
     },
     {
-        label: "Your Blogs", href: "/dashboard/teacher/blogs",
+        label: "Your Blogs", href: "/dashboard/teacher/blogs_ui",
     },
     {
-        label: "Create Blog", href: "/dashboard/teacher/blog/create",
+        label: "Create Blog", href: "/dashboard/teacher/blog_ui/create",
     },
 ]
 

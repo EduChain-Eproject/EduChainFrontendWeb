@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   useAppDispatch,
@@ -24,13 +24,22 @@ const HomeworkList: React.FC<HomeworkListProps> = ({
     (state) => state.homeworks.teacher.deleteHomeworkPage,
   );
 
+  const [showModal, setShowModal] = useState(false);
+  const [selectedHomeworkId, setSelectedHomeworkId] = useState<number | null>(null);
+
   useEffect(() => {
     dispatch(homeworkDeleted(deletedHomeworkId));
-  }, [deletedHomeworkId]);
+  }, [deletedHomeworkId, dispatch]);
 
   const handleDelete = (id: number) => {
-    if (window.confirm('Are you sure you want to delete this homework?')) {
-      dispatch(deleteHomework(id));
+    setSelectedHomeworkId(id);
+    setShowModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (selectedHomeworkId !== null) {
+      dispatch(deleteHomework(selectedHomeworkId));
+      setShowModal(false);
     }
   };
 
@@ -79,6 +88,28 @@ const HomeworkList: React.FC<HomeworkListProps> = ({
             </li>
           ))}
         </ul>
+      )}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h2 className="text-lg font-bold mb-4">Delete Homework</h2>
+            <p className="mb-4">Are you sure you want to delete this homework?</p>
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

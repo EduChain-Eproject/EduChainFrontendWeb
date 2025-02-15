@@ -6,6 +6,7 @@ import { censorRoutes } from './censorRoutes';
 import { userProfileRoutes } from './userProfileRoutes';
 import { userCourseRoute } from './userCourseRoute';
 import { studentRoutes } from './studentRoutes';
+import { certificationRoutes } from './certificationRoutes';
 
 export {
   authRoute,
@@ -16,4 +17,5 @@ export {
   censorRoutes,
   userProfileRoutes,
   userCourseRoute,
+  certificationRoutes
 };

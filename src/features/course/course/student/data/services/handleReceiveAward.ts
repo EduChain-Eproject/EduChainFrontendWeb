@@ -7,7 +7,7 @@ import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
 
 export interface receiveAwardReq {
-  homeworkId: number;
+  awardId: number;
 }
 
 const apiReceiveAward = async (
@@ -15,7 +15,7 @@ const apiReceiveAward = async (
 ): ApiResponse<UserAnswer> => {
   try {
     const response = await axiosService.post(
-      `/STUDENT/api/award/receive/${req.homeworkId}`,
+      `/STUDENT/api/award/receive/${req.awardId}`,
       req,
     );
     return { data: response.data };

@@ -13,9 +13,10 @@ import Tables from '../temp_pages/Tables';
 import Alerts from '../temp_pages/UiElements/Alerts';
 import Buttons from '../temp_pages/UiElements/Buttons';
 import { dashboardRoute } from "../../features/dashboard/presentation/pages";
-import { getBlogsRoute } from "../../features/community/blog/presentation/pages";
+import { blogDetailAdminRoute, createBlogRoute, getBlogsRoute } from "../../features/community/blog/presentation/pages";
 import { getBlogCateCreateRoute, getBlogCateDetailRoute, getBlogCateRoute, getBlogCateUpdateRoute } from "../../features/community/blogCategory/presentation/pages";
-
+import { OrderDetailRoute, OrderListByCourseRoute, OrderListByUserRoute, OrderListRoute } from "../../features/admin/order/presentation/pages";
+import { GetListUserRoute } from "../../features/admin/get-user-list/presentation/page";
 const tempRoutes: RouteObject[] = [
     {
         path: 'calendar',
@@ -60,12 +61,23 @@ export const adminRoutes: RouteObject = {
     element: <DashboardAdminLayout />,
     errorElement: <ErrorPage />,
     children: [
-        dashboardRoute(),
+        // dashboardRoute(),
         ...tempRoutes,
         getBlogsRoute(),
         getBlogCateRoute(),
         getBlogCateDetailRoute(),
         getBlogCateCreateRoute(),
-        getBlogCateUpdateRoute()
+        getBlogCateUpdateRoute(),
+        createBlogRoute(),
+        blogDetailAdminRoute(),
+
+        //order
+        OrderListRoute(),
+        OrderDetailRoute(),
+        OrderListByCourseRoute(),
+        OrderListByUserRoute(),
+    
+        //User list dashboard
+        GetListUserRoute()
     ],
 }

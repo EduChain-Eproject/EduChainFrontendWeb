@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 interface RelatedCoursesProps {
   relatedCourses: Course[];
 }
-
 const RelatedCourses: React.FC<RelatedCoursesProps> = ({ relatedCourses }) => {
   const navigate = useNavigate();
 
@@ -14,24 +13,35 @@ const RelatedCourses: React.FC<RelatedCoursesProps> = ({ relatedCourses }) => {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-xl font-bold mb-4">Related Courses</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <h2 className="text-2xl font-bold mb-6">Related Courses</h2>
+      <div className="flex flex-col space-y-6">
         {relatedCourses.map((course) => (
-          <div key={course.id} className=" bg-slate-300 p-4 rounded-lg">
-            <h3 className="text-lg font-bold">{course.title}</h3>
-            <p className="text-sm">{course.description}</p>
-            <button
-              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-              onClick={() => handleViewCourseDetail(course.id)}
-            >
-              View Details
-            </button>
+          <div
+            key={course.id}
+            className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+          >
+            <img
+              src={course.avatarPath}
+              alt={course.title}
+              className="w-full h-40 object-cover rounded-t-lg"
+            />
+            <div className="p-4">
+              <h3 className="text-xl font-semibold mb-2">{course.title}</h3>
+              <p className="text-sm text-gray-600 mb-4 truncate">{course.description}</p>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200"
+                onClick={() => handleViewCourseDetail(course.id)}
+              >
+                View Details
+              </button>
+            </div>
           </div>
         ))}
       </div>
     </div>
   );
 };
+
 
 export default RelatedCourses;

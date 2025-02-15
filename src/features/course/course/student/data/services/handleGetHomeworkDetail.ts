@@ -6,7 +6,7 @@ import Homework from '../../../../../../common/entities/Homework';
 import { UserHomework } from '../../../../../../common/entities/UserHomework';
 import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
-
+const baseUrl = 'http://localhost:8080/';
 const apiGetHomeworkDetail = async (
   homeworkId: number,
 ): ApiResponse<{
@@ -16,7 +16,7 @@ const apiGetHomeworkDetail = async (
 }> => {
   try {
     const response = await axiosService.get(
-      `/STUDENT/api/homework/detail/${homeworkId}`,
+      `${baseUrl}STUDENT/api/homework/detail/${homeworkId}`,
     );
     return { data: response.data };
   } catch (error) {

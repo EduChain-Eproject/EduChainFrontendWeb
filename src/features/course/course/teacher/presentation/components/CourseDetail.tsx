@@ -36,6 +36,7 @@ const CourseDetail: React.FC = () => {
           <h1>{data.title}</h1>
           <p>{data.description}</p>
           <p>Instructor: {data.teacherDto?.email}</p>
+          <img src={data.avatarPath} alt="" />
         </>
       )}
     </div>

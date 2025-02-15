@@ -5,24 +5,22 @@ import { createCate } from '../cateAction';
 const handleCreateCate = (builder: ActionReducerMapBuilder<CateState>) => {
     builder
         .addCase(createCate.pending, (state) => {
-            state.status = 'loading';
-            state.errorCreate = undefined;
+            state.createCateState.status = 'loading';
+         
         })
         .addCase(createCate.fulfilled, (state, action) => {
             if (action.payload.error) {
-                state.status = 'failed';
-                state.errorCreate = action.payload.error;
-                console.log(action.payload.error);
-                
+                state.createCateState.status = 'failed';
+                state.createCateState.errors = action.payload.error.errors;
+                state.createCateState.error = action.payload.error.message;
             } else {
-                state.status = 'succeeded';
-                state.errorCreate = "";
-                action.payload.data && state.cates?.push(action.payload.data);
+                state.createCateState.status = 'succeeded';
+                state.createCateState.data = action.payload.data;
             }
         })
         .addCase(createCate.rejected, (state, action) => {
-            state.status = 'failed';
-            state.errorCreate = action.error.message;
+            state.createCateState.status = 'failed';
+            state.createCateState.error = action.error.message;
         });
 };
 

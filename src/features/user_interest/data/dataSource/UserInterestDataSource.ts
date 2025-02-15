@@ -1,9 +1,9 @@
-import { UserInterestDto } from './../dto/UserInterestDto';
 import axiosService from '../../../../common/services/axiosService';
 import Failure from '../../../../common/entities/Failure';
-import { DeleteUserInterestRes } from '../../domain/usecase/DeleteUserInterestUseCase';
+import { DeleteUserInterestReq } from '../../domain/usecase/DeleteUserInterestUseCase';
 import { GetUserInterestReq } from '../../domain/usecase/GetUserInterests UserCase';
 import { AddUserInterestReq } from '../../domain/usecase/AddUserInterestUseCase';
+import UserInterest from '../../../../common/entities/UserInterest';
 
 const baseUrl: String = 'http://localhost:8080/STUDENT/';
 
@@ -12,7 +12,7 @@ export const apiTakeUserInterests = async (
 ): Promise<{
   totalPages: number;
   totalElements: number;
-  content: UserInterestDto[];
+  content: UserInterest[];
 }> => {
   try {
     const response = await axiosService.post(
@@ -24,32 +24,59 @@ export const apiTakeUserInterests = async (
         },
       },
     );
-    console.log(req);
     return response.data;
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
+
+
+
 export const apiDeleteUserInterest = async (
-  deleteReq: DeleteUserInterestRes,
+  deleteReq: DeleteUserInterestReq,
 ): Promise<void> => {
   try {
-    const response = await axiosService.delete(`${baseUrl}delete-wishlist`, {
-      data: deleteReq,
-    });
+    const response = await axiosService.delete(`${baseUrl}delete-wishlist/${deleteReq.course_id}`);
     return response.data;
   } catch (error) {
-    throw new Error(`Failed to delete user interest: ${error.message}`);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 
 export const apiAddUserInterest = async (
   req: AddUserInterestReq,
-): Promise<UserInterestDto> => {
+): Promise<UserInterest> => {
   try {
     const response = await axiosService.post(`${baseUrl}add-to-wishlist`, req);
     return response.data;
   } catch (error) {
-    throw new Error(`Failed to delete user interest: ${error.message}`);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };

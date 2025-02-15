@@ -5,19 +5,19 @@ import { deleteBlog } from '../blogActions';
 const handleDeleteBlog = (builder: ActionReducerMapBuilder<BlogState>) => {
     builder
         .addCase(deleteBlog.pending, (state) => {
-            state.status = 'loading';
+            state.deleteBlog.status = 'loading';
         })
         .addCase(deleteBlog.fulfilled, (state, action) => {
             if (action.payload.error) {
-                state.status = 'failed';
-                state.error = action.payload.error;
+                state.deleteBlog.status  = 'failed';
+                state.deleteBlog.error = action.payload.error;
             } else {
-                state.status = 'succeeded';
-                state.blogs = state.blogs?.filter(course => course.id !== action.meta.arg);
+                state.deleteBlog.status  = 'succeeded';
+
             }
         })
         .addCase(deleteBlog.rejected, (state, action) => {
-            state.status = 'failed';
+            state.deleteBlog.status  = 'failed';
             state.error = action.error.message;
         });
 };

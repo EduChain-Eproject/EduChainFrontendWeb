@@ -1,4 +1,9 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import { resetPassword } from './../../data/dataSources/AuthRemoteDataSource';
+import {
+  ActionReducerMapBuilder,
+  createAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import AuthRepositoryImpl from '../../data/repositoryImpl/AuthRepositoryImpl';
 
 import { AuthRepository } from './../../domain/repositories/AuthRepository';
@@ -15,6 +20,10 @@ import axiosService from '../../../../common/services/axiosService';
 import { AuthState } from './authSlice';
 import { logOut } from '../../data/dataSources/AuthRemoteDataSource';
 import LogOut, { LogOutReq } from '../../domain/usecases/LogOut';
+import VerifyCode, { VerifyRequest } from '../../domain/usecases/VerifyCode';
+import ReSendVerifyCode, {
+  ReSendVerifyCodeReq,
+} from '../../domain/usecases/ResendVerifyCode';
 
 const authRepository: AuthRepository = new AuthRepositoryImpl();
 
@@ -65,5 +74,26 @@ export const logOutAction = createAsyncThunk(
     return await logtOutCase.execute(data);
   },
 );
+export const resetSignUpStatus = createAction('auth/resetSignUpStatus');
 
+export const verifyCodeAction = createAsyncThunk(
+  'Auth/verify',
+  async (data: VerifyRequest) => {
+    const verifyCase = new VerifyCode(authRepository);
+    return await verifyCase.execute(data);
+  },
+);
 
+export const reSenVerifyCodeAction = createAsyncThunk(
+  'Auth/resend-verify',
+  async (email: ReSendVerifyCodeReq) => {
+    const resendVerifyCase = new ReSendVerifyCode(authRepository);
+    return await resendVerifyCase.execute(email);
+  },
+);
+
+export const resetSendEmailResetPassword = createAction(
+  'auth/resetSendEmailResetPassword',
+);
+export const resetVerifyPage = createAction('auth/resetVerifyPage');
+export const resetPasswordPageAction = createAction('auth/resetPasswordPage');

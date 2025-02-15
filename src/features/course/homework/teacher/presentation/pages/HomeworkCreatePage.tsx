@@ -52,10 +52,13 @@ const HomeworkCreatePage: React.FC = () => {
   ];
 
   const handleCreate = (title: string, description: string) => {
+    console.log('create')
     dispatch(createHomework({ lessonId: Number(lessonId), title, description }))
       .unwrap()
-      .then(() => {
-        navigate(`/dashboard/teacher/lessons/${lessonId}`);
+      .then((res) => {
+        if (res.data) {
+          navigate(`/dashboard/teacher/lessons/${lessonId}`);
+        }
       });
   };
 
@@ -63,7 +66,7 @@ const HomeworkCreatePage: React.FC = () => {
     <div className="p-4">
       <AppBreadcrumb items={breadCrumbItems} />
       <h1 className="text-2xl font-bold mb-4">Create Homework</h1>
-      <HomeworkForm onSubmit={handleCreate} />
+      <HomeworkForm onSubmit={handleCreate} onSubmitUpdate={() =>{} }  />
     </div>
   );
 };

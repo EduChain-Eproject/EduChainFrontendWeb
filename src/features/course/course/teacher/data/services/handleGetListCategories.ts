@@ -4,12 +4,14 @@ import Category from '../../../../../../common/entities/Category';
 import Failure from '../../../../../../common/entities/Failure';
 import axiosService from '../../../../../../common/services/axiosService';
 import { CourseState } from '../redux/courseSlice';
-
+const baseUrl = 'http://localhost:8080/';
 export const apiFetchListCategories: () => ApiResponse<
   Category[]
 > = async () => {
   try {
-    const response = await axiosService.get('/COMMON/api/category/list');
+    const response = await axiosService.get(
+      `${baseUrl}COMMON/api/category/list`,
+    );
 
     return { data: response.data };
   } catch (error) {

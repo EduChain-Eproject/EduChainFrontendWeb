@@ -10,13 +10,16 @@ import {
 import handleLogin from './actionHandling/HandleLogin';
 import { CommonState, initCommonState } from '../../../../common/state/index';
 import handleGetUser from './actionHandling/HandleGetUser';
-import handleSendMailReset from './actionHandling/HandleSendMailReset';
-import handleResetPassword from './actionHandling/HandleResetPassword';
-import { User } from '../../../../common/entities/User';
+import handleSendMailReset from './actionHandling/reset-password/HandleSendMailReset';
+import handleResetPassword from './actionHandling/reset-password/HandleResetPassword';
 import AuthRepositoryImpl from '../../data/repositoryImpl/AuthRepositoryImpl';
 
 import handleRegister from './actionHandling/HandleRegister';
 import handleLogOut from './actionHandling/HandleLogout';
+import { JwtResponse } from '../../domain/usecases/Login';
+import User from '../../../../common/entities/User';
+import handleVerifyCode from './actionHandling/verify-account/HandleVerifyCode';
+import HandleReSendVerifyCode from './actionHandling/verify-account/HandleReSendVerifyCode';
 
 export interface AuthState {
   user: User | null;
@@ -24,11 +27,12 @@ export interface AuthState {
   token: string | null;
   refreshToken: string | null;
   logoutError: string | null;
-  logInPage: CommonState<null>;
+  logInPage: CommonState<JwtResponse>;
   signUpPage: CommonState<{ message: string | undefined }>;
   sendMailPage: CommonState<null>;
   resetPasswordPage: CommonState<null>;
-  verifyPage: CommonState<null>;
+  verifyPage: CommonState<number>;
+  reSendVerifyPage: CommonState<string>;
 }
 
 const initialState: AuthState = {
@@ -42,6 +46,7 @@ const initialState: AuthState = {
   resetPasswordPage: initCommonState,
   verifyPage: initCommonState,
   logoutError: null,
+  reSendVerifyPage: initCommonState,
 };
 
 const authSlice = createSlice({
@@ -55,6 +60,8 @@ const authSlice = createSlice({
     handleResetPassword(builder);
     handleLogOut(builder);
     handleRegister(builder);
+    handleVerifyCode(builder);
+    HandleReSendVerifyCode(builder);
   },
 });
 

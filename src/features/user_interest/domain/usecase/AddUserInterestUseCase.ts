@@ -1,6 +1,6 @@
 import { UserInterestRepository } from '../repository/UserInterestRepository';
 
-export default class GetUserInterestsUseCase {
+export default class AddUserInterestUseCase {
   constructor(private userInterestRepository: UserInterestRepository) {}
 
   async execute(req: AddUserInterestReq) {

@@ -8,10 +8,11 @@ export default class GetUserCourseUseCase {
 }
 
 export type GetUserCourseRequest = {
-  student_id: number;
+  studentId: number;
   page: number;
   size: number;
   titleSearch: string;
+  completionStatus: string | null;
 };
 
 export type AddUserCourseReq = {

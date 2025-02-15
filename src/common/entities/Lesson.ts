@@ -7,7 +7,7 @@ export default class Lesson {
   description: string;
   videoTitle: string;
   videoURL: string;
-
+  videoFile: File;
   chapterDto?: Chapter;
   homeworkDtos?: Homework[];
 }

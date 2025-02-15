@@ -23,8 +23,11 @@ const UpdateChapterPage: React.FC = () => {
   const { chapterId } = useParams<{ chapterId: string }>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { data, status, error } = useAppSelector(
+  const { data } = useAppSelector(
     (state) => state.chapters.teacher.chapterDetailPage,
+  );
+  const {status,errors,error}   = useAppSelector(
+    (state) => state.chapters.teacher.updateChapterPage
   );
   const [chapterTitle, setChapterTitle] = useState<string>('');
 
@@ -41,7 +44,6 @@ const UpdateChapterPage: React.FC = () => {
   }, [data]);
 
   const handleSave = () => {
-    if (chapterId && chapterTitle) {
       const updatedChapter: UpdateChapterReq = {
         chapterTitle,
       };
@@ -50,11 +52,15 @@ const UpdateChapterPage: React.FC = () => {
           chapterId: Number(chapterId),
           chapterData: updatedChapter,
         }),
-      ).then(() => {
-        navigate(`/dashboard/teacher/chapters/${chapterId}`);
-      });
-    }
+      )
   };
+
+  useEffect(() => {
+    console.log(status)
+    if (status === 'succeeded') {
+      navigate(`/dashboard/teacher/chapters/${chapterId}`);
+    }
+  }, [status, chapterId, navigate]);
 
   const breadCrumbItems = [
     {
@@ -67,7 +73,7 @@ const UpdateChapterPage: React.FC = () => {
     },
     {
       label: `Course ${data?.courseDto?.title}`,
-      href: `/dashboard/teacher/courses/${data?.courseDto.id}`,
+      href: `/dashboard/teacher/courses/${data?.courseDto!.id}`,
     },
     {
       label: `Chapter ${data?.chapterTitle}`,
@@ -83,14 +89,11 @@ const UpdateChapterPage: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  if (status === 'failed') {
-    return <div>Error: {error}</div>;
-  }
-
   return (
     <div className="p-4">
       <AppBreadcrumb items={breadCrumbItems} />
       <div className="bg-white shadow rounded-lg p-6">
+       <div> {error}</div>
         <h1 className="text-2xl font-bold mb-4">Update Chapter</h1>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
@@ -102,6 +105,9 @@ const UpdateChapterPage: React.FC = () => {
             onChange={(e) => setChapterTitle(e.target.value)}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
           />
+                   {errors?.chapterTitle && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.chapterTitle}</p>
+            )}
         </div>
         <div className="space-x-2">
           <button

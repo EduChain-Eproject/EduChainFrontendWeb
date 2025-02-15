@@ -5,13 +5,22 @@ import Category from '../../../../../../common/entities/Category';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import { CourseState } from '../redux/courseSlice';
 
+const baseUrl = 'http://localhost:8080/';
 const apiFetchListCategories: () => ApiResponse<Category[]> = async () => {
   try {
-    const response = await axiosService.get('/COMMON/api/category/list');
+    const response = await axiosService.get(
+      `${baseUrl}COMMON/api/category/list`,
+    );
 
-    return response.data;
+    console.log(response.data);
+
+    return {
+      data: response.data,
+    };
   } catch (error) {
-    return new Failure(error.response.data.message, error.response.status);
+    return {
+      error: new Failure(error.response.data.message, error.response.status),
+    };
   }
 };
 
@@ -36,7 +45,11 @@ export const handleGetListCategories = (
       } else {
         state.listCoursesPage.status = 'get list succeeded';
         if (state.listCoursesPage.data) {
+          console.log(action.payload);
+
           state.listCoursesPage.data.categories = action.payload.data;
+
+          console.log('category setted');
         }
       }
     })

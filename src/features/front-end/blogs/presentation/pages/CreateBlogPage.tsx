@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '../../../../../common/context/store';
 import { useAppSelector } from '../../../../../common/context/store';
-import { CreateBlogReq, createBlog } from '../../data/redux/action/createBlog';
+import { CreateBlogReq, createBlog, resetCreateBlog } from '../../data/redux/action/createBlog';
 import { RouteObject, useNavigate } from 'react-router-dom';
 import CreateBlogForm from '../components/CreateBlogForm';
 import AppBreadcrumb from '../../../../../common/components/Breadcrumbs/AppBreadcrumb';
@@ -29,19 +29,22 @@ const CreateNewBlogPage: React.FC = () => {
     const { status, error } = useAppSelector(state => state.blogUiSlice.blogDetail);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
-    const handleSubmit = async (data: CreateBlogReq): Promise<void> => {
+    const createBlogData = useAppSelector(
+        (state) => state.blogUiSlice.blogCreateState,
+      );
+    const handleSubmit =  (data: CreateBlogReq) => {
         const submitData = {
             ...data,
         };
-    
-        await dispatch(createBlog(submitData));
-    
-        if (status === 'succeeded') {
-            navigate('/teacher/blogs');
-        }
+         dispatch(createBlog(submitData));
     };
 
+  useEffect(() => {
+    if(createBlogData.status === 'succeeded'){
+      navigate('/community/blog_ui');
+      dispatch(resetCreateBlog());
+    }
+  },[createBlogData.status ,navigate]);
     return (
         <div>
             <AppBreadcrumb items={breadCrumbItems} />

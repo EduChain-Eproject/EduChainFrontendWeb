@@ -10,19 +10,27 @@ export interface UpdateHomeworkReq {
   title: string;
   description: string;
 }
-
+const baseUrl = 'http://localhost:8080/';
 export const apiUpdateHomework = async (
   homeworkData: UpdateHomeworkReq,
 ): ApiResponse<Homework> => {
   try {
     const response = await axiosService.put(
-      `/TEACHER/api/homework/update/${homeworkData.homeworkId}`,
+      `${baseUrl}TEACHER/api/homework/update/${homeworkData.homeworkId}`,
       homeworkData,
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -45,6 +53,7 @@ const handleUpdateHomework = (
       if (action.payload.error) {
         state.updateHomeworkPage.status = 'failed';
         state.updateHomeworkPage.error = action.payload.error.message;
+        state.updateHomeworkPage.errors = action.payload.error.errors;
       } else {
         state.updateHomeworkPage.status = 'succeeded';
         state.updateHomeworkPage.data = action.payload.data;

@@ -1,4 +1,8 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import Lesson from '../../../../../../common/entities/Lesson';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import axiosService from '../../../../../../common/services/axiosService';
@@ -9,22 +13,25 @@ export type UpdateLessonReq = {
   lessonTitle: string;
   description: string;
   videoTitle: string;
-  file: FileList;
+  videoFile: File;
 };
-
+const baseUrl = 'http://localhost:8080/';
 export const apiUpdateLesson = async (
   lessonId: number,
   lessonData: UpdateLessonReq,
 ): ApiResponse<Lesson> => {
   try {
     const formData = new FormData();
-    formData.append('file', lessonData.file[0]);
-    formData.append('lessonTitle', lessonData.lessonTitle);
-    formData.append('description', lessonData.description);
-    formData.append('videoTitle', lessonData.videoTitle);
+    // Kiểm tra và thêm tệp vào FormData
+    if (lessonData.videoFile && lessonData.videoFile.length > 0) {
+      formData.append('videoFile', lessonData.videoFile[0]);
+    }
+    formData.append('lessonTitle', lessonData.lessonTitle || '');
+    formData.append('description', lessonData.description || '');
+    formData.append('videoTitle', lessonData.videoTitle || '');
 
     const response = await axiosService.put(
-      `/TEACHER/api/lesson/update/${lessonId}`,
+      `${baseUrl}TEACHER/api/lesson/update/${lessonId}`,
       formData,
       {
         headers: {
@@ -32,10 +39,19 @@ export const apiUpdateLesson = async (
         },
       },
     );
+    console.log(formData);
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -52,6 +68,7 @@ export const updateLesson = createAsyncThunk(
     return await apiUpdateLesson(lessonId, lessonData);
   },
 );
+export const resetUpdateLesson = createAction('lessons/resetUpdateLesson');
 
 const handleUpdateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
   builder
@@ -62,14 +79,22 @@ const handleUpdateLesson = (builder: ActionReducerMapBuilder<LessonState>) => {
       if (action.payload.error) {
         state.updateLessonPage.status = 'failed';
         state.updateLessonPage.error = action.payload.error.message;
+        state.updateLessonPage.errors = action.payload.error.errors;
       } else {
         state.updateLessonPage.status = 'succeeded';
+        console.log(state.updateLessonPage.status);
         state.updateLessonPage.data = action.payload.data;
       }
     })
     .addCase(updateLesson.rejected, (state, action) => {
       state.updateLessonPage.status = 'failed';
       state.updateLessonPage.error = action.error.message;
+    })
+    .addCase(resetUpdateLesson, (state) => {
+      state.updateLessonPage.status = 'idle';
+      state.updateLessonPage.error = undefined;
+      state.updateLessonPage.data = undefined;
+      state.updateLessonPage.errors = undefined;
     });
 };
 export default handleUpdateLesson;

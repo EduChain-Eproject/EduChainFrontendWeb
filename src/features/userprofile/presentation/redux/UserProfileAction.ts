@@ -1,10 +1,8 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import UserProfileRepositoryImpl from '../../data/repositoryImpl/UserProfileRepositoryImpl';
 import { UserProfileRepository } from './../../domain/repository/UserRepository';
 import GetUserProfileUseCase from '../../domain/usecases/GetUserProfileUseCase';
-import UpdateUserProfileUseCase, {
-  UpdateUserProfileReq,
-} from '../../domain/usecases/UpdateUserProfileUseCase';
+import UpdateUserProfileUseCase from '../../domain/usecases/UpdateUserProfileUseCase';
 
 const userProfileRepository: UserProfileRepository =
   new UserProfileRepositoryImpl();
@@ -24,4 +22,6 @@ export const updateUserProfileAction = createAsyncThunk(
     return await updateProfile.execute(formData);
   },
 );
-
+export const resetUpdateProfileStatus = createAction(
+  'userProfile/resetUpdateProfileStatus',
+);

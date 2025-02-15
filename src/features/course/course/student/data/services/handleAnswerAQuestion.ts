@@ -10,19 +10,27 @@ export interface AnswerQuestionReq {
   questionId: number;
   answerId: number;
 }
-
+const baseUrl = 'http://localhost:8080/';
 const apiAnswerAQuestion = async (
   req: AnswerQuestionReq,
 ): ApiResponse<UserAnswer> => {
   try {
     const response = await axiosService.post(
-      `/STUDENT/api/homework/answer/${req.homeworkId}`,
+      `${baseUrl}STUDENT/api/homework/answer/${req.homeworkId}`,
       req,
     );
     return { data: response.data };
   } catch (error) {
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+      return {
+        error: new Failure(message, errors, data.timestamp),
+      };
+    }
     return {
-      error: new Failure(error.response.data.message, error.response.status),
+      error: new Failure('message', {}, ''),
     };
   }
 };
@@ -50,7 +58,7 @@ const handleAnswerAQuestion = (
           questionDtos: state.homeworkDetailComponent.data.questionDtos?.map(
             (q) => {
               if (
-                q.currentUserAnswerDto &&
+                // q.currentUserAnswerDto &&
                 action.payload.data &&
                 q.id == action.payload.data.questionId
               ) {
@@ -58,6 +66,8 @@ const handleAnswerAQuestion = (
                   ...q,
                   currentUserAnswerDto: action.payload.data,
                 };
+                console.log(q);
+
               }
               return q;
             },
@@ -65,6 +75,7 @@ const handleAnswerAQuestion = (
         };
       } else {
         state.homeworkDetailComponent.error = action.payload.error?.message;
+        state.homeworkDetailComponent.errors = action.payload.error?.errors;
       }
     })
     .addCase(answerAQuestion.rejected, (state, action) => {

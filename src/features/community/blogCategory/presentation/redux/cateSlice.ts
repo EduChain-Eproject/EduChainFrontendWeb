@@ -1,45 +1,41 @@
+import {
+  CommonState,
+  initCommonState,
+} from './../../../../../common/state/index';
 import { createSlice } from '@reduxjs/toolkit';
 import { BlogCategory } from '../../domain/entities/BlogCategory';
 import {
-    handleCreateCate,
-    handleDeleteCate,
-    handleFetchCate,
-    handleFetchCates,
-    handleUpdateCate
+  handleCreateCate,
+  handleDeleteCate,
+  handleFetchCate,
+  handleFetchCates,
+  handleUpdateCate,
 } from './actionHandlings';
 
 export interface CateState {
-    cates: BlogCategory[] | undefined,
-    cate: BlogCategory | undefined,
-    status: string | null,
-    errorCreate: string | undefined
-    errorUpdate: string | undefined
-    errorDelete: string | undefined
-    errorFetchCates: string | undefined
-    errorFetchCate: string | undefined
+  fetchCatesState: CommonState<BlogCategory[]>;
+  createCateState: CommonState<BlogCategory>;
+  updateCateState: CommonState<BlogCategory>;
+  fetchCateState: CommonState<BlogCategory>;
 }
 const initialState: CateState = {
-    cates: undefined,
-    cate: undefined,
-    status: null,
-    errorDelete: undefined,
-    errorCreate: undefined,
-    errorFetchCate: undefined,
-    errorFetchCates: undefined,
-    errorUpdate: undefined
-}
+  fetchCatesState: initCommonState,
+  updateCateState: initCommonState,
+  createCateState: initCommonState,
+  fetchCateState: initCommonState,
+};
 
 const cateSlice = createSlice({
-    name: 'cates',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        handleCreateCate(builder);
-        handleUpdateCate(builder);
-        handleFetchCates(builder);
-        handleFetchCate(builder);
-        handleDeleteCate(builder);
-    },
+  name: 'cates',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    handleCreateCate(builder);
+    handleUpdateCate(builder);
+    handleFetchCates(builder);
+    handleFetchCate(builder);
+    handleDeleteCate(builder);
+  },
 });
 
 export default cateSlice.reducer;

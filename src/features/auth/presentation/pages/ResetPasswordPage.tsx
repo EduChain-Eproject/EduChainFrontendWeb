@@ -17,10 +17,10 @@ const ResetPasswordPage = () => {
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
-  const code = searchParams.get('code');
+
 
   const onSubmit = (data: ResetPasswordReq) => {
-    data.code = code!;
+    console.log(data)
     dispatch(ResetPasswordAction({ req: data }));
   };
 

@@ -1,16 +1,16 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import ApiResponse from '../../../../../../common/entities/ApiResponse';
 import Failure from '../../../../../../common/entities/Failure';
-import { Homework } from '../../../../../../common/entities/Homework';
+import Homework from '../../../../../../common/entities/Homework';
 import axiosService from '../../../../../../common/services/axiosService';
 import { HomeworkState } from '../redux/homeworkSlice';
-
+const baseUrl = 'http://localhost:8080/';
 export const apiGetHomeworkDetail = async (
   homeworkId: number,
 ): ApiResponse<Homework> => {
   try {
     const response = await axiosService.get(
-      `/TEACHER/api/homework/detail/${homeworkId}`,
+      `${baseUrl}TEACHER/api/homework/detail/${homeworkId}`,
     );
     return { data: response.data };
   } catch (error) {

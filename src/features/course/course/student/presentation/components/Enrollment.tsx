@@ -1,5 +1,9 @@
-import React from 'react';
-import { useAppDispatch } from '../../../../../../common/context/store';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../common/context/store';
 import Course from '../../../../../../common/entities/Course';
 import { enrollACourse } from '../../data/services/handleEnrollACourse';
 interface EnrollmentProps {
@@ -7,11 +11,26 @@ interface EnrollmentProps {
 }
 
 const Enrollment: React.FC<EnrollmentProps> = ({ course }) => {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { data } = useAppSelector(
+    (state) => state.courses.student.coursePaymentUrl,
+  );
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   function handleEnrollCourse(id: number) {
-    dispatch(enrollACourse(id));
+    if (isAuthenticated) {
+      dispatch(enrollACourse(id));
+    } else {
+      navigate('/Auth/login');
+    }
   }
+
+  useEffect(() => {
+    if (data) {
+      window.location.href = data;
+    }
+  }, [data]);
 
   return (
     <div className="p-3 border-blue-400 rounded-lg bg-blue-300">

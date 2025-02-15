@@ -52,7 +52,7 @@ const ChapterDetailPage: React.FC = () => {
 
   const handleDeleteChapter = () => {
     dispatch(deleteChapter(Number(chapterId))).then(() => {
-      navigate(`/dashboard/teacher/courses/${data?.courseDto.id}`);
+      navigate(`/dashboard/teacher/courses/${data?.courseDto!.id}`);
     });
   };
 
@@ -67,7 +67,7 @@ const ChapterDetailPage: React.FC = () => {
     },
     {
       label: `Course ${data?.courseDto?.title}`,
-      href: `/dashboard/teacher/courses/${data?.courseDto.id}`,
+      href: `/dashboard/teacher/courses/${data?.courseDto!.id}`,
     },
     {
       label: `Chapter ${data?.chapterTitle}`,

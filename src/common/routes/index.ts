@@ -5,8 +5,11 @@ import { teacherRoutes } from './teacherRoutes';
 import { censorRoutes } from './censorRoutes';
 import { userProfileRoutes } from './userProfileRoutes';
 import { userCourseRoute } from './userCourseRoute';
+import { studentRoutes } from './studentRoutes';
+
 export {
   authRoute,
+  studentRoutes,
   homeRoutes,
   adminRoutes,
   teacherRoutes,

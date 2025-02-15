@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
 import { RouteObject, useNavigate, useParams } from 'react-router-dom';
-
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../../../../../common/context/store';
+import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
 import { updateHomework } from '../../data/services/updateHomework';
 import { getHomeworkDetail } from '../../data/services/getHomeworkDetail';
 import HomeworkForm from '../components/HomeworkForm';
-import { fetchLessonDetail } from '../../../../lesson/teacher/data/services/handleGetLessonDetail';
-import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
 
 export const route: () => RouteObject = () => {
   return {
@@ -22,13 +17,8 @@ const HomeworkUpdatePage: React.FC = () => {
   const { homeworkId } = useParams<{ homeworkId: string }>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const {
-    status,
-    error,
-    data: homework,
-  } = useAppSelector((state) => state.homeworks.teacher.homeworkDetailPage);
-
+  const { status, error, data: homework } = useAppSelector((state) => state.homeworks.teacher.homeworkDetailPage);
+  const homeworkState = useAppSelector((s)=>s.homeworks.teacher.updateHomeworkPage)
   useEffect(() => {
     dispatch(getHomeworkDetail(Number(homeworkId)));
   }, [homeworkId, dispatch]);
@@ -38,11 +28,11 @@ const HomeworkUpdatePage: React.FC = () => {
     { label: 'Course by you', href: '/dashboard/teacher/courses' },
     {
       label: `Course ${homework?.lessonDto?.chapterDto?.courseDto?.title}`,
-      href: `/dashboard/teacher/courses/${homework?.lessonDto?.chapterDto?.courseDto.id}`,
+      href: `/dashboard/teacher/courses/${homework?.lessonDto?.chapterDto?.courseDto!.id}`,
     },
     {
       label: `Chapter ${homework?.lessonDto?.chapterDto?.chapterTitle}`,
-      href: `/dashboard/teacher/chapters/${homework?.lessonDto?.chapterDto.id}`,
+      href: `/dashboard/teacher/chapters/${homework?.lessonDto?.chapterDto!.id}`,
     },
     {
       label: `Lesson ${homework?.lessonDto?.lessonTitle}`,
@@ -58,19 +48,19 @@ const HomeworkUpdatePage: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    dispatch(getHomeworkDetail(Number(homeworkId)));
-  }, [homeworkId, dispatch]);
-
   const handleUpdate = (title: string, description: string) => {
+    console.log('update')
     dispatch(
-      updateHomework({ homeworkId: Number(homeworkId), title, description }),
+      updateHomework({ homeworkId: Number(homeworkId), title, description })
     )
-      .unwrap()
-      .then(() => {
-        navigate(`/dashboard/teacher/lessons/${homework?.lessonDto?.id}`);
-      });
+    .unwrap()
+    .then((res) => {
+      if (res.data) {
+        navigate(`/dashboard/teacher/homeworks/${homeworkId}`);
+      }
+    });
   };
+
 
   if (status === 'loading') {
     return <div>Loading...</div>;
@@ -82,14 +72,14 @@ const HomeworkUpdatePage: React.FC = () => {
   return (
     <div className="p-4">
       <AppBreadcrumb items={breadCrumbItems} />
-
       <h1 className="text-2xl font-bold mb-4">Update Homework</h1>
       {homework && (
         <HomeworkForm
           initialTitle={homework.title}
           initialDescription={homework.description}
-          onSubmit={handleUpdate}
-        />
+          onSubmitUpdate={handleUpdate}
+          isUpdate
+          homeworkId={Number(homeworkId)} onSubmit={() =>{} } />
       )}
     </div>
   );

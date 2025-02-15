@@ -6,12 +6,13 @@ import Failure from '../../../../../../common/entities/Failure';
 import axiosService from '../../../../../../common/services/axiosService';
 import { ChapterState } from '../redux/chapterSlice';
 
+const baseUrl = 'http://localhost:8080/';
 export const apiGetChapterDetail = async (
   chapterId: number,
 ): ApiResponse<Chapter> => {
   try {
     const response = await axiosService.get(
-      `/TEACHER/api/chapter/detail/${chapterId}`,
+      `${baseUrl}TEACHER/api/chapter/detail/${chapterId}`,
     );
     return { data: response.data };
   } catch (error) {

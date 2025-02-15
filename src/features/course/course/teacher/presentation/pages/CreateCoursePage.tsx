@@ -1,16 +1,9 @@
 import React, { useEffect } from 'react';
-
 import CourseForm from '../components/CourseForm';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../../../../../common/context/store';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
 import { RouteObject, useNavigate } from 'react-router-dom';
 import AppBreadcrumb from '../../../../../../common/components/Breadcrumbs/AppBreadcrumb';
-import {
-  createCourse,
-  CreateCourseReq,
-} from '../../data/services/handleCreateCourse';
+import { createCourse } from '../../data/services/handleCreateCourse';
 import { fetchListCategories } from '../../data/services/handleGetListCategories';
 
 export const route: () => RouteObject = () => {
@@ -42,17 +35,8 @@ const CreateCoursePage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (data: CreateCourseReq) => {
-    const categoryIds = Object.keys(data.categoryIds)
-      .filter((key) => data.categoryIds[key])
-      .map((key) => parseInt(key, 10));
-
-    const submitData = {
-      ...data,
-      categoryIds,
-    };
-
-    dispatch(createCourse(submitData));
+  const handleSubmit = (data: FormData) => {
+    dispatch(createCourse(data));
   };
 
   useEffect(() => {

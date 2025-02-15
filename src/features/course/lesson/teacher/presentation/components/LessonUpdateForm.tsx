@@ -6,6 +6,7 @@ import {
 } from '../../../../../../common/context/store';
 import { useNavigate } from 'react-router-dom';
 import {
+  resetUpdateLesson,
   updateLesson,
   UpdateLessonReq,
 } from '../../data/services/handleUpdateLesson';
@@ -21,28 +22,36 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
     handleSubmit,
     control,
     setValue,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<UpdateLessonReq>();
   const { data: lesson } = useAppSelector(
     (state) => state.lessons.teacher.lessonDetailPage,
   );
+
+  const {status,error,errors} = useAppSelector((state) => state.lessons.teacher.updateLessonPage);
 
   useEffect(() => {
     if (lesson) {
       setValue('lessonTitle', lesson.lessonTitle);
       setValue('description', lesson.description);
       setValue('videoTitle', lesson.videoTitle);
+      setValue('videoFile',lesson.videoFile)
     }
   }, [lesson, setValue]);
 
   const onSubmit = (formData: UpdateLessonReq) => {
-    dispatch(updateLesson({ lessonId, lessonData: formData })).then(() =>
-      navigate(`/dashboard/teacher/lessons/${lessonId}`),
-    );
+    dispatch(updateLesson({ lessonId, lessonData: formData }))
   };
-
+  useEffect(() => {
+    console.log(status)
+    if(status === 'succeeded'){
+      dispatch(resetUpdateLesson());
+      navigate(`/dashboard/teacher/lessons/${lessonId}`)
+    }
+  },[dispatch,navigate,status])
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
           Lesson Title
@@ -54,17 +63,13 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
             <input
               {...field}
               type="text"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.lessonTitle ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
             />
           )}
         />
-        {errors.lessonTitle && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.lessonTitle.message}
-          </p>
-        )}
+            {errors?.lessonTitle && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.lessonTitle}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -76,17 +81,13 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
           render={({ field }) => (
             <textarea
               {...field}
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.description ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
             />
           )}
         />
-        {errors.description && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.description.message}
-          </p>
-        )}
+             {errors?.description && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.description}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -99,39 +100,33 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
             <input
               {...field}
               type="text"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.videoTitle ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50`}
             />
           )}
         />
-        {errors.videoTitle && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.videoTitle.message}
-          </p>
-        )}
+            {errors?.videoTitle && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.videoTitle}</p>
+            )}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
           Video File
         </label>
         <Controller
-          name="file"
+          name="videoFile"
           control={control}
           render={({ field }) => (
             <input
               // {...field}
               type="file"
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                errors.file ? 'border-red-500' : ''
-              }`}
+              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 `}
               onChange={(e) => field.onChange(e.target.files)}
             />
           )}
         />
-        {errors.file && (
-          <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
-        )}
+            {errors?.videoFile && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.videoFile}</p>
+            )}
       </div>
       <div className="space-x-2">
         <button
@@ -149,6 +144,15 @@ const LessonUpdateForm: React.FC<LessonUpdateFormProps> = ({ lessonId }) => {
         </button>
       </div>
     </form>
+    <video controls className="mt-4 w-full">
+  <source
+    src={`http://localhost:8080/uploadsVideo/${lesson?.videoURL}`}
+    type="video/mp4" // or the appropriate type for your video file
+  />
+  Your browser does not support the video tag.
+</video>
+    </div>
+  
   );
 };
 

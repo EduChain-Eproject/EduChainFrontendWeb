@@ -4,7 +4,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../common/context/store';
-import { Homework } from '../../../../../../common/entities/Homework';
+import Homework from '../../../../../../common/entities/Homework';
 import { deleteHomework } from '../../../../homework/teacher/data/services/deleteHomework';
 import { homeworkDeleted } from '../../data/redux/lessonSlice';
 

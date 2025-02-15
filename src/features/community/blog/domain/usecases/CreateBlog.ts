@@ -9,5 +9,9 @@ export default class CreateBlog {
 }
 
 export type CreateBlogReq = {
-
-}
+  title: string;
+  userId: number;
+  blogCategoryId: number;
+  blogText: string;
+  photo: File | null;
+};

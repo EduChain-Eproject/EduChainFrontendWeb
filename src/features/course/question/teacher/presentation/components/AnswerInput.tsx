@@ -1,5 +1,6 @@
 // src/components/AnswerInput.tsx
 import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../../../common/context/store';
 
 interface AnswerInputProps {
   answerId: number;
@@ -16,8 +17,10 @@ const AnswerInput: React.FC<AnswerInputProps> = ({
 
   const handleSubmit = () => {
     onSubmit(answerId, answerText);
+    
   };
-
+  const{errors,status} = useAppSelector((s) => s.questions.teacher.updateAnswer)
+  const error = errors?.[answerId];
   return (
     <div className="mb-4">
       <label
@@ -32,8 +35,11 @@ const AnswerInput: React.FC<AnswerInputProps> = ({
         value={answerText}
         onChange={(e) => setAnswerText(e.target.value)}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
+  
       />
+             {errors?.answerText && (
+              <p className="text-red-500 text-xs italic mt-1">{errors?.answerText}</p>
+            )}
       <button
         type="button"
         onClick={handleSubmit}

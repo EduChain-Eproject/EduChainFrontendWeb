@@ -23,6 +23,12 @@ import UserCourseSlice from '../../features/user_course/presentation/redux/UserC
 import teacherHomeworkSlice from '../../features/course/homework/teacher/data/redux/homeworkSlice';
 
 import teacherQuestionSlice from '../../features/course/question/teacher/data/redux/questionSlice';
+import UserHomeworkSlice from '../../features/user_homework/presentation/redux/UserHomeworkForProfileSlice';
+import UserHomeworkForProfileSlice from '../../features/user_homework/presentation/redux/UserHomeworkForProfileSlice';
+
+import orderAdminSlice from '../../features/admin/order/data/redux/orderAdminSlice'
+import GetUserListSlice from '../../features/admin/get-user-list/data/redux/GetUserListSlice';
+import commentSlice from '../../features/community/blogComment/presentation/redux/BlogCommentSlice';
 
 const courses = combineReducers({
   teacher: teacherCourseSlice,
@@ -58,8 +64,12 @@ const rootReducer = combineReducers({
   userProfile: UserProfileSlice,
   userInterest: UserInterestSlice,
   userCourse: UserCourseSlice,
+  userhomeworkForPrile: UserHomeworkForProfileSlice,
   homeworks,
   questions,
+  orderAdminSlice,
+  getUserList: GetUserListSlice,
+  commnent: commentSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

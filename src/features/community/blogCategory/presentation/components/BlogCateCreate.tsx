@@ -18,24 +18,8 @@ const BlogCateCreate: React.FC<BlogCateCreateProps> = ({ initialData, onSubmit }
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const createCateResult = useAppSelector((s)=>s.cates.createCateState)
 
-    const [error, setError] = useState<string | undefined>(undefined);
-
-    const errorFromReducer = useAppSelector((state: RootState) => state.cates.errorCreate);
-
-    const [successfulMessage, setSuccessfulMessage] = useState(false);
-
-    useEffect(() => {
-        setError(errorFromReducer);
-    }, [errorFromReducer]);
-
-    useEffect(() => {
-        // Hàm này sẽ được gọi khi component bị unmount
-        return () => {
-            setError('');
-            setSuccessfulMessage(false);
-        };
-    }, []);
 
     const handleFormSubmit = async (data: CreateCateReq) => {
     try {
@@ -44,39 +28,16 @@ const BlogCateCreate: React.FC<BlogCateCreateProps> = ({ initialData, onSubmit }
         if (onSubmit) {
             onSubmit(data as BlogCategory);
         }
-        
-        if (errorFromReducer) {
-            setError('Failed to create category');
-        } else {
-            setSuccessfulMessage(true);
-            reset();
-
-            setTimeout(() => {
-                setSuccessfulMessage(false);
-                navigate('/dashboard/blog_category');
-            }, 3000);
-        }
 
     } catch (err) {
         console.error('Error while creating category:', err);
-        setError('Failed to create category');
+ 
     }
 };
 
     return (
         <div>
-            {error && (
-                <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
-                    <p className="font-bold">Error!</p>
-                    <p>{error}</p>
-                </div>
-            )}
-            {successfulMessage && (
-                <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
-                    <p className="font-bold">Success!</p>
-                    <p>Category created successfully.</p>
-                </div>
-            )}
+    
             <form onSubmit={handleSubmit(handleFormSubmit)} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -85,13 +46,11 @@ const BlogCateCreate: React.FC<BlogCateCreateProps> = ({ initialData, onSubmit }
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="name"
-                        {...register('categoryName', { required: 'Category name is required' })}
+                        {...register('categoryName')}
                     />
-                    {errors.categoryName && (
-                        <p className="text-red-500 text-xs italic mt-2">
-                            {errors.categoryName.message}
-                        </p>
-                    )}
+                   {createCateResult?.errors?.categoryName && (
+              <p className="text-red-500 text-xs italic mt-1">{createCateResult?.errors?.categoryName}</p>
+            )}
                 </div>
                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Submit

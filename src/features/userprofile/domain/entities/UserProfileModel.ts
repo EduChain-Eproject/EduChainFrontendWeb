@@ -1,3 +1,5 @@
+import { Role } from '../../../../common/entities/User';
+
 export class UserProfileModel {
   id: number;
   email: string;
@@ -6,7 +8,7 @@ export class UserProfileModel {
   phone: string;
   address: string;
   avatarPath: string;
-  role: string;
+  role: Role;
 
   constructor(
     id: number,
@@ -16,7 +18,7 @@ export class UserProfileModel {
     phone: string,
     address: string,
     avatarPath: string,
-    role: string,
+    role: Role,
   ) {
     this.id = id;
     this.email = email;

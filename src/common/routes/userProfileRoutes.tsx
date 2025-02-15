@@ -5,11 +5,12 @@ import { getUserProfileRoute } from '../../features/userprofile/presentation/pag
 import { updateUserRoute } from '../../features/userprofile/presentation/pages';
 import { UserProfileLayout } from '../layouts';
 import { getUserIterestRoute } from '../../features/user_interest/presentation/page';
+import { getUserHomeworkRoute } from '../../features/user_homework/presentation/page/Index';
 
 export const userProfileRoutes: RouteObject = {
   path: 'profile',
   // element: <UserProfileLayout />,
   element: <UserProfileLayout />,
   errorElement: <ErrorPage />,
-  children: [getUserProfileRoute(), updateUserRoute(), getUserIterestRoute()],
+  children: [getUserProfileRoute(), updateUserRoute(), getUserIterestRoute(),getUserHomeworkRoute()],
 };

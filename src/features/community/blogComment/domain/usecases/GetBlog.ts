@@ -1,9 +1,9 @@
-import { BlogRepository } from '../repositories/BlogRepository';
+// import { BlogRepository } from '../repositories/BlogRepository';
 
-export default class GetBlog {
-    constructor(private blogRepository: BlogRepository) { }
+// export default class GetBlog {
+//     constructor(private blogRepository: BlogRepository) { }
 
-    async execute(blogId: number) {
-        return await this.blogRepository.getBlog(blogId);
-    }
-}
+//     async execute(blogId: number) {
+//         return await this.blogRepository.getBlog(blogId);
+//     }
+// }

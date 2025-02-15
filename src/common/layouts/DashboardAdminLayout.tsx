@@ -17,7 +17,7 @@ const DashboardAdminLayout = () => {
   //   if (isAuthenticated) {
   //     dispatch(getUserAction());
   //   } else {
-  //     navigate('/Auth')
+  //     navigate('/Auth/login')
   //   }
   // }, [isAuthenticated]);
 

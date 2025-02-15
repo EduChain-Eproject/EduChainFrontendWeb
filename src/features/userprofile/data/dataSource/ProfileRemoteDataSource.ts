@@ -1,12 +1,12 @@
-import { UserProfileDto } from './../dto/UserProfileDto';
+import { UserProfileModel } from './../../domain/entities/UserProfileModel';
+
 import axiosService from '../../../../common/services/axiosService';
 import Failure from '../../../../common/entities/Failure';
-import { UpdateUserProfileReq } from '../../domain/usecases/UpdateUserProfileUseCase';
 
 const baseUrl: String = 'http://localhost:8080/COMMON/';
 export const getUserProfile = async (
   email: string,
-): Promise<UserProfileDto> => {
+): Promise<UserProfileModel> => {
   try {
     const respose = await axiosService.get(
       `${baseUrl}get-user-profile/${email}`,
@@ -19,19 +19,41 @@ export const getUserProfile = async (
     console.log(respose.data);
     return respose.data;
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };
 
 export const updateUserProfile = async (
   req: FormData,
 ): Promise<{
-  content: UserProfileDto;
+  data: UserProfileModel;
 }> => {
   try {
-    const respose = await axiosService.post(`${baseUrl}updateProfile`, req);
-    return respose.data;
+    const response = await axiosService.put(`${baseUrl}updateProfile`, req, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return { data: response.data };
   } catch (error) {
-    throw new Failure(error.response.data.message, error.response.status);
+    if (error.response) {
+      const data = error.response.data;
+      const message = data.errors.message || 'Validation error';
+      const errors = data.errors;
+
+      throw new Failure(message, errors, data.timestamp);
+    }
+    throw new Failure('An unknown error occurred', {
+      message: 'An unknown error occurred',
+    });
   }
 };

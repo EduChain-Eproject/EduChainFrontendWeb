@@ -14,8 +14,9 @@ export const route: () => RouteObject = () => {
 }
 
 const LoginPage: React.FC = () => {
-    const dispatch = useAppDispatch();
-
+    const dispatch = useAppDispatch(); 
+    // const navigate = useNavigate(); 
+    // const status = useAppSelector((s)=>s.auth.logInPage.status);
     const handleSubmit = (data: any) => {
         dispatch(logInAction({ loginReq: data }));
     };
@@ -24,12 +25,19 @@ const LoginPage: React.FC = () => {
         dispatch(SendResetPasswordEmailAction({ req: data }));
     };
 
+
     return (
-        <div className="flex justify-center items-center h-screen sm:h-auto bg-gray-200">
-            <div className="bg-white shadow-md rounded px-8 py-6 w-full sm:w-96">
-                <h1 className="text-2xl font-bold mb-4 text-center">Log In</h1>
+        <div className="min-h-screen bg-cover"
+            style={{
+                backgroundImage:
+                    "url('https://res.cloudinary.com/dcxzqj0ta/image/upload/v1724576548/ijet9ronlxu9vb4stjfl.jpg')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}>
+            <div className="pt-16">
                 <LoginForm onSubmit={handleSubmit} onSubmitReset={handleSubmitReset} />
             </div>
+
         </div>
     )
 }

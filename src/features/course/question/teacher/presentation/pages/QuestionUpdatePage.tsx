@@ -51,10 +51,10 @@ const QuestionUpdatePage: React.FC = () => {
         correctAnswerId,
       }),
     )
-      .unwrap()
-      .then(() => {
-        navigate(`/dashboard/teacher/homeworks/${question?.homeworkId}`);
-      });
+      // .unwrap()
+      // .then(() => {
+      //   navigate(`/dashboard/teacher/homeworks/${question?.homeworkId}`);
+      // });
   };
 
   const handleUpdateAnswer = (answerId: number, answerText: string) => {

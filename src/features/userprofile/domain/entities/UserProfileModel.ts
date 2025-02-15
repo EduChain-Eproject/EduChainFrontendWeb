@@ -9,6 +9,8 @@ export class UserProfileModel {
   address: string;
   avatarPath: string;
   role: Role;
+  walletAddress?: string;
+
 
   constructor(
     id: number,
@@ -19,6 +21,7 @@ export class UserProfileModel {
     address: string,
     avatarPath: string,
     role: Role,
+    walletAddress?: string
   ) {
     this.id = id;
     this.email = email;
@@ -28,5 +31,6 @@ export class UserProfileModel {
     this.address = address;
     this.avatarPath = avatarPath;
     this.role = role;
+    this.walletAddress = walletAddress;
   }
 }

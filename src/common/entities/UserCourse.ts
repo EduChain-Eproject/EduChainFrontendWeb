@@ -1,3 +1,4 @@
+import { Certification } from './Certification';
 import Course from './Course';
 import User from './User';
 
@@ -14,4 +15,5 @@ export default class UserCourse {
   enrollmentDate: Date;
   completionStatus: CompletionStatus;
   progress: number;
+  certificationDto: Certification | undefined;
 }

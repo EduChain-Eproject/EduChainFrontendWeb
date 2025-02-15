@@ -1,4 +1,5 @@
 import Category from './Category';
+import { Certification } from './Certification';
 import Chapter from './Chapter';
 import CourseFeedback from './CourseFeedback';
 import User from './User';
@@ -19,6 +20,7 @@ export default class Course {
   participatedUserDtos?: UserCourse[];
   courseFeedbackDtos?: CourseFeedback[];
   userInterestDtos?: UserInterest[];
+  certifiedParticipantDtos?: Certification[];
 
   numberOfEnrolledStudents?: number;
   currentUserCourse?: UserCourse;

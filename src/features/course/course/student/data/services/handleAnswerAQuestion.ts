@@ -58,7 +58,7 @@ const handleAnswerAQuestion = (
           questionDtos: state.homeworkDetailComponent.data.questionDtos?.map(
             (q) => {
               if (
-                q.currentUserAnswerDto &&
+                // q.currentUserAnswerDto &&
                 action.payload.data &&
                 q.id == action.payload.data.questionId
               ) {
@@ -66,6 +66,8 @@ const handleAnswerAQuestion = (
                   ...q,
                   currentUserAnswerDto: action.payload.data,
                 };
+                console.log(q);
+
               }
               return q;
             },

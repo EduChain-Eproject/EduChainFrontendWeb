@@ -101,8 +101,8 @@ const LessonDetailPage: React.FC = () => {
                 <div className="mb-4">
                   <video
                     controls
-                    className="w-full rounded-lg shadow"
-                    src={`http://localhost:8080/uploadsVideo/${lesson.videoURL}`}
+                    className="w-full"
+                    src={`${import.meta.env.VITE_API_BASE_URL}/uploadsVideo/${lesson.videoURL}`}
                   >
                     Your browser does not support the video tag.
                   </video>

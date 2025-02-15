@@ -37,8 +37,7 @@ const HomeworkInProgress = () => {
   };
 
   const handleSubmitHomework = () => {
-    //dispatch(submitHomework(homework?.id ?? 0));
-
+   
     console.log(homework?.questionDtos);
 
     if (
